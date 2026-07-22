@@ -407,6 +407,32 @@ lore.on("dialog.cancelled", function()
   lore.emit("actionbar.set", { text = "§8Смотритель ждёт. Он умеет ждать" })
 end)
 
+-- ── сброс ─────────────────────────────────────────────────────────────────
+-- Пройти участок заново. Стереть один файл руками было бы недостаточно: память
+-- на диске — только половина состояния, вторая живёт в переменных этого скрипта
+-- и переживает любую правку файла. Поэтому сброс — событие: оно чистит обе
+-- половины разом и снимает всё, что участок нарисовал.
+--
+--   /lore emit to <ник> keeper.reset
+
+lore.on("keeper.reset", function()
+  lore.save("keeper", nil)
+
+  lit, visits, ended = {}, 0, false
+  entered, awake = false, false
+  shrine, stones = nil, {}
+
+  if hearth then hearth(); hearth = nil end
+
+  lore.emit("marker.clear", {})
+  lore.emit("hud.hide", { id = "keeper" })
+  lore.emit("bossbar.hide", { id = "keeper" })
+  lore.emit("music.stop", {})
+  lore.emit("title.clear", {})
+  lore.emit("actionbar.set", { text = "§7Тропа смотрителя сброшена" })
+  lore.log("участок сброшен: заходов 0, вех 0")
+end)
+
 -- ── дозор: пепел под ногами включает сцену ────────────────────────────────
 -- Дёшево нарочно: шаг 3 по решётке. Пепелище широкое, промахнуться нельзя,
 -- а полный перебор радиуса 9 стоил бы вчетверо дороже каждую секунду.

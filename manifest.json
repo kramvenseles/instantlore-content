@@ -1,5 +1,5 @@
 {
-  "version": "f586c632324f",
+  "version": "932dd4f1012a",
   "blocks": [
     {
       "slot": 0,
@@ -496,8 +496,8 @@
     },
     {
       "path": "scripts/keeper.lua",
-      "sha256": "f47769da99e29ba62fd280583069c26a9ed7084821b2127beff1614b9d8cb119",
-      "size": 19100
+      "sha256": "d801ca60a5ab3351192fdf3f4ecc90b86bdb52fdce9a8c764b58904482e37136",
+      "size": 20448
     },
     {
       "path": "scripts/lib/ui.lua",
