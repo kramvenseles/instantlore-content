@@ -1,5 +1,5 @@
 {
-  "version": "75425891534f",
+  "version": "ff693d92b789",
   "blocks": [
     {
       "slot": 0,
@@ -176,8 +176,8 @@
     },
     {
       "path": "hud/probe.json",
-      "sha256": "81cb19426d8e4f83f723112f2ad6aad94134025e74065111b43ed372185f6b6c",
-      "size": 919
+      "sha256": "b6f2a703629254c0cd46731ada4919b1e1e6e212ee9e1ba657dcaf8b155daea2",
+      "size": 980
     },
     {
       "path": "hud/reactor.json",
