@@ -1,5 +1,5 @@
 {
-  "version": "b1c295a3359e",
+  "version": "75425891534f",
   "blocks": [
     {
       "slot": 0,
@@ -163,6 +163,11 @@
       "path": "effects/probe.json",
       "sha256": "8fd1d60f46f843c203af731decab2bf7c36dd7ee47f7e57529dc5d27016b7c06",
       "size": 1193
+    },
+    {
+      "path": "effects/probe_bad.json",
+      "sha256": "7c279f8a41e1ac2ba64b1a2e2fb4bd5cbc2d05bcd708711a8b604a93cb48f9d3",
+      "size": 357
     },
     {
       "path": "hud/anchors.json",
