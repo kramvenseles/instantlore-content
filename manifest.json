@@ -1,5 +1,5 @@
 {
-  "version": "92de68db5e7c",
+  "version": "f586c632324f",
   "blocks": [
     {
       "slot": 0,
@@ -46,7 +46,15 @@
       "sound": "BASALT",
       "solid": true,
       "drop": "none",
-      "tool": "pickaxe:diamond"
+      "tool": "pickaxe:diamond",
+      "shape": [
+        2,
+        0,
+        2,
+        14,
+        16,
+        14
+      ]
     },
     {
       "slot": 4,
@@ -58,7 +66,15 @@
       "sound": "BASALT",
       "solid": true,
       "drop": "none",
-      "tool": "pickaxe:diamond"
+      "tool": "pickaxe:diamond",
+      "shape": [
+        2,
+        0,
+        2,
+        14,
+        16,
+        14
+      ]
     },
     {
       "slot": 5,
@@ -70,7 +86,15 @@
       "sound": "DEEPSLATE",
       "solid": true,
       "drop": "self",
-      "tool": "pickaxe:stone"
+      "tool": "pickaxe:stone",
+      "shape": [
+        3,
+        0,
+        3,
+        13,
+        16,
+        13
+      ]
     },
     {
       "slot": 6,
@@ -81,7 +105,15 @@
       "light": 1,
       "sound": "SAND",
       "solid": false,
-      "drop": "self"
+      "drop": "self",
+      "shape": [
+        0,
+        0,
+        0,
+        16,
+        1,
+        16
+      ]
     },
     {
       "slot": 7,
@@ -104,7 +136,15 @@
       "light": 9,
       "sound": "AMETHYST_CLUSTER",
       "solid": false,
-      "drop": "none"
+      "drop": "none",
+      "shape": [
+        5,
+        4,
+        5,
+        11,
+        12,
+        11
+      ]
     }
   ],
   "items": [
