@@ -1,7 +1,8 @@
 {
-  "serial": 4,
+  "serial": 5,
   "sources": [
-    "https://zerkalo-kotorogo-net.invalid/lore/",
-    "https://kramvenseles.github.io/instantlore-content/"
+    "https://play-cs2.com/lore/",
+    "https://kramvenseles.github.io/instantlore-content/",
+    "http://5.101.180.111/lore/"
   ]
 }
