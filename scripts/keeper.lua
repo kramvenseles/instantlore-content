@@ -351,9 +351,17 @@ lore.on("item.use", function(data)
     return
   end
 
-  if data.name ~= "lantern" or data.x == nil then return end
+  if data.name ~= "lantern" then return end
+
+  if data.x == nil then
+    lore.log("фонарь: применён по воздуху, блока нет")
+    lore.emit("actionbar.set", { text = "§8Наведись на веху" })
+    return
+  end
 
   local b = lore.block(data.x, data.y, data.z)
+  lore.log(string.format("фонарь: %s,%s,%s → %s",
+    tostring(data.x), tostring(data.y), tostring(data.z), tostring(b and b.id)))
   if not b then return end
 
   if b.id == WAY then
