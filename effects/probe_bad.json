@@ -1,8 +1,0 @@
-{
-  "duration": 1.0,
-  "emitters": [
-    { "particle": "minecraft:нет_такой_частицы", "shape": "ring", "radius": 1, "rate": 20 },
-    { "particle": "dust{color:[9,9,9],scale:БУКВЫ}", "shape": "ring", "radius": 1, "rate": 20 },
-    { "particle": "minecraft:flame", "shape": "такой_формы_нет", "radius": 1, "rate": 20 }
-  ]
-}

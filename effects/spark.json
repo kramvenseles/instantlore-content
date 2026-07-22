@@ -1,0 +1,46 @@
+{
+  "duration": 2.5,
+  "sound": {
+    "id": "minecraft:block.beacon.power_select",
+    "volume": 0.9,
+    "pitch": 1.4
+  },
+  "emitters": [
+    {
+      "particle": "dust{color:[1.0,0.62,0.18],scale:1.4}",
+      "shape": "helix",
+      "radius": 0.45,
+      "height": 3.0,
+      "turns": 4,
+      "rate": 90,
+      "offset": [
+        0,
+        0.2,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:end_rod",
+      "shape": "cone",
+      "radius": 0.8,
+      "height": 2.5,
+      "rate": 40,
+      "offset": [
+        0,
+        0.1,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:flame",
+      "shape": "shell",
+      "radius": 0.5,
+      "rate": 30,
+      "offset": [
+        0,
+        1.9,
+        0
+      ]
+    }
+  ]
+}

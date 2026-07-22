@@ -1,0 +1,33 @@
+{
+  "duration": 3.0,
+  "emitters": [
+    {
+      "particle": "minecraft:flame",
+      "shape": "disc",
+      "radius": 0.22,
+      "rate": 12,
+      "offset": [
+        0,
+        1.95,
+        0
+      ],
+      "velocity": [
+        0,
+        0.04,
+        0
+      ],
+      "spread": 0.01
+    },
+    {
+      "particle": "dust{color:[1.0,0.55,0.15],scale:0.8}",
+      "shape": "ring",
+      "radius": 0.4,
+      "rate": 10,
+      "offset": [
+        0,
+        2.0,
+        0
+      ]
+    }
+  ]
+}

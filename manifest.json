@@ -1,5 +1,5 @@
 {
-  "version": "ff693d92b789",
+  "version": "55568a5fc3a2",
   "blocks": [
     {
       "slot": 0,
@@ -35,6 +35,76 @@
       "container": true,
       "label": "Схрон",
       "tick": 0
+    },
+    {
+      "slot": 3,
+      "name": "beacon_dark",
+      "title": "Погасший маяк",
+      "hardness": 8.0,
+      "resistance": 30.0,
+      "light": 0,
+      "sound": "BASALT",
+      "solid": true,
+      "drop": "none",
+      "tool": "pickaxe:diamond"
+    },
+    {
+      "slot": 4,
+      "name": "beacon_lit",
+      "title": "Живой маяк",
+      "hardness": 8.0,
+      "resistance": 30.0,
+      "light": 15,
+      "sound": "BASALT",
+      "solid": true,
+      "drop": "none",
+      "tool": "pickaxe:diamond"
+    },
+    {
+      "slot": 5,
+      "name": "waystone",
+      "title": "Веха",
+      "hardness": 3.5,
+      "resistance": 6.0,
+      "light": 0,
+      "sound": "DEEPSLATE",
+      "solid": true,
+      "drop": "self",
+      "tool": "pickaxe:stone"
+    },
+    {
+      "slot": 6,
+      "name": "ashfall",
+      "title": "Пепел",
+      "hardness": 0.2,
+      "resistance": 0.2,
+      "light": 1,
+      "sound": "SAND",
+      "solid": false,
+      "drop": "self"
+    },
+    {
+      "slot": 7,
+      "name": "keeper_core",
+      "title": "Сердце смотрителя",
+      "hardness": 12.0,
+      "resistance": 60.0,
+      "light": 6,
+      "sound": "ANCIENT_DEBRIS",
+      "solid": true,
+      "drop": "none",
+      "tool": "pickaxe:netherite"
+    },
+    {
+      "slot": 8,
+      "name": "whisper_mote",
+      "title": "Шёпот",
+      "hardness": 0.1,
+      "resistance": 0.1,
+      "light": 9,
+      "sound": "AMETHYST_CLUSTER",
+      "solid": false,
+      "drop": "none"
     }
   ],
   "items": [
@@ -61,6 +131,44 @@
       ],
       "stack": 16,
       "rarity": "uncommon"
+    },
+    {
+      "slot": 2,
+      "name": "lantern",
+      "title": "Фонарь смотрителя",
+      "lore": [
+        "Огонь в нём чужой и не греет.",
+        "ПКМ по вехе — отдать искру."
+      ],
+      "stack": 1,
+      "durability": 0,
+      "rarity": "rare",
+      "glint": true,
+      "usable": true
+    },
+    {
+      "slot": 3,
+      "name": "ember",
+      "title": "Уголёк",
+      "lore": [
+        "Остаток чужого света."
+      ],
+      "stack": 16,
+      "rarity": "uncommon"
+    },
+    {
+      "slot": 4,
+      "name": "keeper_seal",
+      "title": "Печать смотрителя",
+      "lore": [
+        "Знак того, кто стоял до конца.",
+        "ПКМ — вспомнить."
+      ],
+      "stack": 1,
+      "durability": 0,
+      "rarity": "epic",
+      "glint": true,
+      "usable": true
     }
   ],
   "entities": [
@@ -96,6 +204,33 @@
       "health": 200,
       "speed": 0.1,
       "invulnerable": true
+    },
+    {
+      "slot": 3,
+      "name": "whisper",
+      "title": "",
+      "block": 8,
+      "size": 0.6,
+      "scale": 0.5,
+      "gravity": false,
+      "invulnerable": true,
+      "wander": true,
+      "look": true,
+      "speed": 0.12,
+      "health": 4
+    },
+    {
+      "slot": 4,
+      "name": "keeper",
+      "title": "§6Смотритель",
+      "block": 7,
+      "size": 3.5,
+      "scale": 3.5,
+      "health": 200,
+      "speed": 0.14,
+      "wander": false,
+      "look": true,
+      "invulnerable": true
     }
   ],
   "assets": [
@@ -105,9 +240,44 @@
       "size": 1662
     },
     {
+      "path": "assets/instantlore/models/block/ashfall.json",
+      "sha256": "4dd1403f7bc58ea6dbc0b8e67451d43953526df7ea9ae0f19c3006bb50942d57",
+      "size": 677
+    },
+    {
+      "path": "assets/instantlore/models/block/beacon_dark.json",
+      "sha256": "24992447d3d0e6e895f3702c4d679e3faebd3d5e88622eec4094bc952b5fd57c",
+      "size": 2662
+    },
+    {
+      "path": "assets/instantlore/models/block/beacon_lit.json",
+      "sha256": "1e4018f218f94dd38dd8639a33f0aa3b831f70c4efd499a02e2fc4ff711553b7",
+      "size": 2660
+    },
+    {
+      "path": "assets/instantlore/models/block/keeper_core.json",
+      "sha256": "68ef243d952c23530e52862454e992e90fcf3584c23f77ff323aa46d5c85a20b",
+      "size": 2137
+    },
+    {
       "path": "assets/instantlore/models/block/reliquary.json",
       "sha256": "a5ea891370dbfeedffdff1328050057de277d68adf9e67da5364c415739404da",
       "size": 1857
+    },
+    {
+      "path": "assets/instantlore/models/block/waystone.json",
+      "sha256": "b1e4fd870a19ec1de82bd40f2e9b9bc9286b7a50c134efc52a94eac137c025b8",
+      "size": 2161
+    },
+    {
+      "path": "assets/instantlore/models/block/whisper_mote.json",
+      "sha256": "cf1a48e6132a4150575a66106ea3823366885e60ac7f5eac238d88af05cc309d",
+      "size": 1646
+    },
+    {
+      "path": "assets/instantlore/models/item/lantern.json",
+      "sha256": "44ea3a4c284b913858e82f150f8ea48f57675734d79a9935531b39e556a8622b",
+      "size": 5355
     },
     {
       "path": "assets/instantlore/models/item/scroll.json",
@@ -125,6 +295,26 @@
       "size": 702
     },
     {
+      "path": "assets/instantlore/textures/block/ashfall.png",
+      "sha256": "dd5da50c22f1688cc0195c1994a825062c4c30032d397c02f61493864a969191",
+      "size": 332
+    },
+    {
+      "path": "assets/instantlore/textures/block/beacon_dark.png",
+      "sha256": "bc6900af44bb3b86a31e7f6727366f6ffba94224173ddcda7bb201f1865003be",
+      "size": 373
+    },
+    {
+      "path": "assets/instantlore/textures/block/beacon_lit.png",
+      "sha256": "9d36cd251bca058d9f70f0adaed4e5e580eb3af7aa938a7102a81ee14a06fea1",
+      "size": 382
+    },
+    {
+      "path": "assets/instantlore/textures/block/keeper_core.png",
+      "sha256": "e4ba674ff23b3409e4375ad0caed79a065daec10bc4b385930309f4b52c21c25",
+      "size": 388
+    },
+    {
       "path": "assets/instantlore/textures/block/mist.png",
       "sha256": "586894963227bbab0105e7664b7ac938f48f51b5564ca432c1afb6b8eefb6b5d",
       "size": 565
@@ -133,6 +323,31 @@
       "path": "assets/instantlore/textures/block/reliquary.png",
       "sha256": "e8445fbb8a1b0dfea70a0809fdc2533e7fa5b4a65a2cff812947441582dd471c",
       "size": 471
+    },
+    {
+      "path": "assets/instantlore/textures/block/waystone.png",
+      "sha256": "ef947e3e7166d3e0bed3a4c35e9d03e584fd14fc305b3a66dd64bf24f709949a",
+      "size": 358
+    },
+    {
+      "path": "assets/instantlore/textures/block/whisper_mote.png",
+      "sha256": "452a24511f22433236e5ed009b6193a73de1353c767af18113b4eb83f660f21a",
+      "size": 350
+    },
+    {
+      "path": "assets/instantlore/textures/item/ember.png",
+      "sha256": "bdb5b9b244338546287c020eae4509c712711bd79a69f0e112370639068005fd",
+      "size": 183
+    },
+    {
+      "path": "assets/instantlore/textures/item/keeper_seal.png",
+      "sha256": "3b4bb06186a2279df6ec657b8e1d3e6314aca81d5c747547258e2edc84a5725d",
+      "size": 229
+    },
+    {
+      "path": "assets/instantlore/textures/item/lantern.png",
+      "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
+      "size": 187
     },
     {
       "path": "assets/instantlore/textures/item/scroll.png",
@@ -145,6 +360,11 @@
       "size": 479
     },
     {
+      "path": "cutscenes/arrival.json",
+      "sha256": "3dfa343e1862957d6dd3970db7056e6ec699a4fca6363283d510e0442d3cb920",
+      "size": 1713
+    },
+    {
       "path": "cutscenes/intro.json",
       "sha256": "23778c349d656ad63ceaa544f134ce509223c7cf4eecfb216b9e1de059326555",
       "size": 967
@@ -153,6 +373,16 @@
       "path": "dialog/guardian.json",
       "sha256": "df55bc47479f85dc862ed13f3e78a68ce4ad29d7e477369d27b6d565a4263ffb",
       "size": 421
+    },
+    {
+      "path": "dialog/keeper.json",
+      "sha256": "4462c2c15ec2459c9d2fcf6c7c4411a6f02bc64b5a984dbd16eacae44d82e21f",
+      "size": 635
+    },
+    {
+      "path": "effects/hearth.json",
+      "sha256": "6c9c402fe71345eaefd0e4aa0d1260afda63c4ae236aea7e2f8d96ccbf6301f8",
+      "size": 495
     },
     {
       "path": "effects/portal.json",
@@ -165,9 +395,24 @@
       "size": 1193
     },
     {
-      "path": "effects/probe_bad.json",
-      "sha256": "7c279f8a41e1ac2ba64b1a2e2fb4bd5cbc2d05bcd708711a8b604a93cb48f9d3",
-      "size": 357
+      "path": "effects/seal.json",
+      "sha256": "b76bd85414d86f80259e369f65cc5d72b2f4c121facc7896f77739ad40b0d38f",
+      "size": 516
+    },
+    {
+      "path": "effects/spark.json",
+      "sha256": "d548bc7660e473e944836850af77c1e85313d8e044f274e97d48629b9e4631b0",
+      "size": 747
+    },
+    {
+      "path": "effects/veil.json",
+      "sha256": "7ce1096717df3914dd9c386f92af2bf5b876cc1f4d3078bc57c48c228e07850e",
+      "size": 519
+    },
+    {
+      "path": "effects/waking.json",
+      "sha256": "52cfcf948c4a27b981763a50d44c47318722bff6f61960d807e36f2c3bc70843",
+      "size": 1302
     },
     {
       "path": "hud/anchors.json",
@@ -175,9 +420,9 @@
       "size": 1744
     },
     {
-      "path": "hud/probe.json",
-      "sha256": "b6f2a703629254c0cd46731ada4919b1e1e6e212ee9e1ba657dcaf8b155daea2",
-      "size": 980
+      "path": "hud/keeper.json",
+      "sha256": "a5b3bf554388b9bf941c02262134e7b90ed77b81b2c692382474197e802ba16b",
+      "size": 1397
     },
     {
       "path": "hud/reactor.json",
@@ -208,6 +453,11 @@
       "path": "scripts/hp_watch.lua",
       "sha256": "c7e121c1ffe0bac58850ff3082f9f3f83b4d135b3c2e6de9ba880a3b49614c3c",
       "size": 5890
+    },
+    {
+      "path": "scripts/keeper.lua",
+      "sha256": "5373a310cbc3f54a34412007ce29579abeda99aebbd2beab13719d65142b9acd",
+      "size": 18771
     },
     {
       "path": "scripts/lib/ui.lua",

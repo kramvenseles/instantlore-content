@@ -1,0 +1,36 @@
+{
+  "duration": 5.0,
+  "emitters": [
+    {
+      "particle": "minecraft:white_ash",
+      "shape": "box",
+      "size": [
+        14.0,
+        3.0,
+        14.0
+      ],
+      "rate": 26,
+      "offset": [
+        0,
+        2.0,
+        0
+      ]
+    },
+    {
+      "particle": "dust{color:[0.55,0.58,0.66],scale:1.1}",
+      "shape": "disc",
+      "radius": 7.0,
+      "rate": 14,
+      "offset": [
+        0,
+        0.4,
+        0
+      ],
+      "velocity": [
+        0,
+        0.02,
+        0
+      ]
+    }
+  ]
+}

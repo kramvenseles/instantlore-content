@@ -1,0 +1,32 @@
+{
+  "duration": 3.0,
+  "sound": {
+    "id": "minecraft:block.enchantment_table.use",
+    "volume": 1.0,
+    "pitch": 0.8
+  },
+  "emitters": [
+    {
+      "particle": "dust{color:[0.95,0.8,0.35],scale:1.6}",
+      "shape": "sphere",
+      "radius": 1.4,
+      "rate": 70,
+      "offset": [
+        0,
+        1.2,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:end_rod",
+      "shape": "ring",
+      "radius": 1.8,
+      "rate": 35,
+      "offset": [
+        0,
+        1.0,
+        0
+      ]
+    }
+  ]
+}

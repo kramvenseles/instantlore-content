@@ -1,0 +1,76 @@
+{
+  "elements": [
+    {
+      "type": "rect",
+      "anchor": "top_left",
+      "x": 6,
+      "y": 6,
+      "width": 168,
+      "height": 56,
+      "background": "#B4101018"
+    },
+    {
+      "type": "item",
+      "anchor": "top_left",
+      "x": 12,
+      "y": 12,
+      "item": "instantlore:item_2",
+      "count": 1
+    },
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 34,
+      "y": 12,
+      "text": "Тропа смотрителя",
+      "color": "#FFE8C87A"
+    },
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 34,
+      "y": 24,
+      "text": "${stage}",
+      "color": "#FF9A93A8"
+    },
+    {
+      "type": "line",
+      "anchor": "top_left",
+      "x": 12,
+      "y": 38,
+      "x2": 168,
+      "y2": 38,
+      "thickness": 1,
+      "color": "#FF3A3448"
+    },
+    {
+      "type": "image",
+      "anchor": "top_left",
+      "x": 12,
+      "y": 44,
+      "width": 12,
+      "height": 12,
+      "texture": "instantlore:textures/block/waystone.png"
+    },
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 30,
+      "y": 45,
+      "text": "${lit}/3",
+      "color": "#FFFFD27A",
+      "scale": 1.2
+    },
+    {
+      "type": "bar",
+      "anchor": "top_left",
+      "x": 66,
+      "y": 48,
+      "width": 100,
+      "height": 5,
+      "value": "${power}",
+      "color": "#FFE07A20",
+      "background": "#80000000"
+    }
+  ]
+}

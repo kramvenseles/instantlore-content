@@ -1,0 +1,85 @@
+{
+  "duration": 7.0,
+  "sound": {
+    "id": "minecraft:block.beacon.activate",
+    "volume": 1.0,
+    "pitch": 0.7
+  },
+  "emitters": [
+    {
+      "particle": "dust{color:[1.0,0.78,0.35],scale:2.0}",
+      "shape": "shell",
+      "radius": 3.0,
+      "rate": 120,
+      "offset": [
+        0,
+        2.0,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:end_rod",
+      "shape": "ring",
+      "radius": 4.5,
+      "rate": 60,
+      "offset": [
+        0,
+        0.3,
+        0
+      ],
+      "velocity": [
+        0,
+        0.12,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:soul_fire_flame",
+      "shape": "helix",
+      "radius": 1.2,
+      "height": 9.0,
+      "turns": 5,
+      "rate": 90,
+      "offset": [
+        0,
+        0.2,
+        0
+      ]
+    },
+    {
+      "particle": "minecraft:flame",
+      "shape": "line",
+      "to": [
+        0,
+        10,
+        0
+      ],
+      "rate": 70,
+      "offset": [
+        0,
+        0.5,
+        0
+      ]
+    },
+    {
+      "particle": "block{block_state:\"minecraft:tuff\"}",
+      "shape": "box",
+      "size": [
+        5.0,
+        0.4,
+        5.0
+      ],
+      "rate": 45,
+      "offset": [
+        0,
+        6.0,
+        0
+      ],
+      "velocity": [
+        0,
+        -0.1,
+        0
+      ]
+    }
+  ]
+}
