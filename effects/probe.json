@@ -1,0 +1,57 @@
+{
+  "duration": 12.0,
+  "emitters": [
+    {
+      "particle": "dust{color:[1.0,0.1,0.1],scale:1.5}",
+      "shape": "shell",
+      "radius": 1.5,
+      "rate": 60,
+      "offset": [0, 1.0, 0]
+    },
+    {
+      "particle": "dust{color:[0.1,0.4,1.0],scale:1.0}",
+      "shape": "helix",
+      "radius": 1.0,
+      "height": 4.0,
+      "turns": 3,
+      "rate": 60,
+      "offset": [5, 0.2, 0]
+    },
+    {
+      "particle": "minecraft:end_rod",
+      "shape": "cone",
+      "radius": 2.0,
+      "height": 3.0,
+      "rate": 40,
+      "offset": [-5, 0.2, 0]
+    },
+    {
+      "particle": "minecraft:flame",
+      "shape": "box",
+      "size": [2.0, 0.2, 2.0],
+      "rate": 40,
+      "offset": [0, 0.2, 5]
+    },
+    {
+      "particle": "minecraft:soul_fire_flame",
+      "shape": "disc",
+      "radius": 2.0,
+      "rate": 40,
+      "offset": [0, 0.2, -5]
+    },
+    {
+      "particle": "minecraft:electric_spark",
+      "shape": "line",
+      "to": [6, 4, 0],
+      "rate": 50,
+      "offset": [-3, 0.2, -3]
+    },
+    {
+      "particle": "block{block_state:\"minecraft:redstone_block\"}",
+      "shape": "ring",
+      "radius": 2.5,
+      "rate": 30,
+      "offset": [0, 0.2, 0]
+    }
+  ]
+}

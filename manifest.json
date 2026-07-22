@@ -1,5 +1,5 @@
 {
-  "version": "2a7196cb23ba",
+  "version": "b1c295a3359e",
   "blocks": [
     {
       "slot": 0,
@@ -85,6 +85,17 @@
       "scale": 0.6,
       "gravity": false,
       "invulnerable": true
+    },
+    {
+      "slot": 2,
+      "name": "colossus",
+      "title": "Колосс",
+      "block": 0,
+      "size": 20.0,
+      "scale": 20.0,
+      "health": 200,
+      "speed": 0.1,
+      "invulnerable": true
     }
   ],
   "assets": [
@@ -149,9 +160,19 @@
       "size": 488
     },
     {
+      "path": "effects/probe.json",
+      "sha256": "8fd1d60f46f843c203af731decab2bf7c36dd7ee47f7e57529dc5d27016b7c06",
+      "size": 1193
+    },
+    {
       "path": "hud/anchors.json",
       "sha256": "b921569c23d49633343224450ae3b5194a0f1b3ec4b3548ccfbf134f551ec96d",
       "size": 1744
+    },
+    {
+      "path": "hud/probe.json",
+      "sha256": "81cb19426d8e4f83f723112f2ad6aad94134025e74065111b43ed372185f6b6c",
+      "size": 919
     },
     {
       "path": "hud/reactor.json",

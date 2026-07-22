@@ -1,0 +1,44 @@
+{
+  "elements": [
+    {
+      "type": "text",
+      "anchor": "top_center",
+      "x": 0, "y": 8,
+      "text": "крупно по центру: ${state}",
+      "align": "center",
+      "scale": 2.0,
+      "color": "#FFCC00"
+    },
+    {
+      "type": "text",
+      "anchor": "top_right",
+      "x": -8, "y": 8,
+      "text": "справа мелко ${percent}%",
+      "align": "right",
+      "scale": 0.5,
+      "color": "#AACCFF"
+    },
+    {
+      "type": "image",
+      "anchor": "top_left",
+      "x": 8, "y": 8,
+      "width": 32, "height": 32,
+      "texture": "instantlore:textures/item/shard.png"
+    },
+    {
+      "type": "item",
+      "anchor": "top_left",
+      "x": 48, "y": 8,
+      "item": "minecraft:diamond",
+      "count": 7
+    },
+    {
+      "type": "line",
+      "anchor": "top_left",
+      "x": 8, "y": 48,
+      "x2": 108, "y2": 78,
+      "thickness": 3,
+      "color": "#FF00E5"
+    }
+  ]
+}
