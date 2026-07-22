@@ -1,0 +1,96 @@
+{
+  "elements": [
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 4,
+      "y": 4,
+      "text": "TOP-LEFT",
+      "color": "#FFCC00"
+    },
+    {
+      "type": "text",
+      "anchor": "top_center",
+      "x": -34,
+      "y": 4,
+      "text": "TOP-CENTER",
+      "color": "#FFCC00"
+    },
+    {
+      "type": "text",
+      "anchor": "top_right",
+      "x": -62,
+      "y": 4,
+      "text": "TOP-RIGHT",
+      "color": "#FFCC00"
+    },
+    {
+      "type": "text",
+      "anchor": "center_left",
+      "x": 4,
+      "y": 0,
+      "text": "CENTER-LEFT",
+      "color": "#66FF66"
+    },
+    {
+      "type": "text",
+      "anchor": "center_center",
+      "x": -38,
+      "y": 0,
+      "text": "CENTER",
+      "color": "#66FF66"
+    },
+    {
+      "type": "text",
+      "anchor": "center_right",
+      "x": -68,
+      "y": 0,
+      "text": "CENTER-RIGHT",
+      "color": "#66FF66"
+    },
+    {
+      "type": "text",
+      "anchor": "bottom_left",
+      "x": 4,
+      "y": -12,
+      "text": "BOTTOM-LEFT",
+      "color": "#66CCFF"
+    },
+    {
+      "type": "text",
+      "anchor": "bottom_center",
+      "x": -40,
+      "y": -46,
+      "text": "BOTTOM-CENTER",
+      "color": "#66CCFF"
+    },
+    {
+      "type": "text",
+      "anchor": "bottom_right",
+      "x": -68,
+      "y": -12,
+      "text": "BOTTOM-RIGHT",
+      "color": "#66CCFF"
+    },
+    {
+      "type": "bar",
+      "anchor": "bottom_center",
+      "x": -60,
+      "y": -34,
+      "width": 120,
+      "height": 6,
+      "value": "0.5",
+      "color": "#FF5555",
+      "background": "#80000000"
+    },
+    {
+      "type": "rect",
+      "anchor": "top_right",
+      "x": -70,
+      "y": 18,
+      "width": 66,
+      "height": 10,
+      "color": "#40FFFFFF"
+    }
+  ]
+}

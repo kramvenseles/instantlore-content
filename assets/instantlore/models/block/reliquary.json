@@ -1,0 +1,43 @@
+{
+  "comment": "Ступенчатый постамент: проверка того, что блок не обязан быть кубом.",
+  "textures": { "all": "instantlore:block/reliquary", "particle": "instantlore:block/reliquary" },
+  "elements": [
+    {
+      "comment": "основание",
+      "from": [1, 0, 1], "to": [15, 3, 15],
+      "faces": {
+        "north": {"uv": [1, 13, 15, 16], "texture": "#all"},
+        "east":  {"uv": [1, 13, 15, 16], "texture": "#all"},
+        "south": {"uv": [1, 13, 15, 16], "texture": "#all"},
+        "west":  {"uv": [1, 13, 15, 16], "texture": "#all"},
+        "up":    {"uv": [1, 1, 15, 15],  "texture": "#all"},
+        "down":  {"uv": [1, 1, 15, 15],  "texture": "#all"}
+      }
+    },
+    {
+      "comment": "ножка",
+      "from": [5, 3, 5], "to": [11, 9, 11],
+      "faces": {
+        "north": {"uv": [5, 7, 11, 13], "texture": "#all"},
+        "east":  {"uv": [5, 7, 11, 13], "texture": "#all"},
+        "south": {"uv": [5, 7, 11, 13], "texture": "#all"},
+        "west":  {"uv": [5, 7, 11, 13], "texture": "#all"},
+        "up":    {"uv": [5, 5, 11, 11], "texture": "#all"},
+        "down":  {"uv": [5, 5, 11, 11], "texture": "#all"}
+      }
+    },
+    {
+      "comment": "чаша, повёрнутая на 45° — форма, которую кубом не подделать",
+      "from": [3, 9, 3], "to": [13, 14, 13],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 9, 8]},
+      "faces": {
+        "north": {"uv": [3, 2, 13, 7],  "texture": "#all"},
+        "east":  {"uv": [3, 2, 13, 7],  "texture": "#all"},
+        "south": {"uv": [3, 2, 13, 7],  "texture": "#all"},
+        "west":  {"uv": [3, 2, 13, 7],  "texture": "#all"},
+        "up":    {"uv": [3, 3, 13, 13], "texture": "#all"},
+        "down":  {"uv": [3, 3, 13, 13], "texture": "#all"}
+      }
+    }
+  ]
+}

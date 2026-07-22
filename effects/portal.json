@@ -1,0 +1,23 @@
+{
+  "duration": 3.0,
+  "sound": { "id": "minecraft:block.beacon.activate", "volume": 0.8, "pitch": 1.2 },
+  "emitters": [
+    {
+      "particle": "minecraft:end_rod",
+      "shape": "ring",
+      "radius": 1.5,
+      "rate": 40,
+      "offset": [0, 0.2, 0],
+      "velocity": [0, 0.08, 0],
+      "spread": 0.01
+    },
+    {
+      "particle": "minecraft:portal",
+      "shape": "sphere",
+      "radius": 1.2,
+      "rate": 25,
+      "offset": [0, 1.0, 0],
+      "spread": 0.05
+    }
+  ]
+}

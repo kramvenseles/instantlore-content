@@ -1,0 +1,27 @@
+{
+  "elements": [
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 8, "y": 8,
+      "text": "Реактор: ${state}",
+      "color": "#FFCC00"
+    },
+    {
+      "type": "text",
+      "anchor": "top_left",
+      "x": 8, "y": 20,
+      "text": "Мощность ${percent}%",
+      "color": "#AACCFF"
+    },
+    {
+      "type": "bar",
+      "anchor": "bottom_center",
+      "x": -60, "y": -48,
+      "width": 120, "height": 6,
+      "value": "${power}",
+      "color": "#FF5555",
+      "background": "#80000000"
+    }
+  ]
+}

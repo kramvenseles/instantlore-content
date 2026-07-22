@@ -1,0 +1,54 @@
+{
+  "duration": 8.0,
+  "lock_input": true,
+  "relative": true,
+  "easing": "smooth",
+  "keyframes": [
+    {
+      "t": 0.0,
+      "camera": [
+        0,
+        3,
+        0
+      ],
+      "look_at": [
+        0,
+        1,
+        10
+      ]
+    },
+    {
+      "t": 4.0,
+      "camera": [
+        8,
+        6,
+        8
+      ],
+      "look_at": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "t": 8.0,
+      "camera": [
+        0,
+        12,
+        -12
+      ],
+      "look_at": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "events": [
+    { "t": 1.0, "event": "lore.log",    "data": { "message": "таймлайн: секунда 1" } },
+    { "t": 3.0, "event": "effect.play", "data": { "id": "portal" } },
+    { "t": 5.0, "event": "hud.show",    "data": { "id": "reactor", "values": { "state": "СЦЕНА", "percent": 50, "power": 0.5 } } },
+    { "t": 7.5, "event": "hud.hide",    "data": { "id": "reactor" } }
+  ],
+  "debug": true
+}

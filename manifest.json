@@ -1,0 +1,197 @@
+{
+  "version": "2a7196cb23ba",
+  "blocks": [
+    {
+      "slot": 0,
+      "name": "altar",
+      "hardness": 4.5,
+      "resistance": 4.5,
+      "light": 12,
+      "sound": "AMETHYST_BLOCK",
+      "solid": true,
+      "title": "Алтарь",
+      "drop": "self",
+      "tool": "pickaxe:iron"
+    },
+    {
+      "slot": 1,
+      "name": "mist",
+      "hardness": 0.3,
+      "resistance": 0.3,
+      "light": 4,
+      "sound": "WOOL",
+      "solid": false,
+      "title": "Туман"
+    },
+    {
+      "slot": 2,
+      "name": "reliquary",
+      "title": "Реликварий",
+      "hardness": 3.0,
+      "resistance": 3.0,
+      "light": 7,
+      "sound": "AMETHYST_BLOCK",
+      "solid": true,
+      "container": true,
+      "label": "Схрон",
+      "tick": 0
+    }
+  ],
+  "items": [
+    {
+      "slot": 0,
+      "name": "scroll",
+      "title": "Свиток пробуждения",
+      "lore": [
+        "Пергамент, который помнит больше тебя.",
+        "ПКМ — прочесть."
+      ],
+      "stack": 1,
+      "durability": 3,
+      "rarity": "rare",
+      "glint": true,
+      "usable": true
+    },
+    {
+      "slot": 1,
+      "name": "shard",
+      "title": "Осколок эха",
+      "lore": [
+        "Холодный на ощупь."
+      ],
+      "stack": 16,
+      "rarity": "uncommon"
+    }
+  ],
+  "entities": [
+    {
+      "slot": 0,
+      "name": "guardian",
+      "title": "Страж алтаря",
+      "block": 0,
+      "size": 1.0,
+      "scale": 1.0,
+      "health": 40,
+      "speed": 0.22,
+      "wander": true,
+      "look": true
+    },
+    {
+      "slot": 1,
+      "name": "mote",
+      "title": "",
+      "block": 2,
+      "size": 0.5,
+      "scale": 0.6,
+      "gravity": false,
+      "invulnerable": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "assets/instantlore/models/block/altar.json",
+      "sha256": "3f05a2de4152274f0c55696db44293430e2dfcdcdac262eb502cb52588d350db",
+      "size": 1662
+    },
+    {
+      "path": "assets/instantlore/models/block/reliquary.json",
+      "sha256": "a5ea891370dbfeedffdff1328050057de277d68adf9e67da5364c415739404da",
+      "size": 1857
+    },
+    {
+      "path": "assets/instantlore/models/item/scroll.json",
+      "sha256": "04291419ab9ac0285228274de6090db1ec730c7a377acf38d5da5fce8ad34a38",
+      "size": 2200
+    },
+    {
+      "path": "assets/instantlore/models/item/shard.json",
+      "sha256": "cd050d8222a45fa1d2489f3aa6e2c78e41ac9d313f968388fb0378f014128d43",
+      "size": 1797
+    },
+    {
+      "path": "assets/instantlore/textures/block/altar.png",
+      "sha256": "c9f4ade7da9b276c22983f6d02b4b52741dd07004a83143b7c5768657015a9ab",
+      "size": 702
+    },
+    {
+      "path": "assets/instantlore/textures/block/mist.png",
+      "sha256": "586894963227bbab0105e7664b7ac938f48f51b5564ca432c1afb6b8eefb6b5d",
+      "size": 565
+    },
+    {
+      "path": "assets/instantlore/textures/block/reliquary.png",
+      "sha256": "e8445fbb8a1b0dfea70a0809fdc2533e7fa5b4a65a2cff812947441582dd471c",
+      "size": 471
+    },
+    {
+      "path": "assets/instantlore/textures/item/scroll.png",
+      "sha256": "ae5f56691098d4806c84f5f15632cb97b641e55f8923dce421e6a83e8774fbbd",
+      "size": 465
+    },
+    {
+      "path": "assets/instantlore/textures/item/shard.png",
+      "sha256": "61ef0c4ceccefe7cbc44af9a3c69267b78dd64012e23e96d60b26e25df9f2351",
+      "size": 479
+    },
+    {
+      "path": "cutscenes/intro.json",
+      "sha256": "23778c349d656ad63ceaa544f134ce509223c7cf4eecfb216b9e1de059326555",
+      "size": 967
+    },
+    {
+      "path": "dialog/guardian.json",
+      "sha256": "df55bc47479f85dc862ed13f3e78a68ce4ad29d7e477369d27b6d565a4263ffb",
+      "size": 421
+    },
+    {
+      "path": "effects/portal.json",
+      "sha256": "b2022f80274cf2caed45ec71b3509b9dd21edce692f9287038a6ca7a07d9c1c1",
+      "size": 488
+    },
+    {
+      "path": "hud/anchors.json",
+      "sha256": "b921569c23d49633343224450ae3b5194a0f1b3ec4b3548ccfbf134f551ec96d",
+      "size": 1744
+    },
+    {
+      "path": "hud/reactor.json",
+      "sha256": "3bfceab30ffef04cf0bd7c74d76e5eff84a33f3b2df7b7df4aeb85478dffcdda",
+      "size": 543
+    },
+    {
+      "path": "screen/menu.json",
+      "sha256": "ae18b351187beebee73b4c0b2d13944da6d0ce2f88cbe20410b2fec853b65751",
+      "size": 1292
+    },
+    {
+      "path": "screen/shop.json",
+      "sha256": "95ddd8723aa769bb2bf343c1c3ee931284a068f576d466ac4f93527bdb07c529",
+      "size": 10134
+    },
+    {
+      "path": "scripts/demo.lua",
+      "sha256": "209f9a9d81274ca36688bf306861a2ce2d3ce532d523f0f52cee2763e96d3557",
+      "size": 10398
+    },
+    {
+      "path": "scripts/demos2.lua",
+      "sha256": "39cd9ce1a8a93429c3de1e2bb902b8d85807ed87ac9fca67397a6e09236e8b01",
+      "size": 8402
+    },
+    {
+      "path": "scripts/hp_watch.lua",
+      "sha256": "c7e121c1ffe0bac58850ff3082f9f3f83b4d135b3c2e6de9ba880a3b49614c3c",
+      "size": 5890
+    },
+    {
+      "path": "scripts/lib/ui.lua",
+      "sha256": "0137b67847839b45e9607bb70911c4847469a0e1e370847056d32eab91e3d87f",
+      "size": 3922
+    },
+    {
+      "path": "scripts/menu_demo.lua",
+      "sha256": "5195690d3c377e9c8533528e725060f77ba5fc0370009f55282af45ee26f446a",
+      "size": 1738
+    }
+  ]
+}
