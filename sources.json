@@ -1,8 +1,6 @@
 {
-  "serial": 5,
+  "serial": 6,
   "sources": [
-    "https://play-cs2.com/lore/",
-    "https://kramvenseles.github.io/instantlore-content/",
     "http://5.101.180.111/lore/"
   ]
 }
