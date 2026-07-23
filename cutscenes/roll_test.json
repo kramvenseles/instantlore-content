@@ -1,0 +1,24 @@
+{
+  "duration": 12.0,
+  "lock_input": true,
+  "relative": true,
+  "hide_hud": false,
+  "easing": "smooth",
+  "keyframes": [
+    { "t": 0.0,  "camera": [0, 3, -7], "look_at": [0, 2, 0], "roll": 0 },
+    { "t": 3.0,  "camera": [7, 4, 0],  "look_at": [0, 2, 0], "roll": 25 },
+    { "t": 6.0,  "camera": [0, 5, 7],  "look_at": [0, 2, 0], "roll": 0 },
+    { "t": 9.0,  "camera": [-7, 4, 0], "look_at": [0, 2, 0], "roll": -25 },
+    { "t": 12.0, "camera": [0, 3, -7], "look_at": [0, 2, 0], "roll": 0 }
+  ],
+  "events": [
+    { "t": 0.2, "event": "title.show", "data": {
+        "title": "§eКрен катсцены",
+        "subtitle": "§7горизонт должен качнуться вправо, затем влево",
+        "fade_in": 10, "stay": 80, "fade_out": 20 } },
+    { "t": 3.0, "event": "actionbar.set", "data": { "text": "§6+25° — горизонт завален вправо" } },
+    { "t": 6.0, "event": "actionbar.set", "data": { "text": "§7ровный горизонт (roll 0)" } },
+    { "t": 9.0, "event": "actionbar.set", "data": { "text": "§6−25° — горизонт завален влево" } }
+  ],
+  "debug": true
+}

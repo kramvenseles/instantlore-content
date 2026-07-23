@@ -1,5 +1,5 @@
 {
-  "version": "91ac643f9fd1",
+  "version": "ea600cf3a5ae",
   "blocks": [
     {
       "slot": 0,
@@ -409,13 +409,18 @@
     },
     {
       "path": "cutscenes/arrival.json",
-      "sha256": "5a6d05487e942fe7f03d9981700a5db628bcc1c4df4c4bdf29fa9da4a9fd9ad9",
-      "size": 1751
+      "sha256": "ad3dbc304b38bbfc01dbe5b026e6d8d5bbbb8011be0b6d6eabd7460a894cb1f0",
+      "size": 1734
     },
     {
       "path": "cutscenes/intro.json",
       "sha256": "23778c349d656ad63ceaa544f134ce509223c7cf4eecfb216b9e1de059326555",
       "size": 967
+    },
+    {
+      "path": "cutscenes/roll_test.json",
+      "sha256": "77411cdbae44f8acdfc256d021280d8cfc1b4fc361e1dd2edd212d1ef7210a8c",
+      "size": 1160
     },
     {
       "path": "dialog/guardian.json",
@@ -516,6 +521,11 @@
       "path": "scripts/menu_demo.lua",
       "sha256": "5195690d3c377e9c8533528e725060f77ba5fc0370009f55282af45ee26f446a",
       "size": 1738
+    },
+    {
+      "path": "scripts/polygon.lua",
+      "sha256": "125f9e393b535809c3095ce38f7d303cb1e92513fcc189ca345f805e8c1813de",
+      "size": 7843
     }
   ]
 }
