@@ -1,5 +1,5 @@
 {
-  "version": "872e0471b5c7",
+  "version": "91ac643f9fd1",
   "blocks": [
     {
       "slot": 0,
@@ -409,8 +409,8 @@
     },
     {
       "path": "cutscenes/arrival.json",
-      "sha256": "ad3dbc304b38bbfc01dbe5b026e6d8d5bbbb8011be0b6d6eabd7460a894cb1f0",
-      "size": 1734
+      "sha256": "5a6d05487e942fe7f03d9981700a5db628bcc1c4df4c4bdf29fa9da4a9fd9ad9",
+      "size": 1751
     },
     {
       "path": "cutscenes/intro.json",

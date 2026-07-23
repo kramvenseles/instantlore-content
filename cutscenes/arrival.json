@@ -3,6 +3,7 @@
   "lock_input": true,
   "relative": true,
   "hide_hud": false,
+  "debug": true,
   "easing": "smooth",
   "keyframes": [
     {
