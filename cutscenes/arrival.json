@@ -2,6 +2,7 @@
   "duration": 13.0,
   "lock_input": true,
   "relative": true,
+  "hide_hud": false,
   "easing": "smooth",
   "keyframes": [
     {

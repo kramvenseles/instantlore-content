@@ -7,13 +7,11 @@
 
     { "type": "text", "anchor": "center", "x": 0, "y": -48, "align": "center", "text": "Что желаешь, ${player}?" },
 
-    { "type": "rect", "anchor": "center", "x": -100, "y": -22, "width": 200, "height": 24,
-      "background": "#FF23233A", "hover": "#FF3A5A88", "id": "b1", "action": "open_quests" },
-    { "type": "text", "anchor": "center", "x": 0, "y": -15, "align": "center", "text": "Задания" },
+    { "type": "button", "anchor": "center", "x": -100, "y": -22, "width": 200, "height": 20,
+      "id": "b1", "action": "open_quests", "text": "Задания" },
 
-    { "type": "rect", "anchor": "center", "x": -100, "y": 8, "width": 200, "height": 24,
-      "background": "#FF23233A", "hover": "#FF3A5A88", "id": "b2", "action": "open_shop" },
-    { "type": "text", "anchor": "center", "x": 0, "y": 15, "align": "center", "text": "Лавка" },
+    { "type": "button", "anchor": "center", "x": -100, "y": 8, "width": 200, "height": 20,
+      "id": "b2", "action": "open_shop", "text": "Лавка" },
 
     { "type": "text", "anchor": "center", "x": 0, "y": 48, "align": "center", "text": "§7Esc — закрыть", "color": "#FFAAAAAA" }
   ]
