@@ -1,5 +1,5 @@
 {
-  "version": "275d0dd28a42",
+  "version": "06f7c5266c7f",
   "blocks": [
     {
       "slot": 0,
@@ -279,6 +279,22 @@
       "wander": false,
       "look": true,
       "invulnerable": true
+    },
+    {
+      "slot": 5,
+      "name": "cart",
+      "title": "Тележка",
+      "block": 2,
+      "size": 1.2,
+      "hitbox": [
+        1.2,
+        0.8
+      ],
+      "scale": 1.0,
+      "gravity": false,
+      "invulnerable": true,
+      "clickable": true,
+      "collidable": true
     }
   ],
   "assets": [
