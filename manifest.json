@@ -1,5 +1,5 @@
 {
-  "version": "ed65a69494f5",
+  "version": "62417cafa9f5",
   "blocks": [
     {
       "slot": 0,
@@ -372,11 +372,6 @@
       "path": "assets/instantlore/textures/block/beacon_lit.png",
       "sha256": "9d36cd251bca058d9f70f0adaed4e5e580eb3af7aa938a7102a81ee14a06fea1",
       "size": 382
-    },
-    {
-      "path": "assets/instantlore/textures/block/beacon_lit.png.mcmeta",
-      "sha256": "f24cdcac38ac79378636ad679c04fd30b99b94b0e9c8b2918cbb312b9dea7ea6",
-      "size": 87
     },
     {
       "path": "assets/instantlore/textures/block/keeper_core.png",
