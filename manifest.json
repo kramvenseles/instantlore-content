@@ -1,5 +1,5 @@
 {
-  "version": "06f7c5266c7f",
+  "version": "62417cafa9f5",
   "blocks": [
     {
       "slot": 0,
@@ -285,10 +285,10 @@
       "name": "cart",
       "title": "Тележка",
       "block": 2,
-      "size": 1.2,
+      "size": 0.9,
       "hitbox": [
-        1.2,
-        0.8
+        0.9,
+        0.9
       ],
       "scale": 1.0,
       "gravity": false,
