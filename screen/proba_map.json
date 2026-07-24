@@ -1,0 +1,27 @@
+{
+  "title": "Опись станций",
+  "nodes": [
+    { "type": "rect", "anchor": "center", "x": -150, "y": -100, "width": 300, "height": 200, "background": "#EE0E0E16" },
+    { "type": "rect", "anchor": "center", "x": -150, "y": -100, "width": 300, "height": 22, "background": "#FF1A1A2A" },
+    { "type": "text", "anchor": "center", "x": 0, "y": -93, "align": "center", "text": "§bЧертог пробы — станции", "color": "#FF9AD8FF" },
+
+    { "type": "image", "anchor": "center", "x": -142, "y": -72, "width": 16, "height": 16, "texture": "instantlore:textures/block/rune.png" },
+    { "type": "item",  "anchor": "center", "x": 126, "y": -72, "item": "instantlore:item_5", "count": 1 },
+    { "type": "line",  "anchor": "center", "x": -140, "y": -50, "x2": 140, "y2": -50, "thickness": 1, "color": "#FF3A3448" },
+
+    { "type": "scroll", "id": "list", "anchor": "center", "x": -140, "y": -46, "width": 280, "height": 96, "background": "#66000000", "children": [
+      { "type": "text", "x": 6, "y": 2,  "text": "§7С0 Порог — катсцена, крен, вуаль, маркеры" },
+      { "type": "text", "x": 6, "y": 16, "text": "§7С1 Зеркало — все чтения player/item" },
+      { "type": "text", "x": 6, "y": 30, "text": "§7С2 Прицел — target(), visible()" },
+      { "type": "text", "x": 6, "y": 44, "text": "§7С3 Ведомый — путь, ввод, клавиши" },
+      { "type": "text", "x": 6, "y": 58, "text": "§7С4 Живое — наклон, облик, езда, лифт" },
+      { "type": "text", "x": 6, "y": 72, "text": "§7С5 Дар — диалог, экран, контейнер" },
+      { "type": "text", "x": 6, "y": 86, "text": "§7С6 Камера — тряска, fov, заморозка" }
+    ] },
+
+    { "type": "input",  "id": "note", "anchor": "center", "x": -140, "y": 60, "width": 180, "height": 16, "placeholder": "заметка прогона…", "max": 64 },
+    { "type": "button", "anchor": "center", "x": 46, "y": 58, "width": 94, "height": 20, "action": "map:save_note", "text": "Записать" },
+    { "type": "button", "anchor": "center", "x": -140, "y": 82, "width": 130, "height": 16, "action": "map:rerun", "text": "Прогнать заново" },
+    { "type": "button", "anchor": "center", "x": 6, "y": 82, "width": 134, "height": 16, "enabled": false, "text": "Задеплоено (недоступно)" }
+  ]
+}

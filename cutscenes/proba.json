@@ -1,0 +1,25 @@
+{
+  "duration": 10.0,
+  "lock_input": true,
+  "relative": true,
+  "hide_hud": false,
+  "easing": "smooth",
+  "keyframes": [
+    { "t": 0.0,  "camera": [0, 3, -7],  "look_at": [0, 2, 0], "roll": 0 },
+    { "t": 3.0,  "camera": [6, 5, -3],  "look_at": [0, 2, 0], "roll": 18 },
+    { "t": 6.0,  "camera": [-6, 5, -3], "look_at": [0, 2, 0], "roll": -18 },
+    { "t": 10.0, "camera": [0, 3, -7],  "look_at": [0, 2, 0], "roll": 0 }
+  ],
+  "events": [
+    { "t": 0.2, "event": "title.show", "data": {
+        "title": "§bЧертог пробы",
+        "subtitle": "§7все примитивы под одной крышей",
+        "fade_in": 10, "stay": 70, "fade_out": 20 } },
+    { "t": 1.0, "event": "effect.play", "data": { "id": "proba_shapes" } },
+    { "t": 3.0, "event": "actionbar.set", "data": { "text": "§6горизонт завален вправо (+18°)" } },
+    { "t": 6.0, "event": "actionbar.set", "data": { "text": "§6и влево (−18°)" } },
+    { "t": 8.5, "event": "sound.play", "data": {
+        "id": "minecraft:block.beacon.activate", "volume": 0.8, "pitch": 0.8 } }
+  ],
+  "debug": true
+}

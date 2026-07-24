@@ -1,5 +1,5 @@
 {
-  "version": "62417cafa9f5",
+  "version": "7ab7cea3993c",
   "blocks": [
     {
       "slot": 0,
@@ -145,6 +145,97 @@
         12,
         11
       ]
+    },
+    {
+      "slot": 9,
+      "name": "trial_floor",
+      "title": "Пол чертога",
+      "hardness": 1.5,
+      "resistance": 1.5,
+      "light": 15,
+      "sound": "STONE",
+      "solid": true,
+      "drop": "self"
+    },
+    {
+      "slot": 10,
+      "name": "rune",
+      "title": "Руна прицела",
+      "hardness": 3.0,
+      "resistance": 3.0,
+      "light": 10,
+      "sound": "AMETHYST_BLOCK",
+      "solid": true,
+      "drop": "self",
+      "shape": [
+        4,
+        0,
+        4,
+        12,
+        16,
+        12
+      ]
+    },
+    {
+      "slot": 11,
+      "name": "veil_wall",
+      "title": "Завеса",
+      "hardness": 4.0,
+      "resistance": 6.0,
+      "light": 0,
+      "sound": "STONE",
+      "solid": true,
+      "drop": "none"
+    },
+    {
+      "slot": 12,
+      "name": "glass_ward",
+      "title": "Морок",
+      "hardness": 0.3,
+      "resistance": 0.3,
+      "light": 5,
+      "sound": "GLASS",
+      "solid": false,
+      "outline": false,
+      "drop": "none"
+    },
+    {
+      "slot": 13,
+      "name": "vault",
+      "title": "Ковчег пробы",
+      "hardness": 3.0,
+      "resistance": 3.0,
+      "light": 7,
+      "sound": "AMETHYST_BLOCK",
+      "solid": true,
+      "container": true,
+      "label": "Хранилище пробы",
+      "tick": 0,
+      "drop": "none"
+    },
+    {
+      "slot": 14,
+      "name": "ticker",
+      "title": "Счётчик",
+      "hardness": 2.0,
+      "resistance": 2.0,
+      "light": 0,
+      "sound": "BASALT",
+      "solid": true,
+      "tick": 2,
+      "drop": "self"
+    },
+    {
+      "slot": 15,
+      "name": "drop_stone",
+      "title": "Рудная порода",
+      "hardness": 3.0,
+      "resistance": 3.0,
+      "light": 0,
+      "sound": "DEEPSLATE",
+      "solid": true,
+      "tool": "pickaxe:iron",
+      "drop": "item:3"
     }
   ],
   "items": [
@@ -208,6 +299,31 @@
       "durability": 0,
       "rarity": "epic",
       "glint": true,
+      "usable": true
+    },
+    {
+      "slot": 5,
+      "name": "probe_wand",
+      "title": "Жезл пробы",
+      "lore": [
+        "ПКМ — открыть Зеркало.",
+        "Показывает всё, что видит скрипт."
+      ],
+      "stack": 1,
+      "durability": 5,
+      "rarity": "rare",
+      "glint": true,
+      "usable": true
+    },
+    {
+      "slot": 6,
+      "name": "checklist",
+      "title": "Опись станций",
+      "lore": [
+        "ПКМ — карта Чертога пробы."
+      ],
+      "stack": 1,
+      "rarity": "uncommon",
       "usable": true
     }
   ],
@@ -295,6 +411,86 @@
       "invulnerable": true,
       "clickable": true,
       "collidable": true
+    },
+    {
+      "slot": 6,
+      "name": "effigy",
+      "title": "§bИзваяние",
+      "block": 3,
+      "size": 1.0,
+      "hitbox": [
+        0.9,
+        1.0
+      ],
+      "scale": 1.0,
+      "health": 30,
+      "speed": 0.15,
+      "wander": false,
+      "look": true,
+      "invulnerable": true
+    },
+    {
+      "slot": 7,
+      "name": "platform",
+      "title": "",
+      "block": 0,
+      "size": 1.0,
+      "hitbox": [
+        1.0,
+        1.0
+      ],
+      "scale": 1.0,
+      "gravity": false,
+      "invulnerable": true,
+      "collidable": true,
+      "clickable": false
+    },
+    {
+      "slot": 8,
+      "name": "wagon",
+      "title": "Повозка",
+      "block": 2,
+      "size": 0.9,
+      "hitbox": [
+        0.9,
+        0.9
+      ],
+      "scale": 1.0,
+      "gravity": false,
+      "invulnerable": true,
+      "clickable": true,
+      "collidable": true
+    },
+    {
+      "slot": 9,
+      "name": "bench",
+      "title": "Скамья",
+      "block": 5,
+      "size": 0.6,
+      "hitbox": [
+        0.6,
+        0.6
+      ],
+      "scale": 0.8,
+      "gravity": false,
+      "invulnerable": true,
+      "clickable": true,
+      "collidable": true
+    },
+    {
+      "slot": 10,
+      "name": "phantom",
+      "title": "",
+      "block": 8,
+      "size": 0.6,
+      "hitbox": [
+        0.3,
+        0.4
+      ],
+      "scale": 0.6,
+      "gravity": false,
+      "invulnerable": true,
+      "clickable": false
     }
   ],
   "assets": [
@@ -374,6 +570,16 @@
       "size": 382
     },
     {
+      "path": "assets/instantlore/textures/block/drop_stone.png",
+      "sha256": "452a24511f22433236e5ed009b6193a73de1353c767af18113b4eb83f660f21a",
+      "size": 350
+    },
+    {
+      "path": "assets/instantlore/textures/block/glass_ward.png",
+      "sha256": "586894963227bbab0105e7664b7ac938f48f51b5564ca432c1afb6b8eefb6b5d",
+      "size": 565
+    },
+    {
       "path": "assets/instantlore/textures/block/keeper_core.png",
       "sha256": "e4ba674ff23b3409e4375ad0caed79a065daec10bc4b385930309f4b52c21c25",
       "size": 388
@@ -389,6 +595,31 @@
       "size": 471
     },
     {
+      "path": "assets/instantlore/textures/block/rune.png",
+      "sha256": "ef947e3e7166d3e0bed3a4c35e9d03e584fd14fc305b3a66dd64bf24f709949a",
+      "size": 358
+    },
+    {
+      "path": "assets/instantlore/textures/block/ticker.png",
+      "sha256": "e4ba674ff23b3409e4375ad0caed79a065daec10bc4b385930309f4b52c21c25",
+      "size": 388
+    },
+    {
+      "path": "assets/instantlore/textures/block/trial_floor.png",
+      "sha256": "c9f4ade7da9b276c22983f6d02b4b52741dd07004a83143b7c5768657015a9ab",
+      "size": 702
+    },
+    {
+      "path": "assets/instantlore/textures/block/vault.png",
+      "sha256": "e8445fbb8a1b0dfea70a0809fdc2533e7fa5b4a65a2cff812947441582dd471c",
+      "size": 471
+    },
+    {
+      "path": "assets/instantlore/textures/block/veil_wall.png",
+      "sha256": "bc6900af44bb3b86a31e7f6727366f6ffba94224173ddcda7bb201f1865003be",
+      "size": 373
+    },
+    {
       "path": "assets/instantlore/textures/block/waystone.png",
       "sha256": "ef947e3e7166d3e0bed3a4c35e9d03e584fd14fc305b3a66dd64bf24f709949a",
       "size": 358
@@ -397,6 +628,11 @@
       "path": "assets/instantlore/textures/block/whisper_mote.png",
       "sha256": "452a24511f22433236e5ed009b6193a73de1353c767af18113b4eb83f660f21a",
       "size": 350
+    },
+    {
+      "path": "assets/instantlore/textures/item/checklist.png",
+      "sha256": "ae5f56691098d4806c84f5f15632cb97b641e55f8923dce421e6a83e8774fbbd",
+      "size": 465
     },
     {
       "path": "assets/instantlore/textures/item/ember.png",
@@ -410,6 +646,11 @@
     },
     {
       "path": "assets/instantlore/textures/item/lantern.png",
+      "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
+      "size": 187
+    },
+    {
+      "path": "assets/instantlore/textures/item/probe_wand.png",
       "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
       "size": 187
     },
@@ -434,6 +675,11 @@
       "size": 967
     },
     {
+      "path": "cutscenes/proba.json",
+      "sha256": "b662e4a74d0bec6fffa0f5828d17216bff447aa81fedbdb3f51a4cd67eec0bfd",
+      "size": 1125
+    },
+    {
       "path": "cutscenes/roll_test.json",
       "sha256": "77411cdbae44f8acdfc256d021280d8cfc1b4fc361e1dd2edd212d1ef7210a8c",
       "size": 1160
@@ -449,6 +695,11 @@
       "size": 635
     },
     {
+      "path": "dialog/proba.json",
+      "sha256": "5fe9426acbe312cd9ede79f8a7a292e4219e814b5a30373421fb581e462bab1d",
+      "size": 537
+    },
+    {
       "path": "effects/hearth.json",
       "sha256": "6c9c402fe71345eaefd0e4aa0d1260afda63c4ae236aea7e2f8d96ccbf6301f8",
       "size": 495
@@ -457,6 +708,16 @@
       "path": "effects/portal.json",
       "sha256": "b2022f80274cf2caed45ec71b3509b9dd21edce692f9287038a6ca7a07d9c1c1",
       "size": 488
+    },
+    {
+      "path": "effects/proba_particles.json",
+      "sha256": "4c8f0dfa697feadc9e7cee17cf8aafd53262a4601ae68402839cad52bd0f432c",
+      "size": 712
+    },
+    {
+      "path": "effects/proba_shapes.json",
+      "sha256": "3f6940058a4fff9f214b59637d65b3df25fe1178366a60b35bad76ba5763f25e",
+      "size": 1243
     },
     {
       "path": "effects/probe.json",
@@ -494,6 +755,11 @@
       "size": 1397
     },
     {
+      "path": "hud/proba.json",
+      "sha256": "c30d585ccd1a50be8934eae9ec638d774f1144072ab59284be25ccae710b5067",
+      "size": 1039
+    },
+    {
       "path": "hud/reactor.json",
       "sha256": "3bfceab30ffef04cf0bd7c74d76e5eff84a33f3b2df7b7df4aeb85478dffcdda",
       "size": 543
@@ -502,6 +768,11 @@
       "path": "screen/menu.json",
       "sha256": "f3da54acda4078294ac7011b84216b97526f2d1730cf7b56ff0a34acdf29f2e0",
       "size": 1037
+    },
+    {
+      "path": "screen/proba_map.json",
+      "sha256": "4cb63c76d2411666da5e50c82ada8cacea7e3cbe8bf9fcba2a48f419c3f6ab2a",
+      "size": 2446
     },
     {
       "path": "screen/shop.json",
@@ -542,6 +813,11 @@
       "path": "scripts/polygon.lua",
       "sha256": "356f89271a933807e6465b60c2d32234f81d9138c0342c2becb01774b6d3263d",
       "size": 9017
+    },
+    {
+      "path": "scripts/proba.lua",
+      "sha256": "d387bfe3d7b576772be4cb764b13b4b4938b0a9536e08a49ed10a211ce605cf2",
+      "size": 31317
     }
   ]
 }

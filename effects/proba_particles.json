@@ -1,0 +1,10 @@
+{
+  "duration": 4.0,
+  "emitters": [
+    { "particle": "minecraft:end_rod", "shape": "ring", "radius": 0.6, "rate": 14, "offset": [0, 0.5, 0] },
+    { "particle": "dust{color:[1.0,0.1,0.1],scale:1.5}", "shape": "ring", "radius": 0.9, "rate": 14, "offset": [0, 0.8, 0] },
+    { "particle": "dust_color_transition{from_color:[1.0,0.0,0.0],to_color:[0.0,0.4,1.0],scale:1.2}", "shape": "ring", "radius": 1.2, "rate": 14, "offset": [0, 1.1, 0] },
+    { "particle": "block{block_state:\"minecraft:redstone_block\"}", "shape": "sphere", "radius": 0.5, "rate": 12, "offset": [0, 1.4, 0] },
+    { "particle": "item{item:\"minecraft:diamond\"}", "shape": "sphere", "radius": 0.5, "rate": 12, "offset": [0, 1.7, 0] }
+  ]
+}

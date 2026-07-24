@@ -1,0 +1,15 @@
+{
+  "duration": 4.0,
+  "sound": { "id": "minecraft:block.amethyst_block.chime", "volume": 0.8, "pitch": 1.0 },
+  "emitters": [
+    { "particle": "minecraft:end_rod",        "shape": "point",  "rate": 8,  "offset": [0, 0.2, 0] },
+    { "particle": "minecraft:flame",          "shape": "sphere", "radius": 0.8, "rate": 18, "offset": [0, 1.0, 0] },
+    { "particle": "minecraft:soul_fire_flame","shape": "shell",  "radius": 1.0, "rate": 18, "offset": [0, 1.0, 0] },
+    { "particle": "dust{color:[0.2,0.8,1.0],scale:1.2}", "shape": "ring", "radius": 1.2, "rate": 20, "offset": [0, 0.4, 0] },
+    { "particle": "minecraft:electric_spark", "shape": "disc",   "radius": 1.0, "rate": 18, "offset": [0, 0.1, 0] },
+    { "particle": "minecraft:portal",         "shape": "box",    "size": [1.0, 1.5, 1.0], "rate": 22, "offset": [0, 1.0, 0] },
+    { "particle": "minecraft:crit",           "shape": "line",   "to": [0, 3, 0], "rate": 16, "offset": [0, 0.2, 0] },
+    { "particle": "minecraft:end_rod",        "shape": "cone",   "radius": 0.7, "height": 2.5, "rate": 18, "offset": [0, 0.2, 0] },
+    { "particle": "dust{color:[1.0,0.4,0.9],scale:1.0}", "shape": "helix", "radius": 0.5, "height": 3.0, "turns": 4, "rate": 36, "offset": [0, 0.2, 0] }
+  ]
+}
