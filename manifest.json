@@ -1,5 +1,5 @@
 {
-  "version": "62417cafa9f5",
+  "version": "c1809df8c790",
   "blocks": [
     {
       "slot": 0,
@@ -270,7 +270,7 @@
       "block": 7,
       "size": 3.5,
       "hitbox": [
-        1.2,
+        2.8,
         3.5
       ],
       "scale": 3.5,
