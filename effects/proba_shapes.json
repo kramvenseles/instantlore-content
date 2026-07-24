@@ -2,7 +2,7 @@
   "duration": 4.0,
   "sound": { "id": "minecraft:block.amethyst_block.chime", "volume": 0.8, "pitch": 1.0 },
   "emitters": [
-    { "particle": "minecraft:end_rod",        "shape": "point",  "rate": 8,  "offset": [0, 0.2, 0] },
+    { "particle": "minecraft:end_rod",        "rate": 8,  "offset": [0, 0.2, 0] },
     { "particle": "minecraft:flame",          "shape": "sphere", "radius": 0.8, "rate": 18, "offset": [0, 1.0, 0] },
     { "particle": "minecraft:soul_fire_flame","shape": "shell",  "radius": 1.0, "rate": 18, "offset": [0, 1.0, 0] },
     { "particle": "dust{color:[0.2,0.8,1.0],scale:1.2}", "shape": "ring", "radius": 1.2, "rate": 20, "offset": [0, 0.4, 0] },

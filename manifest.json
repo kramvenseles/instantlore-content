@@ -1,5 +1,5 @@
 {
-  "version": "7ab7cea3993c",
+  "version": "3781e1516416",
   "blocks": [
     {
       "slot": 0,
@@ -601,8 +601,13 @@
     },
     {
       "path": "assets/instantlore/textures/block/ticker.png",
-      "sha256": "e4ba674ff23b3409e4375ad0caed79a065daec10bc4b385930309f4b52c21c25",
-      "size": 388
+      "sha256": "631b225fb2b85f644dd9e0816502c9c13c0a4183c3407583e81c86161de6b6ce",
+      "size": 147
+    },
+    {
+      "path": "assets/instantlore/textures/block/ticker.png.mcmeta",
+      "sha256": "261b78c57d660752087e255eb6b5e31be96ca8428e7def203c4a665ec7a8a2c8",
+      "size": 98
     },
     {
       "path": "assets/instantlore/textures/block/trial_floor.png",
@@ -716,8 +721,8 @@
     },
     {
       "path": "effects/proba_shapes.json",
-      "sha256": "3f6940058a4fff9f214b59637d65b3df25fe1178366a60b35bad76ba5763f25e",
-      "size": 1243
+      "sha256": "605ced16f678e554fe1adcf1c44b814cc4e251650a49ca77aa6afa4f7f88ec7e",
+      "size": 1224
     },
     {
       "path": "effects/probe.json",
@@ -816,8 +821,8 @@
     },
     {
       "path": "scripts/proba.lua",
-      "sha256": "d387bfe3d7b576772be4cb764b13b4b4938b0a9536e08a49ed10a211ce605cf2",
-      "size": 31317
+      "sha256": "eaf1497073895151973bf4c21ebdcc799586845f878680f81882e400ed212cc6",
+      "size": 31440
     }
   ]
 }

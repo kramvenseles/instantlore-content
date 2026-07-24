@@ -305,11 +305,12 @@ local function drive()
   if not p then return end
   lore.emit("player.control", { lock_move = true, timeout = 25 })
 
-  -- Маршрут: три точки, средняя вприсядку, разная скорость (4-й элемент точки).
+  -- Маршрут: квадрат на юго-запад (в арене Чертога там чисто), средняя точка
+  -- вприсядку, разная скорость (4-й элемент точки перебивает общий speed).
   lore.emit("player.path", { speed = "walk", points = {
-    { p.x + 3, p.y, p.z },
-    { p.x + 3, p.y, p.z + 3, "sneak" },
-    { p.x, p.y, p.z + 3, "sprint" },
+    { p.x - 3, p.y, p.z },
+    { p.x - 3, p.y, p.z - 3, "sneak" },
+    { p.x, p.y, p.z - 3, "sprint" },
     { p.x, p.y, p.z },
   } })
   lore.emit("player.hotbar", { slot = 2 })
