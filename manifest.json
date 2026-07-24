@@ -1,5 +1,5 @@
 {
-  "version": "5696532d5874",
+  "version": "ed65a69494f5",
   "blocks": [
     {
       "slot": 0,
@@ -375,7 +375,7 @@
     },
     {
       "path": "assets/instantlore/textures/block/beacon_lit.png.mcmeta",
-      "sha256": "f645df109b923f7de9ea2b5eea8ab02b81a85090c425ca632627eb25fa9b2764",
+      "sha256": "f24cdcac38ac79378636ad679c04fd30b99b94b0e9c8b2918cbb312b9dea7ea6",
       "size": 87
     },
     {
