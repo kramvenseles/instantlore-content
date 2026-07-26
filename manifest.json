@@ -1,5 +1,5 @@
 {
-  "version": "3781e1516416",
+  "version": "58e20ba96cc7",
   "blocks": [
     {
       "slot": 0,
@@ -785,44 +785,9 @@
       "size": 10134
     },
     {
-      "path": "scripts/demo.lua",
-      "sha256": "209f9a9d81274ca36688bf306861a2ce2d3ce532d523f0f52cee2763e96d3557",
-      "size": 10398
-    },
-    {
-      "path": "scripts/demos2.lua",
-      "sha256": "39cd9ce1a8a93429c3de1e2bb902b8d85807ed87ac9fca67397a6e09236e8b01",
-      "size": 8402
-    },
-    {
-      "path": "scripts/hp_watch.lua",
-      "sha256": "c7e121c1ffe0bac58850ff3082f9f3f83b4d135b3c2e6de9ba880a3b49614c3c",
-      "size": 5890
-    },
-    {
-      "path": "scripts/keeper.lua",
-      "sha256": "58a5fbb1d4596c4aaeb850ff2084d1248598b26678b9ec734cf76d26a0d4cf4e",
-      "size": 20924
-    },
-    {
       "path": "scripts/lib/ui.lua",
       "sha256": "0137b67847839b45e9607bb70911c4847469a0e1e370847056d32eab91e3d87f",
       "size": 3922
-    },
-    {
-      "path": "scripts/menu_demo.lua",
-      "sha256": "5195690d3c377e9c8533528e725060f77ba5fc0370009f55282af45ee26f446a",
-      "size": 1738
-    },
-    {
-      "path": "scripts/polygon.lua",
-      "sha256": "356f89271a933807e6465b60c2d32234f81d9138c0342c2becb01774b6d3263d",
-      "size": 9017
-    },
-    {
-      "path": "scripts/proba.lua",
-      "sha256": "eaf1497073895151973bf4c21ebdcc799586845f878680f81882e400ed212cc6",
-      "size": 31440
     }
   ]
 }
