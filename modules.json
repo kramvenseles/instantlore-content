@@ -1,5 +1,11 @@
 {
   "modules": {
+    "invisible": {
+      "enabled": true,
+      "config": {
+        "invulnerable": false
+      }
+    },
     "vampire": {
       "enabled": true,
       "config": {
