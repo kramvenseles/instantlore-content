@@ -1,5 +1,5 @@
 {
-  "version": "0c4094ebaebb",
+  "version": "58e20ba96cc7",
   "blocks": [
     {
       "slot": 0,
@@ -325,22 +325,6 @@
       "stack": 1,
       "rarity": "uncommon",
       "usable": true
-    },
-    {
-      "slot": 7,
-      "name": "cursed_blood_vial",
-      "title": "Фиал проклятой крови",
-      "lore": [
-        "Тёмная кровь, что помнит клык.",
-        "Выпей — и рассвет станет врагом.",
-        "ПКМ — осушить."
-      ],
-      "stack": 16,
-      "rarity": "epic",
-      "glint": true,
-      "usable": true,
-      "useAction": "drink",
-      "useTicks": 32
     }
   ],
   "entities": [
@@ -654,11 +638,6 @@
       "path": "assets/instantlore/textures/item/checklist.png",
       "sha256": "ae5f56691098d4806c84f5f15632cb97b641e55f8923dce421e6a83e8774fbbd",
       "size": 465
-    },
-    {
-      "path": "assets/instantlore/textures/item/cursed_blood_vial.png",
-      "sha256": "cd850135bbbc5352e08ed0884f6e1b3ea30e96447f1f3805eec6899967e87d2b",
-      "size": 261
     },
     {
       "path": "assets/instantlore/textures/item/ember.png",
