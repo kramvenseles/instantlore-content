@@ -1,0 +1,13 @@
+{
+  "modules": {
+    "vampire": {
+      "enabled": true,
+      "config": {
+        "effect_duration_ticks": 60,
+        "fire_seconds": 4,
+        "farmer_hat_name": "Farmer's hat",
+        "rain_extinguishes": true
+      }
+    }
+  }
+}
