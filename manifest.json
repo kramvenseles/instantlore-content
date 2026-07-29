@@ -1,5 +1,5 @@
 {
-  "version": "f78882b628e0",
+  "version": "7cd39f37265d",
   "blocks": [
     {
       "slot": 0,
@@ -240,7 +240,7 @@
       "slot": 16,
       "name": "fake_netherite",
       "title": "Блок из незерита",
-      "hardness": 48.0,
+      "hardness": 5.0,
       "resistance": 1200.0,
       "light": 0,
       "sound": "NETHERITE_BLOCK",
