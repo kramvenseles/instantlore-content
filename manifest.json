@@ -1,5 +1,5 @@
 {
-  "version": "7cd39f37265d",
+  "version": "c2b6094a0694",
   "blocks": [
     {
       "slot": 0,
@@ -353,6 +353,20 @@
       "usable": true,
       "useAction": "drink",
       "useTicks": 32
+    },
+    {
+      "slot": 8,
+      "name": "ritual_dagger",
+      "title": "Ритуальный кинжал",
+      "lore": [
+        "Клинок, что открывает путь за грань.",
+        "ПКМ — принести себя в жертву.",
+        "Одноразовый: сгорает в ритуале."
+      ],
+      "stack": 1,
+      "rarity": "epic",
+      "glint": true,
+      "usable": true
     }
   ],
   "entities": [
@@ -696,6 +710,11 @@
       "path": "assets/instantlore/textures/item/probe_wand.png",
       "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
       "size": 187
+    },
+    {
+      "path": "assets/instantlore/textures/item/ritual_dagger.png",
+      "sha256": "126f84555d88b74f7907d9a0283c74e1d76a9e39a4c88125d1e8f87074d53a2f",
+      "size": 150
     },
     {
       "path": "assets/instantlore/textures/item/scroll.png",
