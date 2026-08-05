@@ -1,5 +1,5 @@
 {
-  "version": "c8a9e5adaef5",
+  "version": "275a955ff05d",
   "blocks": [
     {
       "slot": 0,
@@ -979,6 +979,21 @@
       "size": 543
     },
     {
+      "path": "hud/veil_black.json",
+      "sha256": "a1d49373222aaa95b352d1971540f65cd5ec0409457af7986af0ae5ba1619339",
+      "size": 285
+    },
+    {
+      "path": "hud/veil_gray.json",
+      "sha256": "7102fe55bb04e6201093a9f5316123b93fa573b6ae95dd2e9f68824f948107a4",
+      "size": 285
+    },
+    {
+      "path": "hud/veil_purple.json",
+      "sha256": "dbd5bf7398a3a56206509882479ac02d70b1dfa1477b14baf6177cd1f9ba61ae",
+      "size": 285
+    },
+    {
       "path": "screen/menu.json",
       "sha256": "f3da54acda4078294ac7011b84216b97526f2d1730cf7b56ff0a34acdf29f2e0",
       "size": 1037
@@ -997,6 +1012,11 @@
       "path": "scripts/lib/ui.lua",
       "sha256": "0137b67847839b45e9607bb70911c4847469a0e1e370847056d32eab91e3d87f",
       "size": 3922
+    },
+    {
+      "path": "scripts/spirit.lua",
+      "sha256": "8b9c5d50ac5c9806bcb81d8241f9c57be814ca4fff924a2d77826121fa422aa0",
+      "size": 1764
     }
   ]
 }

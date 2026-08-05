@@ -1,0 +1,6 @@
+{
+  "elements": [
+    { "type": "rect", "anchor": "top_left", "x": 0, "y": 0, "width": 10000, "height": 10000, "color": "#E6000000" },
+    { "type": "text", "anchor": "center", "x": 0, "y": -4, "text": "Дух занят", "color": "#FFFFFFFF", "scale": 2.0, "align": "center" }
+  ]
+}
