@@ -1,5 +1,5 @@
 {
-  "version": "c2b6094a0694",
+  "version": "c8a9e5adaef5",
   "blocks": [
     {
       "slot": 0,
@@ -367,6 +367,98 @@
       "rarity": "epic",
       "glint": true,
       "usable": true
+    },
+    {
+      "slot": 9,
+      "name": "rift_pattern",
+      "title": "Узор «Разлом»",
+      "lore": [
+        "Заготовка ткача: разлом на полотне.",
+        "Положи в ткацкий станок к флагу."
+      ],
+      "stack": 1,
+      "rarity": "epic",
+      "glint": true,
+      "bannerPatternTag": "instantlore:rift_instantlore_pattern"
+    },
+    {
+      "slot": 10,
+      "name": "coin_1",
+      "title": "Душа · 1",
+      "lore": [
+        "Одна душа."
+      ],
+      "stack": 99,
+      "rarity": "uncommon",
+      "coin": 1
+    },
+    {
+      "slot": 11,
+      "name": "coin_2",
+      "title": "Души · 2",
+      "lore": [
+        "Две души."
+      ],
+      "stack": 99,
+      "rarity": "uncommon",
+      "coin": 2
+    },
+    {
+      "slot": 12,
+      "name": "coin_5",
+      "title": "Души · 5",
+      "lore": [
+        "Пять душ."
+      ],
+      "stack": 99,
+      "rarity": "uncommon",
+      "coin": 5
+    },
+    {
+      "slot": 13,
+      "name": "coin_10",
+      "title": "Души · 10",
+      "lore": [
+        "Десять душ."
+      ],
+      "stack": 99,
+      "rarity": "rare",
+      "coin": 10
+    },
+    {
+      "slot": 14,
+      "name": "coin_50",
+      "title": "Души · 50",
+      "lore": [
+        "Пятьдесят душ."
+      ],
+      "stack": 99,
+      "rarity": "rare",
+      "coin": 50
+    },
+    {
+      "slot": 15,
+      "name": "coin_100",
+      "title": "Души · 100",
+      "lore": [
+        "Сто душ."
+      ],
+      "stack": 99,
+      "rarity": "epic",
+      "glint": true,
+      "coin": 100
+    },
+    {
+      "slot": 16,
+      "name": "purse",
+      "title": "Кошель душ",
+      "lore": [
+        "Кладёт монеты на твой счёт."
+      ],
+      "stack": 1,
+      "rarity": "epic",
+      "glint": true,
+      "purse": true
     }
   ],
   "entities": [
@@ -537,6 +629,16 @@
   ],
   "assets": [
     {
+      "path": "assets/instantlore/lang/en_us.json",
+      "sha256": "099f742347132880c7486cc9664c4f34837022df3fb710fab1bcee271a1b0eed",
+      "size": 1218
+    },
+    {
+      "path": "assets/instantlore/lang/ru_ru.json",
+      "sha256": "8a03ff0e4148445b174624ecb9e1831588198d1bb48c12d81553f5e8e80b2fc9",
+      "size": 1533
+    },
+    {
       "path": "assets/instantlore/models/block/altar.json",
       "sha256": "3f05a2de4152274f0c55696db44293430e2dfcdcdac262eb502cb52588d350db",
       "size": 1662
@@ -682,9 +784,49 @@
       "size": 350
     },
     {
+      "path": "assets/instantlore/textures/entity/banner/rift_instantlore_pattern.png",
+      "sha256": "73f837be1087e08a462fb5ad75d641972ec3293fddccb3205168b6691c2562b5",
+      "size": 270
+    },
+    {
+      "path": "assets/instantlore/textures/entity/shield/rift_instantlore_pattern.png",
+      "sha256": "1b68f3f70589688057434d14711fbfd4907a3d272fa7b10662474fd158ba5368",
+      "size": 175
+    },
+    {
       "path": "assets/instantlore/textures/item/checklist.png",
       "sha256": "ae5f56691098d4806c84f5f15632cb97b641e55f8923dce421e6a83e8774fbbd",
       "size": 465
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_1.png",
+      "sha256": "73d67ac9113fac4d7f167ccb922d05714aea87ea37d44fd9289e4ec932c1cacb",
+      "size": 139
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_10.png",
+      "sha256": "4031e379ea341ae38745acd10d32a4e1728436814e88873b188bb8a3981d3346",
+      "size": 139
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_100.png",
+      "sha256": "7f4c35eace84b3144a0805d192267b5ba73b377ccb5812501ad71a1c8002848e",
+      "size": 139
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_2.png",
+      "sha256": "d5219928e5cb5b84f60004e47b5ea2c182e75eb7b0723dcb3f9aae28f1563e2a",
+      "size": 139
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_5.png",
+      "sha256": "528ce94d59c7cd64f54eb6c9c521c645248c3c3050cfb30df8d91a7ec3de26b4",
+      "size": 139
+    },
+    {
+      "path": "assets/instantlore/textures/item/coin_50.png",
+      "sha256": "773c9402816ca91bc935655b08d102cfbb49f3f8c33f1219563f08e898c2a6dd",
+      "size": 139
     },
     {
       "path": "assets/instantlore/textures/item/cursed_blood_vial.png",
@@ -710,6 +852,16 @@
       "path": "assets/instantlore/textures/item/probe_wand.png",
       "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
       "size": 187
+    },
+    {
+      "path": "assets/instantlore/textures/item/purse.png",
+      "sha256": "4b09c5de2fa2aee05044c0023aa6ba3d6b231c27730f35b3844f70b545681565",
+      "size": 118
+    },
+    {
+      "path": "assets/instantlore/textures/item/rift_pattern.png",
+      "sha256": "553fb060604b0d35c53f5cf00fb6d0bd4f9ce0b028a6b432c809fa1175b23a3b",
+      "size": 184
     },
     {
       "path": "assets/instantlore/textures/item/ritual_dagger.png",
