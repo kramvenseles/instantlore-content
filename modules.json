@@ -89,6 +89,18 @@
         "max_storm_radius": 128,
         "notify_radius": 48
       }
+    },
+    "harvest": {
+      "enabled": true,
+      "config": {
+        "radius": 10,
+        "coin": 1,
+        "rise_per_tick": 0.35,
+        "height": 24,
+        "max_groups": 8,
+        "event": "limbo.harvest",
+        "notify_radius": 48
+      }
     }
   }
 }
