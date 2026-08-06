@@ -21,7 +21,11 @@
             "event": "limbo.gate",
             "accept": {
               "minecraft:amethyst_shard": 8
-            }
+            },
+            "lines": [
+              "«Кто отдаёт свет — не остаётся во тьме»",
+              "Положи осколки в чашу"
+            ]
           }
         },
         "per_click": "all"
