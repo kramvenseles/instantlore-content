@@ -20,3 +20,11 @@ end)
 lore.on("dbgtarget.off", function()
     if stop then stop(); stop = nil end
 end)
+
+-- Надпись над блоком приходит маркером; проверить её иначе нечем — клиент рисует
+-- маркеры молча, а сервер знает только, что отправил пакет.
+lore.on("marker.set", function(data)
+    if data and data.type == "text" then
+        lore.report("dbg.marker", { id = data.id, text = data.text })
+    end
+end)
