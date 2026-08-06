@@ -1,5 +1,5 @@
 {
-  "version": "c0eca778c6f5",
+  "version": "4c745a7f24bf",
   "blocks": [
     {
       "slot": 0,
@@ -1030,6 +1030,11 @@
       "path": "screen/shop.json",
       "sha256": "95ddd8723aa769bb2bf343c1c3ee931284a068f576d466ac4f93527bdb07c529",
       "size": 10134
+    },
+    {
+      "path": "scripts/dbgtarget.lua",
+      "sha256": "37067cc4e97279d740294df5fe61eb35dce14e821870364f023eb2225234405e",
+      "size": 908
     },
     {
       "path": "scripts/lib/ui.lua",
