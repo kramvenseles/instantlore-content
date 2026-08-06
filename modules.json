@@ -101,7 +101,9 @@
         "event": "limbo.harvest",
         "notify_radius": 48,
         "streams": true,
-        "stream_density": 1.2
+        "stream_density": 4.0,
+        "stream_width": 1.6,
+        "stream_color": "#8FD8FF"
       }
     }
   }
