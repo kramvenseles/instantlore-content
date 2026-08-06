@@ -8,6 +8,23 @@
         "farmer_hat_name": "Farmer's hat",
         "rain_extinguishes": true
       }
+    },
+    "offering": {
+      "enabled": true,
+      "config": {
+        "radius": 10,
+        "max_altars": 256,
+        "max_need": 9999,
+        "presets": {
+          "gate": {
+            "title": "Врата",
+            "event": "limbo.gate",
+            "accept": {
+              "minecraft:amethyst_shard": 8
+            }
+          }
+        }
+      }
     }
   }
 }

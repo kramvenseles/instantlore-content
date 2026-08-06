@@ -1,5 +1,5 @@
 {
-  "version": "275a955ff05d",
+  "version": "c0eca778c6f5",
   "blocks": [
     {
       "slot": 0,
@@ -248,6 +248,19 @@
       "tool": "pickaxe:diamond",
       "drop": "none",
       "firework": true
+    },
+    {
+      "slot": 17,
+      "name": "offering",
+      "title": "Жертвенник",
+      "hardness": 3.0,
+      "resistance": 6.0,
+      "light": 0,
+      "sound": "BASALT",
+      "solid": true,
+      "container": false,
+      "tick": 1,
+      "drop": "self"
     }
   ],
   "items": [
@@ -664,6 +677,11 @@
       "size": 2137
     },
     {
+      "path": "assets/instantlore/models/block/offering.json",
+      "sha256": "8f55e6cd6c7807294eb0a8aa469980fa2a1b82684704e6ed1f4ccfd201d241bf",
+      "size": 1809
+    },
+    {
       "path": "assets/instantlore/models/block/reliquary.json",
       "sha256": "a5ea891370dbfeedffdff1328050057de277d68adf9e67da5364c415739404da",
       "size": 1857
@@ -737,6 +755,11 @@
       "path": "assets/instantlore/textures/block/mist.png",
       "sha256": "586894963227bbab0105e7664b7ac938f48f51b5564ca432c1afb6b8eefb6b5d",
       "size": 565
+    },
+    {
+      "path": "assets/instantlore/textures/block/offering.png",
+      "sha256": "71e09bac03d36d8376ea25c1ffd3bfa627b50f397ccd4cdb9895071e8949906f",
+      "size": 407
     },
     {
       "path": "assets/instantlore/textures/block/reliquary.png",
