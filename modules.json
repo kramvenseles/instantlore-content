@@ -100,9 +100,8 @@
         "max_groups": 8,
         "event": "limbo.harvest",
         "notify_radius": 48,
-        "threads": true,
-        "thread_color": "#8FD8FF",
-        "thread_size": 0.06
+        "streams": true,
+        "stream_density": 1.2
       }
     }
   }
