@@ -99,7 +99,10 @@
         "height": 24,
         "max_groups": 8,
         "event": "limbo.harvest",
-        "notify_radius": 48
+        "notify_radius": 48,
+        "threads": true,
+        "thread_color": "#8FD8FF",
+        "thread_size": 0.06
       }
     }
   }
