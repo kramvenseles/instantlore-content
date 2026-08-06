@@ -23,7 +23,8 @@
               "minecraft:amethyst_shard": 8
             }
           }
-        }
+        },
+        "per_click": "all"
       }
     }
   }
