@@ -16,6 +16,56 @@
         "max_altars": 256,
         "max_need": 9999,
         "presets": {
+          "veil_light": {
+            "title": "Свет",
+            "event": "limbo.veil.light",
+            "accept": {
+              "minecraft:amethyst_shard": 8
+            },
+            "lines": [
+              "«Кто отдаёт свет — не остаётся во тьме»"
+            ]
+          },
+          "veil_bone": {
+            "title": "Память",
+            "event": "limbo.veil.bone",
+            "accept": {
+              "minecraft:bone": 12
+            },
+            "lines": [
+              "«Что осталось от тех, кто ушёл, — то и помнит дорогу»"
+            ]
+          },
+          "veil_ash": {
+            "title": "Пепел",
+            "event": "limbo.veil.ash",
+            "accept": {
+              "minecraft:gunpowder": 16
+            },
+            "lines": [
+              "«Пепел ложится ровно — ему всё равно, кто горел»"
+            ]
+          },
+          "veil_echo": {
+            "title": "Эхо",
+            "event": "limbo.veil.echo",
+            "accept": {
+              "minecraft:echo_shard": 1
+            },
+            "lines": [
+              "«Здесь тебя слышат раньше, чем ты заговоришь»"
+            ]
+          },
+          "veil_eye": {
+            "title": "Взгляд",
+            "event": "limbo.veil.eye",
+            "accept": {
+              "minecraft:ender_pearl": 4
+            },
+            "lines": [
+              "«Смотреть отсюда — уже наполовину быть там»"
+            ]
+          },
           "gate": {
             "title": "Врата",
             "event": "limbo.gate",
@@ -29,6 +79,15 @@
           }
         },
         "per_click": "all"
+      }
+    },
+    "rite": {
+      "enabled": true,
+      "config": {
+        "max_rites": 64,
+        "max_members": 16,
+        "max_storm_radius": 128,
+        "notify_radius": 48
       }
     }
   }
