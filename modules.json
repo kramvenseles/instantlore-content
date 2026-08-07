@@ -164,133 +164,154 @@
         "fade_seconds": 0,
         "cooldown_seconds": 0,
         "max_concurrent": 4,
-        "buttons": [
-          {
-            "x": -2448,
-            "y": 150,
-            "z": -1573
-          }
-        ],
-        "stops": [
-          {
-            "x": -2448,
-            "y": 150,
-            "z": -1573,
-            "yaw": 0.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "spirit_prologue",
-            "seconds": 14.0,
-            "captions": [
-              {
-                "at": 1.0,
-                "title": "",
-                "subtitle": "§7Меня здесь давно никто не слышал.",
-                "stay": 75
-              },
-              {
-                "at": 5.0,
-                "title": "",
-                "subtitle": "§7За вашим миром есть другой. Я знаю дверь — и открою её здесь.",
-                "stay": 75
-              },
-              {
-                "at": 9.5,
-                "title": "",
-                "subtitle": "§7Мне нужна плата. Не золотом.",
-                "stay": 75
-              }
-            ]
-          },
-          {
-            "x": -2404,
-            "y": 164,
-            "z": -1642,
-            "yaw": 270.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "orbit_tower",
-            "lightning": {
-              "x": -2404,
-              "y": 200,
-              "z": -1642,
-              "period": 18
-            },
-            "seconds": 15.0
-          },
-          {
-            "x": -2500,
-            "y": 161,
-            "z": -1594,
-            "yaw": 90.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "orbit"
-          },
-          {
-            "x": -2543,
-            "y": 168,
-            "z": -1575,
-            "yaw": 0.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "fly_pumpkin"
-          },
-          {
-            "x": -2447,
-            "y": 161,
-            "z": -1573,
-            "yaw": 0.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "fly_iron",
-            "seconds": 16.8
-          },
-          {
-            "x": -2463,
-            "y": 205,
-            "z": -1464,
-            "yaw": 0.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "orbit_soul"
-          },
-          {
-            "x": -2463,
-            "y": 193,
-            "z": -1464,
-            "yaw": 0.0,
-            "title": "",
-            "subtitle": "",
-            "cutscene": "spirit_epilogue",
-            "seconds": 15.0,
-            "captions": [
-              {
-                "at": 1.5,
-                "title": "",
-                "subtitle": "§7Здесь встанет дверь. Для всех.",
-                "stay": 75
-              },
-              {
-                "at": 6.0,
-                "title": "",
-                "subtitle": "§7Тому, кто принесёт больше прочих, — вторая. Только его.",
-                "stay": 75
-              },
-              {
-                "at": 10.5,
-                "title": "",
-                "subtitle": "§8А то, что вы принесёте… найдёт себе руки.",
-                "stay": 85
-              }
-            ]
-          }
-        ],
         "final_title": "",
         "final_subtitle": "",
         "answer_title": "",
         "answer_subtitle": "§8«${жертвенник}» — принято",
-        "answer_event": ""
+        "answer_event": "",
+        "tours": {
+          "altars": {
+            "buttons": [
+              {
+                "x": -2448,
+                "y": 150,
+                "z": -1573
+              }
+            ],
+            "stops": [
+              {
+                "x": -2404,
+                "y": 164,
+                "z": -1642,
+                "yaw": 270.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "orbit_tower",
+                "lightning": {
+                  "x": -2404,
+                  "y": 200,
+                  "z": -1642,
+                  "period": 18
+                },
+                "seconds": 15.0
+              },
+              {
+                "x": -2500,
+                "y": 161,
+                "z": -1594,
+                "yaw": 90.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "orbit"
+              },
+              {
+                "x": -2543,
+                "y": 168,
+                "z": -1575,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "fly_pumpkin"
+              },
+              {
+                "x": -2447,
+                "y": 161,
+                "z": -1573,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "fly_iron",
+                "seconds": 16.8
+              },
+              {
+                "x": -2463,
+                "y": 205,
+                "z": -1464,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "orbit_soul"
+              }
+            ]
+          },
+          "story": {
+            "buttons": [
+              {
+                "x": -2450,
+                "y": 150,
+                "z": -1573
+              }
+            ],
+            "stops": [
+              {
+                "x": -2448,
+                "y": 150,
+                "z": -1573,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "spirit_prologue",
+                "seconds": 19.0,
+                "captions": [
+                  {
+                    "at": 1.0,
+                    "title": "§7НОВЫЕ.",
+                    "subtitle": "",
+                    "stay": 80
+                  },
+                  {
+                    "at": 5.5,
+                    "title": "§7Я и представить не мог,",
+                    "subtitle": "§7что вы сами будете помогать",
+                    "stay": 80
+                  },
+                  {
+                    "at": 10.0,
+                    "title": "§7Этот мир — не единственный.",
+                    "subtitle": "§7И я открою проход.",
+                    "stay": 80
+                  },
+                  {
+                    "at": 14.5,
+                    "title": "§7Цена…",
+                    "subtitle": "§7Может быть высока.",
+                    "stay": 80
+                  }
+                ]
+              },
+              {
+                "x": -2463,
+                "y": 193,
+                "z": -1464,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "spirit_epilogue",
+                "seconds": 15.0,
+                "captions": [
+                  {
+                    "at": 0.8,
+                    "title": "§7Первая трещина будет тут",
+                    "subtitle": "",
+                    "stay": 80
+                  },
+                  {
+                    "at": 4.5,
+                    "title": "§7Вторую поставят те, кто",
+                    "subtitle": "§7этого заслужит.",
+                    "stay": 80
+                  },
+                  {
+                    "at": 8.3,
+                    "title": "§7Ну а ваша плата",
+                    "subtitle": "§7даст мне сил.",
+                    "stay": 80
+                  }
+                ]
+              }
+            ]
+          }
+        }
       }
     }
   }

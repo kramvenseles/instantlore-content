@@ -1,5 +1,5 @@
 {
-  "version": "16e11d370721",
+  "version": "2bd7f77adcad",
   "blocks": [
     {
       "slot": 0,
@@ -986,13 +986,13 @@
     },
     {
       "path": "cutscenes/spirit_epilogue.json",
-      "sha256": "8e548a338f64905cb32777f27261e8616e1f9687b4bbca56362906a01f4a7079",
-      "size": 22951
+      "sha256": "edb39a9f596d81de0733a02658e442f7caf5caf0793659a2831c3561482f8457",
+      "size": 7053
     },
     {
       "path": "cutscenes/spirit_prologue.json",
-      "sha256": "1a9fc43adc57de2670a18e71504614c9235e2c896f067a3a874877c537a676dc",
-      "size": 21552
+      "sha256": "5d9d5ac4573fc12d62cc7e8213131239f1f633df162790adfe3887a60e56fc95",
+      "size": 29050
     },
     {
       "path": "dialog/guardian.json",
