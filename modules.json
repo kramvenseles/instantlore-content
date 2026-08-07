@@ -161,8 +161,8 @@
         "cutscene": "orbit",
         "rite": "army",
         "stop_seconds": 6.0,
-        "fade_seconds": 0.6,
-        "cooldown_seconds": 120,
+        "fade_seconds": 0,
+        "cooldown_seconds": 0,
         "max_concurrent": 4,
         "buttons": [
           {
@@ -202,7 +202,8 @@
             "z": -1642,
             "yaw": 270,
             "title": "§7Черепа визера",
-            "subtitle": "§8[текст истории — заготовка]"
+            "subtitle": "§8[текст истории — заготовка]",
+            "cutscene": "orbit_wide"
           },
           {
             "x": -2463,
@@ -210,11 +211,12 @@
             "z": -1464,
             "yaw": 0,
             "title": "§7Песок душ",
-            "subtitle": "§8[текст истории — заготовка]"
+            "subtitle": "§8[текст истории — заготовка]",
+            "cutscene": "orbit_wide"
           }
         ],
         "final_title": "§7Дух просит немногого",
-        "final_subtitle": "§8Довольно ${кворум} алтарей из ${всего} — каких, ему всё равно",
+        "final_subtitle": "§8Довольно ${кворум} алтарей — любых",
         "answer_title": "§7Дух почуял приношение",
         "answer_subtitle": "§8«${жертвенник}» — принято",
         "answer_event": ""
