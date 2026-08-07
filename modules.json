@@ -254,7 +254,7 @@
                 "seconds": 19.0,
                 "captions": [
                   {
-                    "at": 1.0,
+                    "at": 0.0,
                     "title": "§7НОВЫЕ.",
                     "subtitle": "",
                     "stay": 80
@@ -290,7 +290,7 @@
                 "seconds": 15.0,
                 "captions": [
                   {
-                    "at": 0.8,
+                    "at": 0.0,
                     "title": "§7Первая трещина будет тут",
                     "subtitle": "",
                     "stay": 80
@@ -311,7 +311,8 @@
               }
             ],
             "move_body": false,
-            "hud": "spirit_line"
+            "hud": "spirit_line",
+            "perspective": "third"
           }
         }
       }
