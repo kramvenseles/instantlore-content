@@ -1,5 +1,5 @@
 {
-  "version": "7ebb943e4686",
+  "version": "a202563a788b",
   "blocks": [
     {
       "slot": 0,
@@ -936,18 +936,18 @@
     },
     {
       "path": "cutscenes/orbit.json",
-      "sha256": "8f452bb2bfde251c8511260b469c88fb43723bf6779afc3e0c5192752ad40925",
-      "size": 8187
+      "sha256": "56a9c44c633f1c4b8fdf321f83889bbedea117e3f50de698e4da3d28e85bfd6f",
+      "size": 11019
     },
     {
       "path": "cutscenes/orbit_huge.json",
-      "sha256": "48c5d01356b2d41b2022721dd10a3d5910eed12271a1556f8fa7643b1d8fdf1c",
-      "size": 8311
+      "sha256": "0c5f08ceaa434697c9ac7c9bcc6d0d3d07077f232801b4d8d21ee12ebbd9bc22",
+      "size": 11043
     },
     {
       "path": "cutscenes/orbit_wide.json",
-      "sha256": "8743b4e37905f36ab97c97565e8e3f3bb66166b68e1f30ed0813c042154b8d21",
-      "size": 8231
+      "sha256": "0c2d26f5410d1e42196585d2b73d5ef6867efd2353fca34af747fb443ed7df81",
+      "size": 10978
     },
     {
       "path": "cutscenes/proba.json",
