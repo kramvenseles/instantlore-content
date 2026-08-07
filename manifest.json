@@ -1,5 +1,5 @@
 {
-  "version": "b27bbeb671cd",
+  "version": "8468fdb680a5",
   "blocks": [
     {
       "slot": 0,
@@ -931,13 +931,13 @@
     },
     {
       "path": "cutscenes/fly_iron.json",
-      "sha256": "e3328e966935f55c12d90b68b1c76843ccc816e37b40b901db59c2ec78f117d7",
-      "size": 23463
+      "sha256": "d83c8ef9dd8c5c001c96e8f0153dc9de8149ae8d80f7a259084a4dc4c0d863f0",
+      "size": 26724
     },
     {
       "path": "cutscenes/fly_pumpkin.json",
-      "sha256": "aa51b204258cbdf922e72735c233c6b251a81401386bae10e08d35f86cd0c301",
-      "size": 12779
+      "sha256": "182295d31f1f126195c62f4c4b5af9025d8f70e74a96da9c6744dcd42106843f",
+      "size": 15420
     },
     {
       "path": "cutscenes/intro.json",
@@ -946,8 +946,8 @@
     },
     {
       "path": "cutscenes/orbit.json",
-      "sha256": "56a9c44c633f1c4b8fdf321f83889bbedea117e3f50de698e4da3d28e85bfd6f",
-      "size": 11019
+      "sha256": "8830581bd95ce41cb837e676525dd9f638a08fc8ac786bec85294c9b75883f3c",
+      "size": 15030
     },
     {
       "path": "cutscenes/orbit_high.json",
@@ -961,13 +961,13 @@
     },
     {
       "path": "cutscenes/orbit_soul.json",
-      "sha256": "b7bf0fa421fa3cfe3b544a226b4aa19fe22fbcc55ad9f98f24c88c3e8ce96946",
-      "size": 11190
+      "sha256": "ef50577e049d513e49884fffdc61c22760d0873833bac2a038a687adc945d437",
+      "size": 15096
     },
     {
       "path": "cutscenes/orbit_tower.json",
-      "sha256": "04d89ff2eea09caee92c6f592ba10cfcb6aef70f49b3333ac7e28862d26bc731",
-      "size": 17018
+      "sha256": "3921ab83f30baa72ba38eae4d80028144619fd62d7b50ddda642cb65bfcf04a3",
+      "size": 23489
     },
     {
       "path": "cutscenes/orbit_wide.json",
