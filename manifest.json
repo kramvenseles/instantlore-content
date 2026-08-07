@@ -1,5 +1,5 @@
 {
-  "version": "57febefe08dc",
+  "version": "3f957e45690c",
   "blocks": [
     {
       "slot": 0,
@@ -991,8 +991,8 @@
     },
     {
       "path": "cutscenes/spirit_prologue.json",
-      "sha256": "28b95a272ce26bc645cac1d1c883fa54c3879fcbc8aed327272fb16b53d0f0a4",
-      "size": 28651
+      "sha256": "0913c837e83e056e84b1c8cf79824c5e46293fcfe9c2219dd4f990f19b5f772c",
+      "size": 28703
     },
     {
       "path": "dialog/guardian.json",
@@ -1076,8 +1076,8 @@
     },
     {
       "path": "hud/spirit_line.json",
-      "sha256": "bc2b4e83e901d74313e9a24f86ef3f1b4d29d8eb0138ed30cf1d25c51b951b82",
-      "size": 609
+      "sha256": "7d6616f8f4f2dc2e380e1294998353265a265b5a4c21b7f07d674c03e8b64f7d",
+      "size": 851
     },
     {
       "path": "hud/veil_black.json",
