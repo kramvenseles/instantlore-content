@@ -1,5 +1,5 @@
 {
-  "version": "3f957e45690c",
+  "version": "623d3f4d72db",
   "blocks": [
     {
       "slot": 0,
@@ -1076,8 +1076,8 @@
     },
     {
       "path": "hud/spirit_line.json",
-      "sha256": "7d6616f8f4f2dc2e380e1294998353265a265b5a4c21b7f07d674c03e8b64f7d",
-      "size": 851
+      "sha256": "f1b5c23b3ffa3b673c7691b0239c6963087054f34029bb2f0d9d9f972c4bba35",
+      "size": 964
     },
     {
       "path": "hud/veil_black.json",
