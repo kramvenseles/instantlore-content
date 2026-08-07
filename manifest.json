@@ -1,5 +1,5 @@
 {
-  "version": "f3174930ec8a",
+  "version": "7ebb943e4686",
   "blocks": [
     {
       "slot": 0,
@@ -701,8 +701,8 @@
     },
     {
       "path": "assets/instantlore/models/block/spirit_altar.json",
-      "sha256": "2bf73918c4bc430cb1201293c91dd16d7a4ff2ab078ae8c422efdc7ff509835f",
-      "size": 2605
+      "sha256": "4d042b96af8780ad0c95dc573e431b9ce99e919910a2a398fc157dcdfb0e7cfe",
+      "size": 2701
     },
     {
       "path": "assets/instantlore/models/block/waystone.json",
@@ -791,8 +791,8 @@
     },
     {
       "path": "assets/instantlore/textures/block/spirit_altar.png",
-      "sha256": "695fa6d7b013cbeeb807b1899a89e143bcad08763e59363dee430cbc6b461949",
-      "size": 601
+      "sha256": "4dac5ef38857b57f0dc2d6ea5d1497b5eddcd92f3e0cad65557d0481f135a124",
+      "size": 269
     },
     {
       "path": "assets/instantlore/textures/block/ticker.png",
@@ -936,13 +936,18 @@
     },
     {
       "path": "cutscenes/orbit.json",
-      "sha256": "5a23eefcc6c0b3ec83b0ca743d5674ff968cc53732e6e73cdc5e25b5cb360d24",
-      "size": 3099
+      "sha256": "8f452bb2bfde251c8511260b469c88fb43723bf6779afc3e0c5192752ad40925",
+      "size": 8187
+    },
+    {
+      "path": "cutscenes/orbit_huge.json",
+      "sha256": "48c5d01356b2d41b2022721dd10a3d5910eed12271a1556f8fa7643b1d8fdf1c",
+      "size": 8311
     },
     {
       "path": "cutscenes/orbit_wide.json",
-      "sha256": "7199fd8e7c1c89781058a8e6c8a24ea54cc351b5411b1a9036570b3e7e1e49fe",
-      "size": 3099
+      "sha256": "8743b4e37905f36ab97c97565e8e3f3bb66166b68e1f30ed0813c042154b8d21",
+      "size": 8231
     },
     {
       "path": "cutscenes/proba.json",
