@@ -1,0 +1,15 @@
+{
+  "comment": "Полный оборот вокруг якоря за 6 с. Описание про ФОРМУ облёта, место приходит с командой (cutscene.play + x/y/z/yaw), поэтому один файл обслуживает все остановки тура.",
+  "duration": 6.0,
+  "lock_input": true,
+  "relative": false,
+  "hide_hud": false,
+  "easing": "smooth",
+  "keyframes": [
+    {"t": 0.0, "camera": [0, 4, -9],  "look_at": [0, 1.2, 0]},
+    {"t": 1.5, "camera": [9, 5, 0],   "look_at": [0, 1.2, 0]},
+    {"t": 3.0, "camera": [0, 7, 9],   "look_at": [0, 1.0, 0], "roll": 3},
+    {"t": 4.5, "camera": [-9, 5, 0],  "look_at": [0, 1.2, 0]},
+    {"t": 6.0, "camera": [0, 4, -9],  "look_at": [0, 1.2, 0]}
+  ]
+}

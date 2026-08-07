@@ -1,0 +1,55 @@
+{
+  "comment": "Алтарь духа: стела с прожилкой. Ступенчатое основание — та же порода, что у жертвенников, но вверх, а не чашей: этот блок не принимает, а говорит.",
+  "textures": { "all": "instantlore:block/spirit_altar", "particle": "instantlore:block/spirit_altar" },
+  "elements": [
+    {
+      "comment": "плита основания",
+      "from": [2, 0, 2], "to": [14, 2, 14],
+      "faces": {
+        "north": {"uv": [2, 14, 14, 16], "texture": "#all"},
+        "east":  {"uv": [2, 14, 14, 16], "texture": "#all"},
+        "south": {"uv": [2, 14, 14, 16], "texture": "#all"},
+        "west":  {"uv": [2, 14, 14, 16], "texture": "#all"},
+        "up":    {"uv": [2, 2, 14, 14],  "texture": "#all"},
+        "down":  {"uv": [2, 2, 14, 14],  "texture": "#all"}
+      }
+    },
+    {
+      "comment": "ступень",
+      "from": [4, 2, 4], "to": [12, 4, 12],
+      "faces": {
+        "north": {"uv": [4, 12, 12, 14], "texture": "#all"},
+        "east":  {"uv": [4, 12, 12, 14], "texture": "#all"},
+        "south": {"uv": [4, 12, 12, 14], "texture": "#all"},
+        "west":  {"uv": [4, 12, 12, 14], "texture": "#all"},
+        "up":    {"uv": [4, 4, 12, 12],  "texture": "#all"},
+        "down":  {"uv": [4, 4, 12, 12],  "texture": "#all"}
+      }
+    },
+    {
+      "comment": "стела: узкий столб во весь блок, прожилка идёт по нему сверху вниз",
+      "from": [6, 4, 6], "to": [10, 15, 10],
+      "faces": {
+        "north": {"uv": [6, 1, 10, 12], "texture": "#all"},
+        "east":  {"uv": [6, 1, 10, 12], "texture": "#all"},
+        "south": {"uv": [6, 1, 10, 12], "texture": "#all"},
+        "west":  {"uv": [6, 1, 10, 12], "texture": "#all"},
+        "up":    {"uv": [6, 6, 10, 10], "texture": "#all"},
+        "down":  {"uv": [6, 6, 10, 10], "texture": "#all"}
+      }
+    },
+    {
+      "comment": "навершие, повёрнутое на 45° — читается как «здесь смотрят»",
+      "from": [5, 12, 5], "to": [11, 15, 11],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 12, 8]},
+      "faces": {
+        "north": {"uv": [5, 1, 11, 4],  "texture": "#all"},
+        "east":  {"uv": [5, 1, 11, 4],  "texture": "#all"},
+        "south": {"uv": [5, 1, 11, 4],  "texture": "#all"},
+        "west":  {"uv": [5, 1, 11, 4],  "texture": "#all"},
+        "up":    {"uv": [5, 5, 11, 11], "texture": "#all"},
+        "down":  {"uv": [5, 5, 11, 11], "texture": "#all"}
+      }
+    }
+  ]
+}

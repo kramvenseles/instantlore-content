@@ -1,5 +1,5 @@
 {
-  "version": "c0eca778c6f5",
+  "version": "864300243eaa",
   "blocks": [
     {
       "slot": 0,
@@ -260,6 +260,19 @@
       "solid": true,
       "container": false,
       "tick": 1,
+      "drop": "self"
+    },
+    {
+      "slot": 18,
+      "name": "spirit_altar",
+      "title": "Алтарь духа",
+      "hardness": 3.0,
+      "resistance": 1200.0,
+      "light": 7,
+      "sound": "BASALT",
+      "solid": true,
+      "container": false,
+      "tick": 0,
       "drop": "self"
     }
   ],
@@ -687,6 +700,11 @@
       "size": 1857
     },
     {
+      "path": "assets/instantlore/models/block/spirit_altar.json",
+      "sha256": "2bf73918c4bc430cb1201293c91dd16d7a4ff2ab078ae8c422efdc7ff509835f",
+      "size": 2605
+    },
+    {
       "path": "assets/instantlore/models/block/waystone.json",
       "sha256": "b1e4fd870a19ec1de82bd40f2e9b9bc9286b7a50c134efc52a94eac137c025b8",
       "size": 2161
@@ -770,6 +788,11 @@
       "path": "assets/instantlore/textures/block/rune.png",
       "sha256": "ef947e3e7166d3e0bed3a4c35e9d03e584fd14fc305b3a66dd64bf24f709949a",
       "size": 358
+    },
+    {
+      "path": "assets/instantlore/textures/block/spirit_altar.png",
+      "sha256": "695fa6d7b013cbeeb807b1899a89e143bcad08763e59363dee430cbc6b461949",
+      "size": 601
     },
     {
       "path": "assets/instantlore/textures/block/ticker.png",
@@ -910,6 +933,11 @@
       "path": "cutscenes/intro.json",
       "sha256": "23778c349d656ad63ceaa544f134ce509223c7cf4eecfb216b9e1de059326555",
       "size": 967
+    },
+    {
+      "path": "cutscenes/orbit.json",
+      "sha256": "cd36b60bf8103727d690fed8ce565a6e18a8ed864e4fda0e1808242bed6dcd8c",
+      "size": 750
     },
     {
       "path": "cutscenes/proba.json",
