@@ -160,7 +160,7 @@
       "config": {
         "cutscene": "orbit",
         "rite": "army",
-        "stop_seconds": 11.0,
+        "stop_seconds": 9.0,
         "fade_seconds": 0,
         "cooldown_seconds": 0,
         "max_concurrent": 4,
@@ -185,7 +185,8 @@
               "y": 200,
               "z": -1642,
               "period": 18
-            }
+            },
+            "seconds": 11.0
           },
           {
             "x": -2500,
@@ -212,7 +213,8 @@
             "yaw": 0.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "fly_iron"
+            "cutscene": "fly_iron",
+            "seconds": 13.0
           },
           {
             "x": -2463,
