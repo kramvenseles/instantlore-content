@@ -319,7 +319,7 @@
               "hold": 1.2,
               "out": 2.2
             },
-            "initiates": false,
+            "initiates": true,
             "hud": "spirit_line",
             "captions": [
               {
@@ -355,7 +355,7 @@
               "hold": 1.6,
               "out": 2.6
             },
-            "initiates": false,
+            "initiates": true,
             "hud": "spirit_line",
             "captions": [
               {
