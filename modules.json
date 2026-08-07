@@ -227,7 +227,7 @@
           }
         ],
         "final_title": "",
-        "final_subtitle": "§8Довольно ${кворум} алтарей — любых",
+        "final_subtitle": "",
         "answer_title": "",
         "answer_subtitle": "§8«${жертвенник}» — принято",
         "answer_event": ""
