@@ -163,7 +163,7 @@
         "stop_seconds": 9.0,
         "fade_seconds": 0,
         "cooldown_seconds": 0,
-        "max_concurrent": 4,
+        "max_concurrent": 32,
         "final_title": "",
         "final_subtitle": "",
         "answer_title": "",
@@ -309,6 +309,37 @@
                 "body": "spectator"
               }
             ]
+          },
+          "gate": {
+            "buttons": [],
+            "hud": "spirit_line",
+            "stops": [
+              {
+                "x": -2463,
+                "y": 193,
+                "z": -1464,
+                "yaw": 0.0,
+                "title": "",
+                "subtitle": "",
+                "cutscene": "gate_open",
+                "seconds": 12.0,
+                "body": "spectator",
+                "captions": [
+                  {
+                    "at": 0.5,
+                    "title": "§7Трещина раскрылась.",
+                    "subtitle": "",
+                    "stay": 90
+                  },
+                  {
+                    "at": 5.5,
+                    "title": "§7«Путь к лимбо»",
+                    "subtitle": "§7ждёт.",
+                    "stay": 110
+                  }
+                ]
+              }
+            ]
           }
         },
         "moments": {
@@ -364,7 +395,8 @@
                 "subtitle": "§7«Путь к лимбо» ждёт.",
                 "stay": 110
               }
-            ]
+            ],
+            "show": "gate"
           }
         }
       }

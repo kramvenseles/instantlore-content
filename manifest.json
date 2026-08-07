@@ -1,5 +1,5 @@
 {
-  "version": "4ac74232637c",
+  "version": "8dcbf7c0ea42",
   "blocks": [
     {
       "slot": 0,
@@ -938,6 +938,11 @@
       "path": "cutscenes/fly_pumpkin.json",
       "sha256": "3803fca82334bae500f48eb1514a12b3067fc96627601716ff55b3e6bab6d349",
       "size": 19021
+    },
+    {
+      "path": "cutscenes/gate_open.json",
+      "sha256": "48620abd9a3c5b5471e5682aa1fc9d285d888f392c9de85f87fbf9b2812b7afa",
+      "size": 19307
     },
     {
       "path": "cutscenes/intro.json",
