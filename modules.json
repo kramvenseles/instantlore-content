@@ -176,43 +176,46 @@
             "x": -2543,
             "y": 168,
             "z": -1575,
-            "yaw": 180,
+            "yaw": 0.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]"
+            "subtitle": "§8[текст истории — заготовка]",
+            "cutscene": "fly_pumpkin"
           },
           {
             "x": -2500,
             "y": 161,
             "z": -1594,
-            "yaw": 90,
+            "yaw": 90.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]"
+            "subtitle": "§8[текст истории — заготовка]",
+            "cutscene": "orbit"
           },
           {
             "x": -2404,
             "y": 164,
             "z": -1642,
-            "yaw": 270,
+            "yaw": 270.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "orbit_huge"
+            "cutscene": "orbit_tower"
           },
           {
             "x": -2447,
             "y": 161,
             "z": -1573,
-            "yaw": 0,
+            "yaw": 0.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]"
+            "subtitle": "§8[текст истории — заготовка]",
+            "cutscene": "orbit_high"
           },
           {
             "x": -2463,
             "y": 205,
             "z": -1464,
-            "yaw": 0,
+            "yaw": 0.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "orbit_wide"
+            "cutscene": "orbit_soul"
           }
         ],
         "final_title": "",
