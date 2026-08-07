@@ -310,6 +310,62 @@
               }
             ]
           }
+        },
+        "moments": {
+          "start": {
+            "fade": {
+              "color": "#B4121A24",
+              "in": 1.4,
+              "hold": 1.2,
+              "out": 2.2
+            },
+            "initiates": false,
+            "hud": "spirit_line",
+            "captions": [
+              {
+                "at": 0.0,
+                "title": "§7«Путь к лимбо»",
+                "subtitle": "§7был открыт.",
+                "stay": 110
+              }
+            ]
+          },
+          "goal": {
+            "fade": {
+              "color": "#64121A24",
+              "in": 0.5,
+              "hold": 0.3,
+              "out": 1.2
+            },
+            "initiates": true,
+            "hud": "spirit_line",
+            "captions": [
+              {
+                "at": 0.0,
+                "title": "§7«${жертвенник}» насытился",
+                "subtitle": "§8осталось ${осталось} из ${кворум}",
+                "stay": 110
+              }
+            ]
+          },
+          "gate": {
+            "fade": {
+              "color": "#C8241A2E",
+              "in": 1.8,
+              "hold": 1.6,
+              "out": 2.6
+            },
+            "initiates": false,
+            "hud": "spirit_line",
+            "captions": [
+              {
+                "at": 0.0,
+                "title": "§7Трещина раскрылась.",
+                "subtitle": "§7«Путь к лимбо» ждёт.",
+                "stay": 110
+              }
+            ]
+          }
         }
       }
     }
