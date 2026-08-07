@@ -287,7 +287,7 @@
                 "title": "",
                 "subtitle": "",
                 "cutscene": "spirit_epilogue",
-                "seconds": 15.0,
+                "seconds": 17.5,
                 "captions": [
                   {
                     "at": 0.0,
@@ -296,13 +296,13 @@
                     "stay": 80
                   },
                   {
-                    "at": 4.5,
+                    "at": 3.5,
                     "title": "§7Вторую поставят те, кто",
                     "subtitle": "§7этого заслужит.",
                     "stay": 80
                   },
                   {
-                    "at": 8.3,
+                    "at": 7.0,
                     "title": "§7Ну а ваша плата",
                     "subtitle": "§7даст мне сил.",
                     "stay": 80
