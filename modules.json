@@ -306,7 +306,7 @@
                     "stay": 80
                   }
                 ],
-                "body": "player"
+                "body": "spectator"
               }
             ]
           }
