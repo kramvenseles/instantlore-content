@@ -1,5 +1,5 @@
 {
-  "version": "56c19502909c",
+  "version": "dd85c4142ef6",
   "blocks": [
     {
       "slot": 0,
@@ -931,13 +931,13 @@
     },
     {
       "path": "cutscenes/fly_iron.json",
-      "sha256": "08ef11690422cae46cd18bb1467d802caa0d4bee53dd2ba193481fd9b33d82fc",
-      "size": 30171
+      "sha256": "94183146c24284698dece0026f6fc3aa9ec9e0076b5b0a338d1bc0c94b5054af",
+      "size": 35328
     },
     {
       "path": "cutscenes/fly_pumpkin.json",
-      "sha256": "93879002cc7d5898a8e89196bad31124f0dbd84adefb72d5b58c80d1a36d1b96",
-      "size": 15584
+      "sha256": "0c9113e81bb8d38619b69a9d470cce204c7455d51e73b62c336edf521fdb654a",
+      "size": 19002
     },
     {
       "path": "cutscenes/intro.json",
