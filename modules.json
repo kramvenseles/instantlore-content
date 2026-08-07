@@ -309,7 +309,9 @@
                   }
                 ]
               }
-            ]
+            ],
+            "move_body": false,
+            "hud": "spirit_line"
           }
         }
       }
