@@ -76,6 +76,55 @@
               "«Кто отдаёт свет — не остаётся во тьме»",
               "Положи осколки в чашу"
             ]
+          },
+          "army_iron": {
+            "title": "Железо",
+            "event": "limbo.army.iron",
+            "accept": {
+              "minecraft:iron_block": 4000
+            }
+          },
+          "army_pumpkin": {
+            "title": "Тыквы",
+            "event": "limbo.army.pumpkin",
+            "accept": {
+              "minecraft:pumpkin,minecraft:carved_pumpkin": 2000
+            }
+          },
+          "army_snow": {
+            "title": "Снег",
+            "event": "limbo.army.snow",
+            "accept": {
+              "minecraft:snow_block": 2000
+            }
+          },
+          "army_soul": {
+            "title": "Песок душ",
+            "event": "limbo.army.soul",
+            "accept": {
+              "minecraft:soul_sand": 4000
+            }
+          },
+          "army_wither_skull": {
+            "title": "Черепа визера",
+            "event": "limbo.army.wither_skull",
+            "accept": {
+              "minecraft:wither_skeleton_skull": 3000
+            }
+          },
+          "army_skull": {
+            "title": "Черепа",
+            "event": "limbo.army.skull",
+            "accept": {
+              "minecraft:skeleton_skull": 64
+            }
+          },
+          "army_egg": {
+            "title": "Яйца",
+            "event": "limbo.army.egg",
+            "accept": {
+              "#minecraft:eggs": 1000
+            }
           }
         },
         "per_click": "all"
