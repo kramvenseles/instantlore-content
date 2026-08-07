@@ -160,7 +160,7 @@
       "config": {
         "cutscene": "orbit",
         "rite": "army",
-        "stop_seconds": 9.0,
+        "stop_seconds": 11.0,
         "fade_seconds": 0,
         "cooldown_seconds": 0,
         "max_concurrent": 4,
@@ -179,7 +179,13 @@
             "yaw": 270.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "orbit_tower"
+            "cutscene": "orbit_tower",
+            "lightning": {
+              "x": -2404,
+              "y": 200,
+              "z": -1642,
+              "period": 18
+            }
           },
           {
             "x": -2500,
