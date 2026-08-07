@@ -350,7 +350,7 @@
               "hold": 1.2,
               "out": 2.2
             },
-            "initiates": true,
+            "initiates": false,
             "hud": "spirit_line",
             "captions": [
               {
@@ -386,7 +386,7 @@
               "hold": 1.6,
               "out": 2.6
             },
-            "initiates": true,
+            "initiates": false,
             "hud": "spirit_line",
             "captions": [
               {
@@ -398,7 +398,9 @@
             ],
             "show": "gate"
           }
-        }
+        },
+        "min_version": "0.77.0",
+        "outdated_message": "Мод устарел — событие покажется урезанным. Перезапусти игру, обновление приедет само."
       }
     }
   }
