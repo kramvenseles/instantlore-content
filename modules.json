@@ -173,13 +173,13 @@
         ],
         "stops": [
           {
-            "x": -2543,
-            "y": 168,
-            "z": -1575,
-            "yaw": 0.0,
+            "x": -2404,
+            "y": 164,
+            "z": -1642,
+            "yaw": 270.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "fly_pumpkin"
+            "cutscene": "orbit_tower"
           },
           {
             "x": -2500,
@@ -191,13 +191,13 @@
             "cutscene": "orbit"
           },
           {
-            "x": -2404,
-            "y": 164,
-            "z": -1642,
-            "yaw": 270.0,
+            "x": -2543,
+            "y": 168,
+            "z": -1575,
+            "yaw": 0.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "orbit_tower"
+            "cutscene": "fly_pumpkin"
           },
           {
             "x": -2447,
@@ -206,7 +206,7 @@
             "yaw": 0.0,
             "title": "",
             "subtitle": "§8[текст истории — заготовка]",
-            "cutscene": "orbit_high"
+            "cutscene": "fly_iron"
           },
           {
             "x": -2463,

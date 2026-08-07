@@ -1,5 +1,5 @@
 {
-  "version": "c676ec219675",
+  "version": "46b0646d3f9f",
   "blocks": [
     {
       "slot": 0,
@@ -930,9 +930,14 @@
       "size": 1734
     },
     {
+      "path": "cutscenes/fly_iron.json",
+      "sha256": "04aa1672c5777bb8795902154acd53f157786d1d154b67746185cac992580441",
+      "size": 12691
+    },
+    {
       "path": "cutscenes/fly_pumpkin.json",
-      "sha256": "c20445d0df55b05df558914e120afeace09ed96037ddabe3cbe3311980faccb2",
-      "size": 12721
+      "sha256": "aa51b204258cbdf922e72735c233c6b251a81401386bae10e08d35f86cd0c301",
+      "size": 12779
     },
     {
       "path": "cutscenes/intro.json",
@@ -961,8 +966,8 @@
     },
     {
       "path": "cutscenes/orbit_tower.json",
-      "sha256": "33a11b6368a5e8c8364e0b061ff16e05874851fd154eabc9b5c4d0de38d2ca0c",
-      "size": 11194
+      "sha256": "d8ffedb95be69662e18067295bca660c3efab6cd0ef6a7d1b8743fb91ec65a79",
+      "size": 11331
     },
     {
       "path": "cutscenes/orbit_wide.json",
