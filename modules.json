@@ -178,7 +178,7 @@
             "z": -1642,
             "yaw": 270.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]",
+            "subtitle": "",
             "cutscene": "orbit_tower",
             "lightning": {
               "x": -2404,
@@ -194,7 +194,7 @@
             "z": -1594,
             "yaw": 90.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]",
+            "subtitle": "",
             "cutscene": "orbit"
           },
           {
@@ -203,7 +203,7 @@
             "z": -1575,
             "yaw": 0.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]",
+            "subtitle": "",
             "cutscene": "fly_pumpkin"
           },
           {
@@ -212,7 +212,7 @@
             "z": -1573,
             "yaw": 0.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]",
+            "subtitle": "",
             "cutscene": "fly_iron",
             "seconds": 14.6
           },
@@ -222,7 +222,7 @@
             "z": -1464,
             "yaw": 0.0,
             "title": "",
-            "subtitle": "§8[текст истории — заготовка]",
+            "subtitle": "",
             "cutscene": "orbit_soul"
           }
         ],
