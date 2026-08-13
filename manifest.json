@@ -1,5 +1,5 @@
 {
-  "version": "8dcbf7c0ea42",
+  "version": "fb78efed4cc9",
   "blocks": [
     {
       "slot": 0,
@@ -485,6 +485,21 @@
       "rarity": "epic",
       "glint": true,
       "purse": true
+    },
+    {
+      "slot": 17,
+      "name": "pioneer_chestplate",
+      "title": "Нагрудник первооткрывателя",
+      "lore": [
+        "Первым прошёл путь до конца.",
+        "Выдан teapo1.",
+        "Ни защиты, ни силы — только память."
+      ],
+      "stack": 1,
+      "rarity": "epic",
+      "glint": true,
+      "equip": "chest",
+      "equipAsset": "leather"
     }
   ],
   "entities": [
@@ -893,6 +908,11 @@
       "path": "assets/instantlore/textures/item/lantern.png",
       "sha256": "095a4dde7b30b2c3bdf7fb3f96f9c2741fc8372de41bc455cafb8f322fa868b8",
       "size": 187
+    },
+    {
+      "path": "assets/instantlore/textures/item/pioneer_chestplate.png",
+      "sha256": "f36481133b35a4e88fa0f7f4a7ca79ac2df1f16575087dcddf9a01feb5dbbd14",
+      "size": 157
     },
     {
       "path": "assets/instantlore/textures/item/probe_wand.png",

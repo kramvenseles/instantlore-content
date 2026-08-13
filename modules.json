@@ -152,7 +152,9 @@
         "streams": true,
         "stream_density": 4.0,
         "stream_width": 1.6,
-        "stream_color": "#8FD8FF"
+        "stream_color": "#8FD8FF",
+        "pioneer_slot": 17,
+        "pioneer_coins": 2
       }
     },
     "tour": {
