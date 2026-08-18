@@ -1,5 +1,5 @@
 {
-  "version": "fb78efed4cc9",
+  "version": "65560bdb6aac",
   "blocks": [
     {
       "slot": 0,
@@ -273,6 +273,18 @@
       "solid": true,
       "container": false,
       "tick": 0,
+      "drop": "self"
+    },
+    {
+      "slot": 19,
+      "name": "fake_budding_amethyst",
+      "title": "Фейковый цветущий аметист",
+      "hardness": 1.5,
+      "resistance": 1.5,
+      "light": 0,
+      "sound": "AMETHYST_BLOCK",
+      "solid": true,
+      "tool": "pickaxe",
       "drop": "self"
     }
   ],
@@ -768,6 +780,11 @@
       "path": "assets/instantlore/textures/block/drop_stone.png",
       "sha256": "452a24511f22433236e5ed009b6193a73de1353c767af18113b4eb83f660f21a",
       "size": 350
+    },
+    {
+      "path": "assets/instantlore/textures/block/fake_budding_amethyst.png",
+      "sha256": "1370de704ca64a39dac879f538739d4b814ef783de33b825d794105037464bba",
+      "size": 220
     },
     {
       "path": "assets/instantlore/textures/block/fake_netherite.png",
