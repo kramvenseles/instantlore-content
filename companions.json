@@ -1,0 +1,11 @@
+{
+  "mods": [
+    {
+      "id": "tool_trims",
+      "file": "tool-trims-v3.0.4-beta-for-1.21.9+.jar",
+      "path": "companions/tool-trims-v3.0.4-beta-for-1.21.9+.jar",
+      "sha256": "d25e2099de7c0f6f8e8fef78897e1c64df1a7758d2d54f148b8e212fdf00d5da",
+      "size": 3570239
+    }
+  ]
+}
