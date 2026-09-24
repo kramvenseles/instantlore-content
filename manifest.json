@@ -1,5 +1,5 @@
 {
-  "version": "65560bdb6aac",
+  "version": "8a4957ddddbc",
   "blocks": [
     {
       "slot": 0,
@@ -682,6 +682,11 @@
   ],
   "assets": [
     {
+      "path": "assets/instantlore/items/loki_spear.json",
+      "sha256": "9deef447e9ff5b4b1c028f40af135ac5493738da08f16aeab0c07255cdd7f700",
+      "size": 94
+    },
+    {
       "path": "assets/instantlore/lang/en_us.json",
       "sha256": "099f742347132880c7486cc9664c4f34837022df3fb710fab1bcee271a1b0eed",
       "size": 1218
@@ -745,6 +750,11 @@
       "path": "assets/instantlore/models/item/lantern.json",
       "sha256": "44ea3a4c284b913858e82f150f8ea48f57675734d79a9935531b39e556a8622b",
       "size": 5355
+    },
+    {
+      "path": "assets/instantlore/models/item/loki_spear.json",
+      "sha256": "1d436e2ab84665bbefa89ee98c5d25aa914ad9c3604bb18ddec6ca67968412b7",
+      "size": 82381
     },
     {
       "path": "assets/instantlore/models/item/scroll.json",
@@ -927,9 +937,19 @@
       "size": 187
     },
     {
+      "path": "assets/instantlore/textures/item/outline.png",
+      "sha256": "9a0f41aaae55a8b7550d3d230f7cbd5a000b35e54a86f3adf2d25a35fcc2503f",
+      "size": 160
+    },
+    {
       "path": "assets/instantlore/textures/item/pioneer_chestplate.png",
       "sha256": "f36481133b35a4e88fa0f7f4a7ca79ac2df1f16575087dcddf9a01feb5dbbd14",
       "size": 157
+    },
+    {
+      "path": "assets/instantlore/textures/item/posoh.png",
+      "sha256": "34ae2b9a159ccd3b0722eec7cf230d5364d2548bef22f1016e37fcea58d04ec3",
+      "size": 1855
     },
     {
       "path": "assets/instantlore/textures/item/probe_wand.png",
