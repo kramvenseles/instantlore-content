@@ -1,12 +1,13 @@
--- Геогессер по карте первого сезона — доска с зумом и панорамой.
+-- Геогессер по карте первого сезона — доска с зумом, панорамой и показом результата.
 --
--- Открытие: клавиша key.1 (G) или geo.open (тест). Колесо — зум к курсору.
--- Перетаскивание ЛКМ — панорама. Клик без сдвига — поставить точку. «Сохранить» —
--- зафиксировать и доложить geo.guess (счёт по расстоянию считает сервер).
+-- Открытие: клавиша key.1 (G) или geo.open (тест). Колесо — зум к курсору,
+-- перетаскивание ЛКМ — панорама, клик без сдвига — поставить точку, «Сохранить» —
+-- доклад geo.guess. Сервер считает промах и шлёт geo.result — тогда доска переходит
+-- в РЕЖИМ ПОКАЗА: подводит вид к обоим точкам, рисует правду, твою догадку и линию
+-- между ними, снизу — промах/очки. «Дальше» → geo.next → следующий раунд.
 --
--- Доска показывает ОКНО большой текстуры (image src_*). Сетка рисуется оверлеем
--- (line-узлы по вьюпорту), а не вшита в картинку, — иначе на зуме тонкие линии
--- пропадают при выборке.
+-- Доска показывает ОКНО большой текстуры (image src_*): зум/панорама — сдвиг окна.
+-- Сетка рисуется оверлеем (не вшита), иначе на зуме тонкие линии пропадают.
 --
 -- ⚠️ WORLD_* и TEX должны совпадать с картинкой (gen_placeholder_map2.py): ±20000, 4000px.
 
@@ -23,20 +24,24 @@ local BX, BY = -90, -90
 
 local MIN_VIEW = 600
 local ZOOM_STEP = 0.8
-local DRAG_SLOP = 4         -- сдвиг больше этого (px) = пан, а не клик
+local DRAG_SLOP = 4
 
 -- вьюпорт
 local view = SPAN
 local cx, cz = 0, 0
--- текущая (ещё не сохранённая) точка и сохранённая
+-- режим: "guess" (угадываем) | "result" (показ правды)
+local mode = "guess"
+-- текущая/сохранённая точка догадки
 local px, pz = nil, nil
 local sx, sz = nil, nil
+-- данные результата (в режиме показа)
+local R = nil
 -- жест
 local pressed = false
 local moved = 0
--- сессия раундов (приходит с сервера)
+-- сессия
 local round_n, round_of = 0, 0
-local handle = nil           -- хэндл открытого экрана (чтобы закрыть)
+local handle = nil
 
 local function close_screen()
     if handle then handle.close(); handle = nil end
@@ -56,7 +61,6 @@ local function clamp_center()
     end
 end
 
--- «красивый» шаг сетки: ~6 делений на окно
 local function nice_step(target)
     for _, s in ipairs({ 250, 500, 1000, 2000, 5000, 10000, 20000 }) do
         if s >= target then return s end
@@ -64,9 +68,17 @@ local function nice_step(target)
     return 20000
 end
 
+-- подвести вид так, чтобы обе точки попали в кадр с запасом
+local function frame_two(ax, az, gx, gz)
+    local span = math.max(math.abs(ax - gx), math.abs(az - gz)) * 1.7
+    view = clamp(span, 1500, SPAN)
+    cx = (ax + gx) / 2
+    cz = (az + gz) / 2
+    clamp_center()
+end
+
 local render
 
--- мир <-> доска (пиксель от левого-верхнего угла доски)
 local function world_left() return cx - view / 2 end
 local function world_top() return cz - view / 2 end
 
@@ -75,7 +87,12 @@ local function board_px_to_world(bpx, bpy)
            math.floor(world_top() + bpy / DH * view + 0.5)
 end
 
--- нажатие над доской (ЛКМ вниз): запоминаем жест, точку ставим на отпускании
+-- мир -> пиксель доски
+local function world_to_board(wx, wz)
+    return (wx - world_left()) / view * DW, (wz - world_top()) / view * DH
+end
+
+-- нажатие над доской: запоминаем жест (и для клика, и для панорамы)
 local function on_board_press()
     pressed = true
     moved = 0
@@ -84,7 +101,6 @@ end
 local function on_drag(d)
     if not pressed then return end
     moved = moved + math.abs(d.dx) + math.abs(d.dy)
-    -- тащим карту за курсором: окно едет в обратную сторону
     cx = cx - d.dx / DW * view
     cz = cz - d.dy / DH * view
     clamp_center()
@@ -94,8 +110,8 @@ end
 local function on_release(p)
     if not pressed then return end
     pressed = false
-    if moved <= DRAG_SLOP then
-        -- чистый клик — курсор от центра экрана; доска стоит в BX,BY
+    -- точку ставим только в режиме угадывания и только если это клик, а не протяжка
+    if mode == "guess" and moved <= DRAG_SLOP then
         local bpx, bpy = p.x - BX, p.y - BY
         if bpx >= 0 and bpx <= DW and bpy >= 0 and bpy <= DH then
             px, pz = board_px_to_world(bpx, bpy)
@@ -126,11 +142,11 @@ local function on_save()
     render()
 end
 
-local function ui_swallow() pressed = false end  -- нажатие по панели — не по карте
+local function ui_swallow() pressed = false end
 
--- маркер-крестик по центру (bpx,bpy): симметричные планки на rect'ах + точка
+-- крестик-маркер по центру (bpx,bpy): симметричные планки + точка
 local function marker(nodes, bpx, bpy, arm_col, dot_col)
-    if bpx < 0 or bpx > DW or bpy < 0 or bpy > DH then return end
+    if bpx < -4 or bpx > DW + 4 or bpy < -4 or bpy > DH + 4 then return end
     local mx = BX + math.floor(bpx + 0.5)
     local my = BY + math.floor(bpy + 0.5)
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 7, y = my - 1, width = 14, height = 2, background = arm_col }
@@ -138,20 +154,16 @@ local function marker(nodes, bpx, bpy, arm_col, dot_col)
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 2, y = my - 2, width = 4, height = 4, background = dot_col }
 end
 
-render = function()
-    clamp_center()
+-- общая часть доски: рамка, окно карты, сетка + подписи осей за доской
+local function draw_board(nodes)
     local wl, wt = world_left(), world_top()
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX - 3, y = BY - 3, width = DW + 6, height = DH + 6, background = "#FF0A0C14" }
+    nodes[#nodes + 1] = { type = "image", anchor = "center", x = BX, y = BY, width = DW, height = DH,
+        texture = MAP, tex_w = TEX, tex_h = TEX,
+        src_x = (wl - WORLD_X0) * BPP, src_y = (wt - WORLD_Z0) * BPP,
+        src_w = view * BPP, src_h = view * BPP,
+        id = "board", on_click = on_board_press }
 
-    local nodes = {
-        { type = "rect", anchor = "center", x = BX - 3, y = BY - 3, width = DW + 6, height = DH + 6, background = "#FF0A0C14" },
-        { type = "image", anchor = "center", x = BX, y = BY, width = DW, height = DH,
-          texture = MAP, tex_w = TEX, tex_h = TEX,
-          src_x = (wl - WORLD_X0) * BPP, src_y = (wt - WORLD_Z0) * BPP,
-          src_w = view * BPP, src_h = view * BPP,
-          id = "board", on_click = on_board_press },
-    }
-
-    -- сетка оверлеем на доске; подписи осей — ЗА доской (X сверху, Z слева)
     local step = nice_step(view / 6)
     local gx = math.ceil(wl / step) * step
     while gx <= wl + view do
@@ -168,26 +180,56 @@ render = function()
         gz = gz + step
     end
 
-    -- сохранённая точка (бирюзовый) и текущая (жёлто-зелёный)
-    if sx then marker(nodes, (sx - wl) / view * DW, (sz - wt) / view * DH, "#FF66E0FF", "#FF3AC8F0") end
-    if px then marker(nodes, (px - wl) / view * DW, (pz - wt) / view * DH, "#FFFFE08A", "#FF78E6AA") end
-
-    -- панель СПРАВА ОТ доски (в поле, не поверх карты): текущая точка, кнопка, сохранённое
-    local PX0, PW = BX + DW + 6, 64
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
     if round_of > 0 then
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX, y = BY - 20, align = "left", text = string.format("§eРаунд %d/%d", round_n, round_of), color = "#FFFFE08A" }
     end
+end
+
+-- режим угадывания: маркеры догадки + правая панель
+local function draw_guess(nodes)
+    if sx then local bx, by = world_to_board(sx, sz); marker(nodes, bx, by, "#FF66E0FF", "#FF3AC8F0") end
+    if px then local bx, by = world_to_board(px, pz); marker(nodes, bx, by, "#FFFFE08A", "#FF78E6AA") end
+
+    local PX0, PW = BX + DW + 6, 64
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
     nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
-    if sx then
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 62, align = "left", text = "§aСохранено", color = "#FF88E6AA" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 72, align = "left", text = "§ax " .. sx, color = "#FF88E6AA" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 81, align = "left", text = "§az " .. sz, color = "#FF88E6AA" }
-    end
+end
 
+-- режим показа: правда + догадка + линия + нижняя полоса со счётом
+local function draw_result(nodes)
+    local wl, wt = world_left(), world_top()
+    local abx, aby = world_to_board(R.ax, R.az)
+    local gbx, gby = world_to_board(R.gx, R.gz)
+
+    -- линия догадка → правда
+    nodes[#nodes + 1] = { type = "line", anchor = "center", x = BX + gbx, y = BY + gby, x2 = BX + abx, y2 = BY + aby, thickness = 1, color = "#C0FFFFFF" }
+    -- твоя догадка (жёлтый) и правда (бирюзовый)
+    marker(nodes, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    marker(nodes, abx, aby, "#FF66E0FF", "#FF3AC8F0")
+    -- подпись места у правды
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + abx + 7, y = BY + aby - 4, align = "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
+
+    -- нижняя полоса: промах · очки · всего + кнопка
+    local BARY = BY + DH + 4
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX, y = BARY, width = DW, height = 16, background = "#E6080A12" }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
+        text = string.format("§7промах §f%d §7бл   §a+%d   §7всего §f%d", R.dist or 0, R.points or 0, R.total or 0), color = "#FFE8EEF8" }
+    nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 54, height = 14,
+        text = R["final"] and "Готово" or "Дальше",
+        on_click = function()
+            lore.report(R["final"] and "geo.done" or "geo.next", {})
+            close_screen()
+        end }
+end
+
+render = function()
+    clamp_center()
+    local nodes = {}
+    draw_board(nodes)
+    if mode == "result" then draw_result(nodes) else draw_guess(nodes) end
     handle = lore.screen({
         title = "Карта первого сезона",
         nodes = nodes,
@@ -198,38 +240,27 @@ render = function()
 end
 
 local function open()
+    mode = "guess"
     view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
     render()
 end
 
--- экран результата раунда (поверх): промах, очки, всего, кнопка дальше/готово
-local function show_result(d)
-    local last = d["final"]
-    local nodes = {
-        { type = "rect", anchor = "center", x = -80, y = -56, width = 160, height = 112, background = "#F00A0C14" },
-        { type = "text", anchor = "center", x = 0, y = -48, align = "center", text = string.format("§eРаунд %d/%d", d.n or 0, d.of or 0), color = "#FFFFE08A" },
-        { type = "text", anchor = "center", x = 0, y = -34, align = "center", text = "§7это §f" .. tostring(d.name or "?"), color = "#FFE8EEF8" },
-        { type = "text", anchor = "center", x = 0, y = -16, align = "center", text = string.format("§7промах  §f%d §7бл", d.dist or 0), color = "#FFCCD4E6" },
-        { type = "text", anchor = "center", x = 0, y = -2, align = "center", text = string.format("§a+%d §7очков", d.points or 0), color = "#FF88E6AA" },
-        { type = "text", anchor = "center", x = 0, y = 14, align = "center", text = string.format("§7всего  §f%d", d.total or 0), color = "#FFE8EEF8" },
-        { type = "button", anchor = "center", x = -40, y = 34, width = 80, height = 14,
-          text = last and "Готово" or "Дальше",
-          on_click = function()
-              lore.report(last and "geo.done" or "geo.next", {})
-              close_screen()
-          end },
-    }
-    handle = lore.screen({ title = "Результат", nodes = nodes })
-end
-
--- новый раунд с сервера: свежее состояние, экран закрыть (игрок осматривается)
-lore.on("geo.round", function(d)
-    round_n, round_of = d.n or 0, d.of or 0
-    view, cx, cz, px, pz, sx, sz = SPAN, 0, 0, nil, nil, nil, nil
-    close_screen()
+-- результат раунда с сервера: показать на карте
+lore.on("geo.result", function(d)
+    R = d
+    mode = "result"
+    px, pz, sx, sz = nil, nil, nil, nil
+    frame_two(d.ax, d.az, d.gx, d.gz)
+    render()
 end)
 
-lore.on("geo.result", function(d) show_result(d) end)
+-- новый раунд: свежее угадывание, экран закрыть (игрок осматривается)
+lore.on("geo.round", function(d)
+    round_n, round_of = d.n or 0, d.of or 0
+    mode = "guess"
+    view, cx, cz, px, pz, sx, sz, R = SPAN, 0, 0, nil, nil, nil, nil, nil
+    close_screen()
+end)
 
 lore.on("geo.open", open)
 lore.on("key.1", open)
