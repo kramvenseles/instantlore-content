@@ -188,7 +188,7 @@ render = function()
 end
 
 local function open()
-    view, cx, cz, px, pz, sx, sz, pressed, moved = 8000, 3000, -5000, 3000, -5000, 3000, -5000, false, 0  -- ТЕСТ
+    view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
     render()
 end
 
