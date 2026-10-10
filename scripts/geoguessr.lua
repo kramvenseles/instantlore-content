@@ -212,17 +212,25 @@ local function draw_result(nodes)
     -- подпись места у правды
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + abx + 7, y = BY + aby - 4, align = "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
 
-    -- нижняя полоса: промах · очки · всего + кнопка
+    -- нижняя полоса: промах · очки (всего — на финале крупно), кнопка справа
     local BARY = BY + DH + 4
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX, y = BARY, width = DW, height = 16, background = "#E6080A12" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
-        text = string.format("§7промах §f%d §7бл   §a+%d   §7всего §f%d", R.dist or 0, R.points or 0, R.total or 0), color = "#FFE8EEF8" }
+        text = R["final"]
+            and string.format("§eИтог: §f%d §7очков", R.total or 0)
+            or string.format("§7промах §f%d §7бл     §a+%d §7очков", R.dist or 0, R.points or 0),
+        color = "#FFE8EEF8" }
     nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 54, height = 14,
         text = R["final"] and "Готово" or "Дальше",
         on_click = function()
             lore.report(R["final"] and "geo.done" or "geo.next", {})
             close_screen()
         end }
+    -- бегущий счёт — компактно над полосой справа (не перекрывается кнопкой)
+    if not R["final"] then
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW, y = BY - 20, align = "right",
+            text = string.format("§7всего §f%d", R.total or 0), color = "#FFE8EEF8" }
+    end
 end
 
 render = function()
