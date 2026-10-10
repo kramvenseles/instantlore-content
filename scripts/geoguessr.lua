@@ -34,6 +34,13 @@ local sx, sz = nil, nil
 -- жест
 local pressed = false
 local moved = 0
+-- сессия раундов (приходит с сервера)
+local round_n, round_of = 0, 0
+local handle = nil           -- хэндл открытого экрана (чтобы закрыть)
+
+local function close_screen()
+    if handle then handle.close(); handle = nil end
+end
 
 local function clamp(v, lo, hi)
     if v < lo then return lo elseif v > hi then return hi else return v end
@@ -168,6 +175,9 @@ render = function()
     -- панель СПРАВА ОТ доски (в поле, не поверх карты): текущая точка, кнопка, сохранённое
     local PX0, PW = BX + DW + 6, 64
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
+    if round_of > 0 then
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX, y = BY - 20, align = "left", text = string.format("§eРаунд %d/%d", round_n, round_of), color = "#FFFFE08A" }
+    end
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
@@ -178,7 +188,7 @@ render = function()
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 81, align = "left", text = "§az " .. sz, color = "#FF88E6AA" }
     end
 
-    lore.screen({
+    handle = lore.screen({
         title = "Карта первого сезона",
         nodes = nodes,
         on_scroll = on_zoom,
@@ -191,6 +201,35 @@ local function open()
     view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
     render()
 end
+
+-- экран результата раунда (поверх): промах, очки, всего, кнопка дальше/готово
+local function show_result(d)
+    local last = d["final"]
+    local nodes = {
+        { type = "rect", anchor = "center", x = -80, y = -56, width = 160, height = 112, background = "#F00A0C14" },
+        { type = "text", anchor = "center", x = 0, y = -48, align = "center", text = string.format("§eРаунд %d/%d", d.n or 0, d.of or 0), color = "#FFFFE08A" },
+        { type = "text", anchor = "center", x = 0, y = -34, align = "center", text = "§7это §f" .. tostring(d.name or "?"), color = "#FFE8EEF8" },
+        { type = "text", anchor = "center", x = 0, y = -16, align = "center", text = string.format("§7промах  §f%d §7бл", d.dist or 0), color = "#FFCCD4E6" },
+        { type = "text", anchor = "center", x = 0, y = -2, align = "center", text = string.format("§a+%d §7очков", d.points or 0), color = "#FF88E6AA" },
+        { type = "text", anchor = "center", x = 0, y = 14, align = "center", text = string.format("§7всего  §f%d", d.total or 0), color = "#FFE8EEF8" },
+        { type = "button", anchor = "center", x = -40, y = 34, width = 80, height = 14,
+          text = last and "Готово" or "Дальше",
+          on_click = function()
+              lore.report(last and "geo.done" or "geo.next", {})
+              close_screen()
+          end },
+    }
+    handle = lore.screen({ title = "Результат", nodes = nodes })
+end
+
+-- новый раунд с сервера: свежее состояние, экран закрыть (игрок осматривается)
+lore.on("geo.round", function(d)
+    round_n, round_of = d.n or 0, d.of or 0
+    view, cx, cz, px, pz, sx, sz = SPAN, 0, 0, nil, nil, nil, nil
+    close_screen()
+end)
+
+lore.on("geo.result", function(d) show_result(d) end)
 
 lore.on("geo.open", open)
 lore.on("key.1", open)
