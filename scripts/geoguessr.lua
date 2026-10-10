@@ -13,14 +13,15 @@
 
 local MAP = "instantlore:textures/gui/s1_map.png"
 
--- рамка мира (блоки), та же что у картинки
-local WORLD_X0, WORLD_X1 = -5000, 10000
-local WORLD_Z0, WORLD_Z1 = -3000, 7000
+-- рамка мира (блоки), та же что у картинки — барьер 20000x20000, центр 0,0
+local WORLD_X0, WORLD_X1 = -10000, 10000
+local WORLD_Z0, WORLD_Z1 = -10000, 10000
 
 -- размер доски на экране (пиксели GUI); клик приходит в [0,DW)x[0,DH)
-local DW, DH = 300, 180
+-- квадрат, потому что барьер квадратный (20000x20000)
+local DW, DH = 180, 180
 -- левый-верхний угол доски — смещение от центра экрана
-local BX, BY = -150, -88
+local BX, BY = -90, -92
 
 -- пиксель клика по доске -> мировые координаты
 local function px_to_world(cx, cy)
@@ -34,7 +35,7 @@ local open_board -- предварительное объявление: on_clic
 -- guess = { cx, cy, wx, wz } или nil (ещё не кликали)
 open_board = function(guess)
     local nodes = {
-        { type = "rect", anchor = "center", x = -160, y = -110, width = 320, height = 240,
+        { type = "rect", anchor = "center", x = -100, y = -108, width = 200, height = 232,
           background = "#EE0C0E16" },
         { type = "text", anchor = "center", x = 0, y = -104, align = "center",
           text = "§bКуда это? — отметь место на карте", color = "#FF9AD8FF" },
@@ -59,17 +60,17 @@ open_board = function(guess)
         nodes[#nodes + 1] = { type = "rect", anchor = "center",
             x = mx - 2, y = my - 2, width = 4, height = 4, background = "#FF78E6AA" }
 
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = 98, align = "center",
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = 96, align = "center",
             text = string.format("§7твоя точка:  §fx %d   z %d", guess.wx, guess.wz),
             color = "#FFCCD4E6" }
-        nodes[#nodes + 1] = { type = "button", anchor = "center", x = -50, y = 112,
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = -50, y = 108,
             width = 100, height = 18, text = "Подтвердить",
             on_click = function()
                 lore.report("geo.guess", { x = guess.wx, z = guess.wz })
                 lore.log(string.format("geo.guess x=%d z=%d", guess.wx, guess.wz))
             end }
     else
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = 98, align = "center",
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = 96, align = "center",
             text = "§8кликни по карте", color = "#FF6A7A8A" }
     end
 
