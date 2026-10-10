@@ -168,7 +168,7 @@ local function place_marker(ch, bpx, bpy, arm_col, dot_col)
     end
     local ccx, ccy = DW / 2, DH / 2
     local dx, dy = bpx - ccx, bpy - ccy
-    local INSET = 8
+    local INSET = 2          -- кончик вплотную к краю (не 0 — чтобы крайний пиксель не срезало клипом)
     local tx, ty = math.huge, math.huge
     if dx > 0 then tx = (DW - INSET - ccx) / dx elseif dx < 0 then tx = (INSET - ccx) / dx end
     if dy > 0 then ty = (DH - INSET - ccy) / dy elseif dy < 0 then ty = (INSET - ccy) / dy end
@@ -311,3 +311,11 @@ end)
 
 lore.on("geo.open", open)
 lore.on("key.1", open)
+
+lore.on("geo.testedge", function()
+    mode = "guess"; round_n, round_of = 0, 0
+    view, cx, cz = 4000, 0, 0
+    px, pz = 16000, -200
+    sx, sz = -200, 15000
+    render()
+end)
