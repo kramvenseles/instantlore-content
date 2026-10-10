@@ -1,5 +1,11 @@
 {
   "modules": {
+    "geoguessr": {
+      "enabled": true,
+      "config": {
+        "round_seconds": 8
+      }
+    },
     "vampire": {
       "enabled": true,
       "config": {
