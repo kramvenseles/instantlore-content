@@ -165,15 +165,16 @@ render = function()
     if px then marker(nodes, (px - wl) / view * DW, (pz - wt) / view * DH, "#FFFFE08A", "#FF78E6AA") end
 
     -- правая панель (поверх угла доски): текущая точка, кнопка, сохранённое
-    local PX0, PW = 44, 54
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = 34, width = PW, height = 64, background = "#E6080A12", id = "panel", on_click = ui_swallow }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 4, y = 38, align = "left", text = "§7Точка:", color = "#FFBFE8FF" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 4, y = 48, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 4, y = 57, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 2, y = 68, width = PW - 4, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
+    local PX0, PW = 36, 62
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = 26, width = PW, height = 82, background = "#E6080A12", id = "panel", on_click = ui_swallow }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 30, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 40, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 49, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
+    nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = 60, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
     if sx then
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 4, y = 85, align = "left", text = "§aСохранено:", color = "#FF88E6AA" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 4, y = 92, align = "left", text = string.format("§ax %d z %d", sx, sz), color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 78, align = "left", text = "§aСохранено", color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 88, align = "left", text = "§ax " .. sx, color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 97, align = "left", text = "§az " .. sz, color = "#FF88E6AA" }
     end
 
     lore.screen({
