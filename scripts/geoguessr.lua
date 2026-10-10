@@ -68,10 +68,10 @@ local function nice_step(target)
     return 20000
 end
 
--- подвести вид так, чтобы обе точки попали в кадр с запасом
+-- подвести вид так, чтобы обе точки попали в кадр с ЗАПАСОМ (маркеры и подпись — внутри)
 local function frame_two(ax, az, gx, gz)
-    local span = math.max(math.abs(ax - gx), math.abs(az - gz)) * 1.7
-    view = clamp(span, 1500, SPAN)
+    local span = math.max(math.abs(ax - gx), math.abs(az - gz)) * 2.4
+    view = clamp(span, 2000, SPAN)
     cx = (ax + gx) / 2
     cz = (az + gz) / 2
     clamp_center()
@@ -201,16 +201,22 @@ end
 -- режим показа: правда + догадка + линия + нижняя полоса со счётом
 local function draw_result(nodes)
     local wl, wt = world_left(), world_top()
-    local abx, aby = world_to_board(R.ax, R.az)
-    local gbx, gby = world_to_board(R.gx, R.gz)
+    -- точки держим внутри доски (на всякий случай — после frame_two они и так внутри)
+    local function clampb(bx, by) return clamp(bx, 0, DW), clamp(by, 0, DH) end
+    local abx, aby = clampb(world_to_board(R.ax, R.az))
+    local gbx, gby = clampb(world_to_board(R.gx, R.gz))
 
-    -- линия догадка → правда
+    -- линия догадка → правда (концы внутри доски)
     nodes[#nodes + 1] = { type = "line", anchor = "center", x = BX + gbx, y = BY + gby, x2 = BX + abx, y2 = BY + aby, thickness = 1, color = "#C0FFFFFF" }
     -- твоя догадка (жёлтый) и правда (бирюзовый)
     marker(nodes, gbx, gby, "#FFFFE08A", "#FF78E6AA")
     marker(nodes, abx, aby, "#FF66E0FF", "#FF3AC8F0")
-    -- подпись места у правды
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + abx + 7, y = BY + aby - 4, align = "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
+    -- подпись места у правды: сторона и высота так, чтобы не вылезти за доску
+    local right = abx > DW * 0.5
+    local lx = right and (BX + abx - 8) or (BX + abx + 8)
+    local ly = clamp(BY + aby - 4, BY + 2, BY + DH - 9)
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = lx, y = ly,
+        align = right and "right" or "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
 
     -- нижняя полоса: промах · очки (всего — на финале крупно), кнопка справа
     local BARY = BY + DH + 4
