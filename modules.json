@@ -3,7 +3,7 @@
     "geoguessr": {
       "enabled": true,
       "config": {
-        "round_seconds": 8
+        "round_seconds": 120
       }
     },
     "vampire": {
