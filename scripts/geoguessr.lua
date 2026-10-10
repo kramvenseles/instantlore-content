@@ -311,11 +311,3 @@ end)
 
 lore.on("geo.open", open)
 lore.on("key.1", open)
-
-lore.on("geo.testedge", function()
-    mode = "guess"; round_n, round_of = 0, 0
-    view, cx, cz = 4000, 0, 0
-    px, pz = 16000, -200
-    sx, sz = -200, 15000
-    render()
-end)
