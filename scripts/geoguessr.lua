@@ -307,6 +307,8 @@ lore.on("geo.round", function(d)
     mode = "guess"
     view, cx, cz, px, pz, sx, sz, R = SPAN, 0, 0, nil, nil, nil, nil, nil
     close_screen()
+    -- подсказка над хотбаром: где эта локация? открыть карту на G
+    lore.emit("actionbar.set", { text = string.format("§7Место %d/%d · §eнажми §fG§e — открыть карту", round_n, round_of) })
 end)
 
 lore.on("geo.open", open)
