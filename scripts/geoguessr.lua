@@ -144,14 +144,19 @@ end
 
 local function ui_swallow() pressed = false end
 
--- крестик-маркер по центру (bpx,bpy): симметричные планки + точка
-local function marker(nodes, bpx, bpy, arm_col, dot_col)
-    if bpx < -4 or bpx > DW + 4 or bpy < -4 or bpy > DH + 4 then return end
-    local mx = BX + math.floor(bpx + 0.5)
-    local my = BY + math.floor(bpy + 0.5)
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 7, y = my - 1, width = 14, height = 2, background = arm_col }
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 1, y = my - 7, width = 2, height = 14, background = arm_col }
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 2, y = my - 2, width = 4, height = 4, background = dot_col }
+-- крестик-маркер в ДЕТИ clip-группы (координаты board-relative, 0..DW): планки + точка.
+-- Обрезка по доске делается группой — за край уходит, геометрию не меняем.
+local function marker(ch, bpx, bpy, arm_col, dot_col)
+    local mx = math.floor(bpx + 0.5)
+    local my = math.floor(bpy + 0.5)
+    ch[#ch + 1] = { type = "rect", x = mx - 7, y = my - 1, width = 14, height = 2, background = arm_col }
+    ch[#ch + 1] = { type = "rect", x = mx - 1, y = my - 7, width = 2, height = 14, background = arm_col }
+    ch[#ch + 1] = { type = "rect", x = mx - 2, y = my - 2, width = 4, height = 4, background = dot_col }
+end
+
+-- clip-группа ровно по доске: дети обрезаются по её краю
+local function clip_group(children)
+    return { type = "group", anchor = "center", x = BX, y = BY, width = DW, height = DH, clip = true, children = children }
 end
 
 -- общая часть доски: рамка, окно карты, сетка + подписи осей за доской
@@ -187,8 +192,10 @@ end
 
 -- режим угадывания: маркеры догадки + правая панель
 local function draw_guess(nodes)
-    if sx then local bx, by = world_to_board(sx, sz); marker(nodes, bx, by, "#FF66E0FF", "#FF3AC8F0") end
-    if px then local bx, by = world_to_board(px, pz); marker(nodes, bx, by, "#FFFFE08A", "#FF78E6AA") end
+    local ch = {}
+    if sx then local bx, by = world_to_board(sx, sz); marker(ch, bx, by, "#FF66E0FF", "#FF3AC8F0") end
+    if px then local bx, by = world_to_board(px, pz); marker(ch, bx, by, "#FFFFE08A", "#FF78E6AA") end
+    nodes[#nodes + 1] = clip_group(ch)
 
     local PX0, PW = BX + DW + 6, 64
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
@@ -201,22 +208,21 @@ end
 -- режим показа: правда + догадка + линия + нижняя полоса со счётом
 local function draw_result(nodes)
     local wl, wt = world_left(), world_top()
-    -- точки держим внутри доски (на всякий случай — после frame_two они и так внутри)
-    local function clampb(bx, by) return clamp(bx, 0, DW), clamp(by, 0, DH) end
-    local abx, aby = clampb(world_to_board(R.ax, R.az))
-    local gbx, gby = clampb(world_to_board(R.gx, R.gz))
+    -- истинные позиции (board-relative); за край доски — обрежет clip-группа
+    local abx, aby = world_to_board(R.ax, R.az)
+    local gbx, gby = world_to_board(R.gx, R.gz)
 
-    -- линия догадка → правда (концы внутри доски)
-    nodes[#nodes + 1] = { type = "line", anchor = "center", x = BX + gbx, y = BY + gby, x2 = BX + abx, y2 = BY + aby, thickness = 1, color = "#C0FFFFFF" }
+    local ch = {}
+    -- линия догадка → правда
+    ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#C0FFFFFF" }
     -- твоя догадка (жёлтый) и правда (бирюзовый)
-    marker(nodes, gbx, gby, "#FFFFE08A", "#FF78E6AA")
-    marker(nodes, abx, aby, "#FF66E0FF", "#FF3AC8F0")
-    -- подпись места у правды: сторона и высота так, чтобы не вылезти за доску
+    marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    marker(ch, abx, aby, "#FF66E0FF", "#FF3AC8F0")
+    -- подпись места у правды: сторону выбираем, чтобы текст шёл внутрь карты
     local right = abx > DW * 0.5
-    local lx = right and (BX + abx - 8) or (BX + abx + 8)
-    local ly = clamp(BY + aby - 4, BY + 2, BY + DH - 9)
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = lx, y = ly,
+    ch[#ch + 1] = { type = "text", x = right and (abx - 8) or (abx + 8), y = aby - 4,
         align = right and "right" or "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
+    nodes[#nodes + 1] = clip_group(ch)
 
     -- нижняя полоса: промах · очки (всего — на финале крупно), кнопка справа
     local BARY = BY + DH + 4
@@ -224,9 +230,9 @@ local function draw_result(nodes)
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
         text = R["final"]
             and string.format("§eИтог: §f%d §7очков", R.total or 0)
-            or string.format("§7промах §f%d §7бл     §a+%d §7очков", R.dist or 0, R.points or 0),
+            or string.format("§7промах §f%d §7бл   §a+%d", R.dist or 0, R.points or 0),
         color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 54, height = 14,
+    nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 46, y = BARY + 1, width = 46, height = 14,
         text = R["final"] and "Готово" or "Дальше",
         on_click = function()
             lore.report(R["final"] and "geo.done" or "geo.next", {})
