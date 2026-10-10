@@ -159,6 +159,33 @@ local function clip_group(children)
     return { type = "group", anchor = "center", x = BX, y = BY, width = DW, height = DH, clip = true, children = children }
 end
 
+-- метка: внутри доски — крестик; за краем — стрелка-направление НА краю (не пропадает).
+-- Возвращает (x,y) показа в board-коорд (для подписи).
+local function place_marker(ch, bpx, bpy, arm_col, dot_col)
+    if bpx >= 0 and bpx <= DW and bpy >= 0 and bpy <= DH then
+        marker(ch, bpx, bpy, arm_col, dot_col)
+        return bpx, bpy
+    end
+    local ccx, ccy = DW / 2, DH / 2
+    local dx, dy = bpx - ccx, bpy - ccy
+    local INSET = 8
+    local tx, ty = math.huge, math.huge
+    if dx > 0 then tx = (DW - INSET - ccx) / dx elseif dx < 0 then tx = (INSET - ccx) / dx end
+    if dy > 0 then ty = (DH - INSET - ccy) / dy elseif dy < 0 then ty = (INSET - ccy) / dy end
+    local t = math.min(tx, ty)
+    local ex = math.floor(ccx + dx * t + 0.5)
+    local ey = math.floor(ccy + dy * t + 0.5)
+    local len = math.max(1, math.sqrt(dx * dx + dy * dy))
+    local ux, uy = dx / len, dy / len          -- направление наружу
+    local perpx, perpy = -uy, ux
+    local L, W = 7, 4
+    local bx, by = ex - ux * L, ey - uy * L     -- основание стрелки
+    ch[#ch + 1] = { type = "line", x = ex, y = ey, x2 = math.floor(bx + perpx * W + 0.5), y2 = math.floor(by + perpy * W + 0.5), thickness = 1, color = arm_col }
+    ch[#ch + 1] = { type = "line", x = ex, y = ey, x2 = math.floor(bx - perpx * W + 0.5), y2 = math.floor(by - perpy * W + 0.5), thickness = 1, color = arm_col }
+    ch[#ch + 1] = { type = "rect", x = ex - 1, y = ey - 1, width = 3, height = 3, background = dot_col }
+    return ex, ey
+end
+
 -- общая часть доски: рамка, окно карты, сетка + подписи осей за доской
 local function draw_board(nodes)
     local wl, wt = world_left(), world_top()
@@ -193,8 +220,8 @@ end
 -- режим угадывания: маркеры догадки + правая панель
 local function draw_guess(nodes)
     local ch = {}
-    if sx then local bx, by = world_to_board(sx, sz); marker(ch, bx, by, "#FF66E0FF", "#FF3AC8F0") end
-    if px then local bx, by = world_to_board(px, pz); marker(ch, bx, by, "#FFFFE08A", "#FF78E6AA") end
+    if sx then local bx, by = world_to_board(sx, sz); place_marker(ch, bx, by, "#FF66E0FF", "#FF3AC8F0") end
+    if px then local bx, by = world_to_board(px, pz); place_marker(ch, bx, by, "#FFFFE08A", "#FF78E6AA") end
     nodes[#nodes + 1] = clip_group(ch)
 
     local PX0, PW = BX + DW + 6, 64
@@ -213,14 +240,14 @@ local function draw_result(nodes)
     local gbx, gby = world_to_board(R.gx, R.gz)
 
     local ch = {}
-    -- линия догадка → правда
+    -- линия догадка → правда (к истинным позициям; за краем обрежется)
     ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#C0FFFFFF" }
-    -- твоя догадка (жёлтый) и правда (бирюзовый)
-    marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
-    marker(ch, abx, aby, "#FF66E0FF", "#FF3AC8F0")
-    -- подпись места у правды: сторону выбираем, чтобы текст шёл внутрь карты
-    local right = abx > DW * 0.5
-    ch[#ch + 1] = { type = "text", x = right and (abx - 8) or (abx + 8), y = aby - 4,
+    -- твоя догадка (жёлтый) и правда (бирюзовый); за краем — стрелка-направление
+    place_marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    local adx, ady = place_marker(ch, abx, aby, "#FF66E0FF", "#FF3AC8F0")
+    -- подпись места у ПОКАЗАННОЙ точки правды (у стрелки, если она за краем)
+    local right = adx > DW * 0.5
+    ch[#ch + 1] = { type = "text", x = right and (adx - 8) or (adx + 8), y = ady - 4,
         align = right and "right" or "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
     nodes[#nodes + 1] = clip_group(ch)
 
