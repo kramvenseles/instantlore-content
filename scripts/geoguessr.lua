@@ -231,5 +231,5 @@ end)
 
 lore.on("geo.result", function(d) show_result(d) end)
 
-lore.on("geo.open", open)
+lore.on("geo.open", function() show_result({n=1,of=3,name="база",dist=212,points=931,total=931,["final"]=false}) end)  -- ТЕСТ
 lore.on("key.1", open)
