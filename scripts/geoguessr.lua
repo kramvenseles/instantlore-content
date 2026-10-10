@@ -42,6 +42,10 @@ local moved = 0
 -- сессия
 local round_n, round_of = 0, 0
 local handle = nil
+-- таймер раунда (секунды приходят с сервером в geo.round; 0 — без таймера)
+local round_secs = 0
+local remaining = 0
+local tick_cancel = nil
 
 local function close_screen()
     if handle then handle.close(); handle = nil end
@@ -134,12 +138,58 @@ local function on_zoom(s)
     render()
 end
 
+local function fmt_time(s)
+    if s < 0 then s = 0 end
+    return string.format("%d:%02d", math.floor(s / 60), s % 60)
+end
+
+local function stop_timer()
+    if tick_cancel then tick_cancel(); tick_cancel = nil end
+end
+
 local function on_save()
     if not px then return end
     sx, sz = px, pz
+    stop_timer()
     lore.report("geo.guess", { x = sx, z = sz })
     lore.log(string.format("geo.guess x=%d z=%d", sx, sz))
     render()
+end
+
+-- время вышло: отправить текущую догадку, а нет метки — таймаут (сервер даст 0 очков)
+local function on_timeout()
+    stop_timer()
+    if mode ~= "guess" then return end
+    if px then
+        on_save()
+    else
+        lore.report("geo.guess", { timeout = true })
+        lore.log("geo.guess timeout (без метки)")
+    end
+end
+
+local function on_tick()
+    remaining = remaining - 1
+    if remaining <= 0 then
+        remaining = 0
+        on_timeout()
+        return
+    end
+    -- подсказка над хотбаром (видна, когда доска закрыта; обновляется — не гаснет)
+    lore.emit("actionbar.set", { text = string.format("§7Место %d/%d · §f%s §7· §eG §7— карта",
+        round_n, round_of, fmt_time(remaining)) })
+    -- доска открыта и угадываем — обновить таймер на ней (но не рвать активный жест)
+    if handle and mode == "guess" and not pressed then render() end
+end
+
+local function start_timer(s)
+    stop_timer()
+    round_secs = s or 0
+    remaining = round_secs
+    if round_secs <= 0 then return end
+    lore.emit("actionbar.set", { text = string.format("§7Место %d/%d · §f%s §7· §eG §7— карта",
+        round_n, round_of, fmt_time(remaining)) })
+    tick_cancel = lore.every(1, on_tick)
 end
 
 local function ui_swallow() pressed = false end
@@ -219,6 +269,11 @@ end
 
 -- режим угадывания: маркеры догадки + правая панель
 local function draw_guess(nodes)
+    if round_secs > 0 then
+        local col = remaining <= 10 and "#FFFF6B6B" or "#FFFFE08A"
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW, y = BY - 20, align = "right",
+            text = "§l⏳ " .. fmt_time(remaining), color = col }
+    end
     local ch = {}
     if sx then local bx, by = world_to_board(sx, sz); place_marker(ch, bx, by, "#FF66E0FF", "#FF3AC8F0") end
     if px then local bx, by = world_to_board(px, pz); place_marker(ch, bx, by, "#FFFFE08A", "#FF78E6AA") end
@@ -237,13 +292,15 @@ local function draw_result(nodes)
     local wl, wt = world_left(), world_top()
     -- истинные позиции (board-relative); за край доски — обрежет clip-группа
     local abx, aby = world_to_board(R.ax, R.az)
-    local gbx, gby = world_to_board(R.gx, R.gz)
 
     local ch = {}
-    -- линия догадка → правда (к истинным позициям; за краем обрежется)
-    ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#C0FFFFFF" }
-    -- твоя догадка (жёлтый) и правда (бирюзовый); за краем — стрелка-направление
-    place_marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    -- догадка (есть только если не таймаут-без-метки): линия к правде + жёлтая метка
+    if not R.nog then
+        local gbx, gby = world_to_board(R.gx, R.gz)
+        ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#C0FFFFFF" }
+        place_marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    end
+    -- правда (бирюзовый); за краем — стрелка-направление
     local adx, ady = place_marker(ch, abx, aby, "#FF66E0FF", "#FF3AC8F0")
     -- подпись места у ПОКАЗАННОЙ точки правды (у стрелки, если она за краем)
     local right = adx > DW * 0.5
@@ -257,7 +314,9 @@ local function draw_result(nodes)
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
         text = R["final"]
             and string.format("§eИтог: §f%d §7очков", R.total or 0)
-            or string.format("§7промах §f%d §7бл   §a+%d", R.dist or 0, R.points or 0),
+            or (R.nog
+                and string.format("§cВремя вышло §7· §a+%d", R.points or 0)
+                or string.format("§7промах §f%d §7бл   §a+%d", R.dist or 0, R.points or 0)),
         color = "#FFE8EEF8" }
     nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 46, y = BARY + 1, width = 46, height = 14,
         text = R["final"] and "Готово" or "Дальше",
@@ -294,21 +353,26 @@ end
 
 -- результат раунда с сервера: показать на карте
 lore.on("geo.result", function(d)
+    stop_timer()
     R = d
     mode = "result"
     px, pz, sx, sz = nil, nil, nil, nil
-    frame_two(d.ax, d.az, d.gx, d.gz)
+    -- нет догадки (таймаут без метки) — кадрируем на правду
+    if d.nog then frame_two(d.ax, d.az, d.ax, d.az) else frame_two(d.ax, d.az, d.gx, d.gz) end
     render()
 end)
 
--- новый раунд: свежее угадывание, экран закрыть (игрок осматривается)
+-- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
     view, cx, cz, px, pz, sx, sz, R = SPAN, 0, 0, nil, nil, nil, nil, nil
     close_screen()
-    -- подсказка над хотбаром: где эта локация? открыть карту на G
-    lore.emit("actionbar.set", { text = string.format("§7Место %d/%d · §eнажми §fG§e — открыть карту", round_n, round_of) })
+    start_timer(d.secs or 0)
+    -- без таймера подсказку всё равно показать (start_timer молчит при secs<=0)
+    if (d.secs or 0) <= 0 then
+        lore.emit("actionbar.set", { text = string.format("§7Место %d/%d · §eнажми §fG§e — открыть карту", round_n, round_of) })
+    end
 end)
 
 lore.on("geo.open", open)
