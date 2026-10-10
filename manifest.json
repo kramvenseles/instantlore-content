@@ -1,5 +1,5 @@
 {
-  "version": "adcfb7b2867b",
+  "version": "58909f1565eb",
   "blocks": [
     {
       "slot": 0,
@@ -1178,8 +1178,8 @@
     },
     {
       "path": "scripts/geoguessr.lua",
-      "sha256": "d91a8cda6653a700c4bcc8bc9445e0c72eed10894f91501899a774eebe2be1c7",
-      "size": 8761
+      "sha256": "b74ef09dec563e585a3ae7e4719f93f5da7d8eb47443040178dce8b09226cf91",
+      "size": 9037
     },
     {
       "path": "scripts/lib/ui.lua",

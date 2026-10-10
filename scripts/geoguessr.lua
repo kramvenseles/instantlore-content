@@ -17,9 +17,9 @@ local WORLD_Z0, WORLD_Z1 = -20000, 20000
 local SPAN = WORLD_X1 - WORLD_X0
 local BPP = TEX / SPAN
 
--- доска строго по центру экрана
-local DW, DH = 200, 200
-local BX, BY = -100, -100
+-- доска по центру экрана; поля вокруг — под подписи осей и панель
+local DW, DH = 180, 180
+local BX, BY = -90, -90
 
 local MIN_VIEW = 600
 local ZOOM_STEP = 0.8
@@ -121,12 +121,13 @@ end
 
 local function ui_swallow() pressed = false end  -- нажатие по панели — не по карте
 
--- маркер-крестик с точкой в центре доски (bpx,bpy), цвета заданы
-local function marker(nodes, bpx, bpy, line_col, dot_col)
+-- маркер-крестик по центру (bpx,bpy): симметричные планки на rect'ах + точка
+local function marker(nodes, bpx, bpy, arm_col, dot_col)
     if bpx < 0 or bpx > DW or bpy < 0 or bpy > DH then return end
-    local mx, my = BX + bpx, BY + bpy
-    nodes[#nodes + 1] = { type = "line", anchor = "center", x = mx - 6, y = my, x2 = mx + 6, y2 = my, thickness = 1, color = line_col }
-    nodes[#nodes + 1] = { type = "line", anchor = "center", x = mx, y = my - 6, x2 = mx, y2 = my + 6, thickness = 1, color = line_col }
+    local mx = BX + math.floor(bpx + 0.5)
+    local my = BY + math.floor(bpy + 0.5)
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 7, y = my - 1, width = 14, height = 2, background = arm_col }
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 1, y = my - 7, width = 2, height = 14, background = arm_col }
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = mx - 2, y = my - 2, width = 4, height = 4, background = dot_col }
 end
 
@@ -143,20 +144,20 @@ render = function()
           id = "board", on_click = on_board_press },
     }
 
-    -- сетка оверлеем + подписи осей
+    -- сетка оверлеем на доске; подписи осей — ЗА доской (X сверху, Z слева)
     local step = nice_step(view / 6)
     local gx = math.ceil(wl / step) * step
     while gx <= wl + view do
         local bpx = (gx - wl) / view * DW
         nodes[#nodes + 1] = { type = "line", anchor = "center", x = BX + bpx, y = BY, x2 = BX + bpx, y2 = BY + DH, thickness = 1, color = "#33FFFFFF" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + bpx + 1, y = BY + 1, align = "left", text = "§8" .. gx, color = "#80AEC8E6" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + bpx, y = BY - 10, align = "center", text = tostring(gx), color = "#FFAEC8E6" }
         gx = gx + step
     end
     local gz = math.ceil(wt / step) * step
     while gz <= wt + view do
         local bpy = (gz - wt) / view * DH
         nodes[#nodes + 1] = { type = "line", anchor = "center", x = BX, y = BY + bpy, x2 = BX + DW, y2 = BY + bpy, thickness = 1, color = "#33FFFFFF" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 1, y = BY + bpy + 1, align = "left", text = "§8" .. gz, color = "#80AEC8E6" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX - 4, y = BY + bpy - 4, align = "right", text = tostring(gz), color = "#FFAEC8E6" }
         gz = gz + step
     end
 
@@ -164,17 +165,17 @@ render = function()
     if sx then marker(nodes, (sx - wl) / view * DW, (sz - wt) / view * DH, "#FF66E0FF", "#FF3AC8F0") end
     if px then marker(nodes, (px - wl) / view * DW, (pz - wt) / view * DH, "#FFFFE08A", "#FF78E6AA") end
 
-    -- правая панель (поверх угла доски): текущая точка, кнопка, сохранённое
-    local PX0, PW = 36, 62
-    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = 26, width = PW, height = 82, background = "#E6080A12", id = "panel", on_click = ui_swallow }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 30, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 40, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 49, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = 60, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
+    -- панель СПРАВА ОТ доски (в поле, не поверх карты): текущая точка, кнопка, сохранённое
+    local PX0, PW = BX + DW + 6, 64
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
+    nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
     if sx then
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 78, align = "left", text = "§aСохранено", color = "#FF88E6AA" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 88, align = "left", text = "§ax " .. sx, color = "#FF88E6AA" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = 97, align = "left", text = "§az " .. sz, color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 62, align = "left", text = "§aСохранено", color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 72, align = "left", text = "§ax " .. sx, color = "#FF88E6AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 81, align = "left", text = "§az " .. sz, color = "#FF88E6AA" }
     end
 
     lore.screen({
@@ -187,7 +188,7 @@ render = function()
 end
 
 local function open()
-    view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
+    view, cx, cz, px, pz, sx, sz, pressed, moved = 8000, 3000, -5000, 3000, -5000, 3000, -5000, false, 0  -- ТЕСТ
     render()
 end
 
