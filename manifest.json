@@ -1,5 +1,5 @@
 {
-  "version": "d863d4d4f7a3",
+  "version": "c231bdd295b0",
   "blocks": [
     {
       "slot": 0,
@@ -883,8 +883,8 @@
     },
     {
       "path": "assets/instantlore/textures/gui/s1_map.png",
-      "sha256": "8aa548cbd706ce003108a3981e779f620b15c221c1371dedf3998afd84e60547",
-      "size": 512974
+      "sha256": "883bde4d5b35bf86862367acb58f2a748dfc10351bf1b6f992d5e4d2fc2c638f",
+      "size": 563586
     },
     {
       "path": "assets/instantlore/textures/item/checklist.png",
