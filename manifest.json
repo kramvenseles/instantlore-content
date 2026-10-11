@@ -1,5 +1,5 @@
 {
-  "version": "f13be39b080d",
+  "version": "48f765ede595",
   "blocks": [
     {
       "slot": 0,
@@ -883,18 +883,18 @@
     },
     {
       "path": "assets/instantlore/textures/gui/s1_map_0.png",
-      "sha256": "883bde4d5b35bf86862367acb58f2a748dfc10351bf1b6f992d5e4d2fc2c638f",
-      "size": 563586
+      "sha256": "aec080df792a042752e9344f922dddb06c84f75cc14f0f99007fe61bd6625e16",
+      "size": 603625
     },
     {
       "path": "assets/instantlore/textures/gui/s1_map_1.png",
-      "sha256": "02a449fb2bac72d0fb07604167f95ab67fbcef09d4e60f58c107266783bd0774",
-      "size": 1480373
+      "sha256": "5d469b647b6a2a1954cb8950f69cb3fbbd158a698ae056e351e4ad3f710253d7",
+      "size": 1849434
     },
     {
       "path": "assets/instantlore/textures/gui/s1_map_2.png",
-      "sha256": "71a85abd4840f13f049565a5eb323b8b9f2ab4f647af0ba8e0b1b0f8fea93bd7",
-      "size": 991446
+      "sha256": "a5a1dd685739fec92f5f229366a2d36e51710b950f451e0088ed3518e4cd29f3",
+      "size": 3145229
     },
     {
       "path": "assets/instantlore/textures/item/checklist.png",
