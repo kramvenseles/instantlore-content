@@ -1,5 +1,5 @@
 {
-  "version": "48f765ede595",
+  "version": "60133727b222",
   "blocks": [
     {
       "slot": 0,
@@ -897,6 +897,21 @@
       "size": 3145229
     },
     {
+      "path": "assets/instantlore/textures/gui/s1_map_3b.png",
+      "sha256": "19f40f77ed827e9abe0665f6bd317e40cb46fe78576697ea27b5e5a3a72a8acf",
+      "size": 1120706
+    },
+    {
+      "path": "assets/instantlore/textures/gui/s1_map_3g.png",
+      "sha256": "272715962cab0fd8ea76406582e565c87118203c34f94a9aa18b442ffbed5fd1",
+      "size": 1016080
+    },
+    {
+      "path": "assets/instantlore/textures/gui/s1_map_3p.png",
+      "sha256": "8dcb8284f9f58e6210ff16cc9093155fb2a6d20180dcb4576e9d0c21889006cb",
+      "size": 1680495
+    },
+    {
       "path": "assets/instantlore/textures/item/checklist.png",
       "sha256": "ae5f56691098d4806c84f5f15632cb97b641e55f8923dce421e6a83e8774fbbd",
       "size": 465
@@ -1188,8 +1203,8 @@
     },
     {
       "path": "scripts/geoguessr.lua",
-      "sha256": "a7a7c2fd497256603ecb9ac238b683754a638e6cfc1fcc60a536d4c4313a100a",
-      "size": 19105
+      "sha256": "acefe0a90996bf3c02db46d4bff33da818789f8638d9bf30f518dc5ecabdacdf",
+      "size": 19632
     },
     {
       "path": "scripts/lib/ui.lua",

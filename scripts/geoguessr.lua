@@ -21,6 +21,10 @@ local SPAN = WORLD_X1 - WORLD_X0
 -- содержит текущий вид (зум глубже → слой детальнее). Отсортированы туже → шире.
 -- Рендерит tools/geoguessr-map/render_map.py; добавить слой = строка сюда + текстура.
 local LEVELS = {
+    -- L3 — самый близкий, по слою на место (2 px/блок). Доска берёт тот, что под видом.
+    { tex = "instantlore:textures/gui/s1_map_3b.png", cx = 5030, cz = 1542, half = 1000 },
+    { tex = "instantlore:textures/gui/s1_map_3p.png", cx = -1008, cz = 2402, half = 1000 },
+    { tex = "instantlore:textures/gui/s1_map_3g.png", cx = 6234, cz = 6281, half = 1000 },
     { tex = "instantlore:textures/gui/s1_map_2.png", cx = 2600, cz = 3900, half = 4000 },
     { tex = "instantlore:textures/gui/s1_map_1.png", cx = 2600, cz = 3900, half = 9000 },
     { tex = "instantlore:textures/gui/s1_map_0.png", cx = 0, cz = 0, half = 20000 },
@@ -42,7 +46,7 @@ end
 local DW, DH = 180, 180
 local BX, BY = -90, -90
 
-local MIN_VIEW = 600
+local MIN_VIEW = 150   -- глубокий зум: у мест есть L3 (2 px/блок), хватает детализации
 local ZOOM_STEP = 0.8
 local DRAG_SLOP = 4
 
