@@ -9,14 +9,34 @@
 -- Доска показывает ОКНО большой текстуры (image src_*): зум/панорама — сдвиг окна.
 -- Сетка рисуется оверлеем (не вшита), иначе на зуме тонкие линии пропадают.
 --
--- ⚠️ WORLD_* и TEX должны совпадать с картинкой (gen_placeholder_map2.py): ±20000, 4000px.
+-- ⚠️ WORLD_* и слои LOD должны совпадать с рендером (tools/geoguessr-map): ±20000 мир.
 
-local MAP = "instantlore:textures/gui/s1_map.png"
 local TEX = 4000
 local WORLD_X0, WORLD_X1 = -20000, 20000
 local WORLD_Z0, WORLD_Z1 = -20000, 20000
 local SPAN = WORLD_X1 - WORLD_X0
-local BPP = TEX / SPAN
+
+-- Слои детализации (LOD): обзор + детальные на области контента. Каждый слой — текстура
+-- TEX×TEX, покрывающая квадрат [cx±half, cz±half]. Доска берёт самый ТУГОЙ слой, чей квадрат
+-- содержит текущий вид (зум глубже → слой детальнее). Отсортированы туже → шире.
+-- Рендерит tools/geoguessr-map/render_map.py; добавить слой = строка сюда + текстура.
+local LEVELS = {
+    { tex = "instantlore:textures/gui/s1_map_2.png", cx = 2600, cz = 3900, half = 4000 },
+    { tex = "instantlore:textures/gui/s1_map_1.png", cx = 2600, cz = 3900, half = 9000 },
+    { tex = "instantlore:textures/gui/s1_map_0.png", cx = 0, cz = 0, half = 20000 },
+}
+
+-- самый тугой слой, чей квадрат содержит окно вида; последний (обзор) содержит всё
+local function pick_level(vcx, vcz, vview)
+    local h = vview / 2
+    for _, L in ipairs(LEVELS) do
+        if vcx - h >= L.cx - L.half and vcx + h <= L.cx + L.half
+            and vcz - h >= L.cz - L.half and vcz + h <= L.cz + L.half then
+            return L
+        end
+    end
+    return LEVELS[#LEVELS]
+end
 
 -- доска по центру экрана; поля вокруг — под подписи осей и панель
 local DW, DH = 180, 180
@@ -240,10 +260,12 @@ end
 local function draw_board(nodes)
     local wl, wt = world_left(), world_top()
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX - 3, y = BY - 3, width = DW + 6, height = DH + 6, background = "#FF0A0C14" }
+    local L = pick_level(cx, cz, view)
+    local lbpp = TEX / (2 * L.half)        -- px на блок у выбранного слоя
     nodes[#nodes + 1] = { type = "image", anchor = "center", x = BX, y = BY, width = DW, height = DH,
-        texture = MAP, tex_w = TEX, tex_h = TEX,
-        src_x = (wl - WORLD_X0) * BPP, src_y = (wt - WORLD_Z0) * BPP,
-        src_w = view * BPP, src_h = view * BPP,
+        texture = L.tex, tex_w = TEX, tex_h = TEX,
+        src_x = (wl - (L.cx - L.half)) * lbpp, src_y = (wt - (L.cz - L.half)) * lbpp,
+        src_w = view * lbpp, src_h = view * lbpp,
         id = "board", on_click = on_board_press }
 
     local step = nice_step(view / 6)
