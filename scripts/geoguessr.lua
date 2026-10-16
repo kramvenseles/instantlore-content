@@ -20,14 +20,20 @@ local SPAN = WORLD_X1 - WORLD_X0
 -- TEX×TEX, покрывающая квадрат [cx±half, cz±half]. Доска берёт самый ТУГОЙ слой, чей квадрат
 -- содержит текущий вид (зум глубже → слой детальнее). Отсортированы туже → шире.
 -- Рендерит tools/geoguessr-map/render_map.py; добавить слой = строка сюда + текстура.
+-- Движок играет по СЛУЧАЙНЫМ тёплым точкам — персональных близких слоёв (L3) у них нет,
+-- поэтому доска пинится на L0–L2 (обзор → центр контента). L1/L2 покрывают обжитую зону,
+-- дальний от центра рандом падает на L0 (обзорный). ⚠️ cx/cz/half обязаны совпадать с рендером.
 local LEVELS = {
-    -- L3 — самый близкий, по слою на место (2 px/блок). Доска берёт тот, что под видом.
-    { tex = "instantlore:textures/gui/s1_map_3b.png", cx = 5030, cz = 1542, half = 1000 },
-    { tex = "instantlore:textures/gui/s1_map_3p.png", cx = -1008, cz = 2402, half = 1000 },
-    { tex = "instantlore:textures/gui/s1_map_3g.png", cx = 6234, cz = 6281, half = 1000 },
     { tex = "instantlore:textures/gui/s1_map_2.png", cx = 2600, cz = 3900, half = 4000 },
     { tex = "instantlore:textures/gui/s1_map_1.png", cx = 2600, cz = 3900, half = 9000 },
     { tex = "instantlore:textures/gui/s1_map_0.png", cx = 0, cz = 0, half = 20000 },
+}
+
+-- палитра меток игроков (цикл по ростеру) — рука/точка
+local PLAYER_COLORS = {
+    { "#FFFFE08A", "#FF78E6AA" }, { "#FFFF9AA2", "#FFF06A78" },
+    { "#FFA6C8FF", "#FF6A9AF0" }, { "#FFC8A6FF", "#FF9A6AF0" },
+    { "#FFFFD080", "#FFF0A83A" }, { "#FF9AF0C8", "#FF3AC89A" },
 }
 
 -- самый тугой слой, чей квадрат содержит окно вида; последний (обзор) содержит всё
@@ -60,6 +66,8 @@ local px, pz = nil, nil
 local sx, sz = nil, nil
 -- данные результата (в режиме показа)
 local R = nil
+-- ожидание остальных после своей догадки: {submitted,total}
+local waiting = nil
 -- жест
 local pressed = false
 local moved = 0
@@ -105,6 +113,23 @@ local function frame_two(ax, az, gx, gz)
     clamp_center()
 end
 
+-- кадрировать по набору точек { {x,z}, ... } (правда + метки всех игроков)
+local function frame_points(pts)
+    local minx, maxx, minz, maxz = math.huge, -math.huge, math.huge, -math.huge
+    for _, p in ipairs(pts) do
+        if p.x < minx then minx = p.x end
+        if p.x > maxx then maxx = p.x end
+        if p.z < minz then minz = p.z end
+        if p.z > maxz then maxz = p.z end
+    end
+    if minx == math.huge then return end
+    local span = math.max(maxx - minx, maxz - minz) * 2.4
+    view = clamp(span, 2000, SPAN)
+    cx = (minx + maxx) / 2
+    cz = (minz + maxz) / 2
+    clamp_center()
+end
+
 local render
 
 local function world_left() return cx - view / 2 end
@@ -139,7 +164,7 @@ local function on_release(p)
     if not pressed then return end
     pressed = false
     -- точку ставим только в режиме угадывания и только если это клик, а не протяжка
-    if mode == "guess" and moved <= DRAG_SLOP then
+    if mode == "guess" and not sx and moved <= DRAG_SLOP then
         local bpx, bpy = p.x - BX, p.y - BY
         if bpx >= 0 and bpx <= DW and bpy >= 0 and bpy <= DH then
             px, pz = board_px_to_world(bpx, bpy)
@@ -307,53 +332,81 @@ local function draw_guess(nodes)
 
     local PX0, PW = BX + DW + 6, 64
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
+    if sx then
+        -- догадка отправлена — ждём остальных (счёт из geo.waiting)
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§aОтправлено", color = "#FFBFF0C0" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 16, align = "left",
+            text = waiting and string.format("§7угадали §f%d/%d", waiting.submitted or 0, waiting.total or 0) or "§7ждём…",
+            color = "#FFE8EEF8" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 28, align = "left", text = "§8ждём\n§8остальных", color = "#FF9AA0AA" }
+    else
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
+    end
 end
 
--- режим показа: правда + догадка + линия + нижняя полоса со счётом
+local TRUTH_ARM, TRUTH_DOT = "#FF66E0FF", "#FF3AC8F0"
+
+-- режим показа: правда + метки ВСЕХ игроков + лидерборд + кнопка (у хоста)
 local function draw_result(nodes)
-    local wl, wt = world_left(), world_top()
-    -- истинные позиции (board-relative); за край доски — обрежет clip-группа
-    local abx, aby = world_to_board(R.ax, R.az)
+    local truth = R.truth or {}
+    local abx, aby = world_to_board(truth.ax or 0, truth.az or 0)
 
     local ch = {}
-    -- догадка (есть только если не таймаут-без-метки): линия к правде + жёлтая метка
-    if not R.nog then
-        local gbx, gby = world_to_board(R.gx, R.gz)
-        ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#C0FFFFFF" }
-        place_marker(ch, gbx, gby, "#FFFFE08A", "#FF78E6AA")
+    -- метки всех игроков: линия к правде + крестик цветом игрока + подпись ника
+    for i, g in ipairs(R.guesses or {}) do
+        if not g.nog and g.gx and g.gz then
+            local col = PLAYER_COLORS[((i - 1) % #PLAYER_COLORS) + 1]
+            local gbx, gby = world_to_board(g.gx, g.gz)
+            ch[#ch + 1] = { type = "line", x = gbx, y = gby, x2 = abx, y2 = aby, thickness = 1, color = "#80FFFFFF" }
+            local mx, my = place_marker(ch, gbx, gby, col[1], col[2])
+            local right = mx > DW * 0.5
+            ch[#ch + 1] = { type = "text", x = right and (mx - 8) or (mx + 8), y = my - 4,
+                align = right and "right" or "left", text = col[3] or ("§e" .. tostring(g.name or "?")),
+                color = col[1] }
+        end
     end
     -- правда (бирюзовый); за краем — стрелка-направление
-    local adx, ady = place_marker(ch, abx, aby, "#FF66E0FF", "#FF3AC8F0")
-    -- подпись места у ПОКАЗАННОЙ точки правды (у стрелки, если она за краем)
-    local right = adx > DW * 0.5
-    ch[#ch + 1] = { type = "text", x = right and (adx - 8) or (adx + 8), y = ady - 4,
-        align = right and "right" or "left", text = "§b" .. tostring(R.name or "?"), color = "#FF9AD8FF" }
+    local adx, ady = place_marker(ch, abx, aby, TRUTH_ARM, TRUTH_DOT)
+    local tright = adx > DW * 0.5
+    ch[#ch + 1] = { type = "text", x = tright and (adx - 8) or (adx + 8), y = ady - 4,
+        align = tright and "right" or "left", text = "§bправда", color = "#FF9AD8FF" }
     nodes[#nodes + 1] = clip_group(ch)
 
-    -- нижняя полоса: промах · очки (всего — на финале крупно), кнопка справа
+    -- правая панель: лидерборд (имя · сумма), первые 8
+    local PX0, PW = BX + DW + 6, 78
+    local rows = R.board or {}
+    local ph = 16 + math.min(#rows, 8) * 10
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = ph, background = "#E6080A12", on_click = ui_swallow }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left",
+        text = R["final"] and "§6§lИтог" or "§7Таблица", color = "#FFBFE8FF" }
+    for i, row in ipairs(rows) do
+        if i > 8 then break end
+        local y = BY + 15 + (i - 1) * 10
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = y, align = "left",
+            text = string.format("§f%d. %s", i, tostring(row.name or "?")), color = "#FFE8EEF8" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 4, y = y, align = "right",
+            text = string.format("§a%d", row.total or 0), color = "#FFBFF0C0" }
+    end
+
+    -- нижняя полоса: номер раунда + кнопка (только у хоста), иначе «ждём ведущего»
     local BARY = BY + DH + 4
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX, y = BARY, width = DW, height = 16, background = "#E6080A12" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
-        text = R["final"]
-            and string.format("§eИтог: §f%d §7очков", R.total or 0)
-            or (R.nog
-                and string.format("§cВремя вышло §7· §a+%d", R.points or 0)
-                or string.format("§7промах §f%d §7бл   §a+%d", R.dist or 0, R.points or 0)),
+        text = R["final"] and "§eИтоги матча" or string.format("§7Раунд §f%d/%d", R.n or 0, R.of or 0),
         color = "#FFE8EEF8" }
-    nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 46, y = BARY + 1, width = 46, height = 14,
-        text = R["final"] and "Готово" or "Дальше",
-        on_click = function()
-            lore.report(R["final"] and "geo.done" or "geo.next", {})
-            close_screen()
-        end }
-    -- бегущий счёт — компактно над полосой справа (не перекрывается кнопкой)
-    if not R["final"] then
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW, y = BY - 20, align = "right",
-            text = string.format("§7всего §f%d", R.total or 0), color = "#FFE8EEF8" }
+    if R.host then
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 56, height = 14,
+            text = R["final"] and "Готово" or "Дальше",
+            on_click = function()
+                lore.report(R["final"] and "geo.done" or "geo.next", {})
+                close_screen()
+            end }
+    else
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
+            text = "§8ждём ведущего", color = "#FF9AA0AA" }
     end
 end
 
@@ -377,22 +430,34 @@ local function open()
     render()
 end
 
--- результат раунда с сервера: показать на карте
+-- результат раунда с сервера: правда + метки всех игроков + лидерборд
 lore.on("geo.result", function(d)
     stop_timer()
     R = d
     mode = "result"
+    waiting = nil
     px, pz, sx, sz = nil, nil, nil, nil
-    -- нет догадки (таймаут без метки) — кадрируем на правду
-    if d.nog then frame_two(d.ax, d.az, d.ax, d.az) else frame_two(d.ax, d.az, d.gx, d.gz) end
+    -- кадр по всем точкам: правда + догадки всех (у кого есть метка)
+    local pts = {}
+    if d.truth then pts[#pts + 1] = { x = d.truth.ax, z = d.truth.az } end
+    for _, g in ipairs(d.guesses or {}) do
+        if g.gx and g.gz then pts[#pts + 1] = { x = g.gx, z = g.gz } end
+    end
+    frame_points(pts)
     render()
+end)
+
+-- сколько игроков уже угадали (показываем ожидающему)
+lore.on("geo.waiting", function(d)
+    waiting = d
+    if handle and mode == "guess" then render() end
 end)
 
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
-    view, cx, cz, px, pz, sx, sz, R = SPAN, 0, 0, nil, nil, nil, nil, nil
+    view, cx, cz, px, pz, sx, sz, R, waiting = SPAN, 0, 0, nil, nil, nil, nil, nil, nil
     close_screen()
     start_timer(d.secs or 0)
     -- без таймера подсказку всё равно показать (start_timer молчит при secs<=0)
