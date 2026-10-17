@@ -367,23 +367,8 @@ local function draw_guess(nodes)
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
     end
-    -- нижняя кнопка: ведущий — мгновенно закрыть место; участник — голос за пропуск (>½ → закрытие)
-    if is_host then
-        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 90, width = PW - 6, height = 13,
-            text = "§eЗакрыть место",
-            on_click = function()
-                lore.report("geo.skip", {})
-                close_screen()
-            end }
-    elseif playing then
-        if skipvote then
-            nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 80, align = "left",
-                text = string.format("§8за пропуск %d/%d", skipvote.votes or 0, skipvote.total or 0), color = "#FF9AA0AA" }
-        end
-        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 90, width = PW - 6, height = 13,
-            text = "§7Пропустить",
-            on_click = function() lore.report("geo.vote", {}) end }
-    end
+    -- В фазе угадывания — только «Сохранить». Закрытие/пропуск раунда живёт на экране
+    -- результата (между раундами), а не здесь: иначе кнопка скипала бы активный игровой раунд.
 end
 
 local TRUTH_ARM, TRUTH_DOT = "#FF66E0FF", "#FF3AC8F0"
@@ -498,20 +483,17 @@ local function draw_final(nodes)
         end
     end
 
-    -- кнопка появляется, когда все проявились
+    -- кнопка появляется, когда все проявились: «Выйти» доступна КАЖДОМУ (geo.leave — выход
+    -- только для себя; матч сам закроется через авто-таймер или когда вышли все). Вместо
+    -- прежнего хост-«Готово», чтобы никто не ждал ведущего на финале.
     if revealed >= N then
         local BY2 = WINY + 30 + math.max(N - 1, 1) * 12 + 6
-        if is_host then
-            nodes[#nodes + 1] = { type = "button", anchor = "center", x = -28, y = BY2, width = 56, height = 14,
-                text = "Готово",
-                on_click = function()
-                    lore.report("geo.done", {})
-                    close_screen()
-                end }
-        else
-            nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = BY2 + 3, align = "center",
-                text = "§8ждём ведущего", color = "#FF9AA0AA" }
-        end
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = -28, y = BY2, width = 56, height = 14,
+            text = "Выйти",
+            on_click = function()
+                lore.report("geo.leave", {})
+                close_screen()
+            end }
     end
 end
 
