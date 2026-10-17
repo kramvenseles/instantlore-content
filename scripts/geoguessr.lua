@@ -78,9 +78,13 @@ local pressed = false
 local moved = 0
 -- сессия
 local active = false   -- идёт ли матч (G открывает доску только внутри матча)
-local is_host = false  -- я ведущий? (кнопки «закрыть место»/«Дальше»/«Готово» — только у хоста)
+local is_host = false  -- я ведущий? (на экране результата у хоста ещё кнопка «Дальше» — переход без голосования)
 local playing = true   -- я участник (угадываю)? false — распорядитель (ведёт, не играет)
-local skipvote = nil   -- {votes,total} — голоса за пропуск раунда (для игроков)
+local skipvote = nil   -- {votes,total} — голоса за переход (экран результата)
+local i_voted = false  -- я уже нажал «Пропустить» на этом экране результата
+-- обратный отсчёт до авто-перехода на экране результата (секунды из geo.result.auto)
+local result_rem = 0
+local result_cancel = nil
 local loadbar = false  -- показан ли боссбар загрузки острова
 local round_n, round_of = 0, 0
 local handle = nil
@@ -209,6 +213,28 @@ end
 
 local function stop_timer()
     if tick_cancel then tick_cancel(); tick_cancel = nil end
+end
+
+local function stop_result_timer()
+    if result_cancel then result_cancel(); result_cancel = nil end
+end
+
+-- тик обратного отсчёта на экране результата: уменьшаем, перерисовываем открытую доску.
+-- По нулю не уводим сами — переход делает сервер (geo.round); тикер лишь обновляет цифру.
+local function result_tick()
+    result_rem = result_rem - 1
+    if result_rem <= 0 then
+        result_rem = 0
+        stop_result_timer()
+    end
+    if handle and mode == "result" and not pressed then render() end
+end
+
+local function start_result_timer(s)
+    stop_result_timer()
+    result_rem = s or 0
+    if result_rem <= 0 then return end
+    result_cancel = lore.every(1, result_tick)
 end
 
 local function on_save()
@@ -418,27 +444,57 @@ local function draw_result(nodes)
             text = string.format("§a%d", row.total or 0), color = "#FFBFF0C0" }
     end
 
-    -- нижняя полоса: номер раунда + кнопка (только у хоста), иначе «ждём ведущего».
-    -- На финале (фаза "map") кнопки нет — через ~4с сам уйдём на победный экран.
+    -- нижняя полоса: только номер раунда. Управление темпом — в правом столбце ПОД таблицей.
     local BARY = BY + DH + 4
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX, y = BARY, width = DW, height = 16, background = "#E6080A12" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
         text = R["final"] and "§eПоследнее место" or string.format("§7Раунд §f%d/%d", R.n or 0, R.of or 0),
         color = "#FFE8EEF8" }
     if R["final"] then
+        -- финал: без управления — через ~4с сам уйдём на победный экран
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
             text = "§8подводим итоги…", color = "#FF9AA0AA" }
-    elseif is_host then
-        nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 56, height = 14,
+        return
+    end
+
+    -- Правый столбец ПОД таблицей (между раундами): таймер авто-перехода + голос за пропуск
+    -- (нажали >50% участников — переход сразу), у хоста ещё «Дальше» (мгновенный переход).
+    -- Пауза ~20с на обсуждение результата; наблюдатель-распорядитель не голосует.
+    local show_vote = playing
+    local auto_on = (R.auto and R.auto > 0)
+    local vh = 15                                   -- строка таймера
+    if show_vote and skipvote then vh = vh + 10 end -- счётчик голосов
+    if show_vote then vh = vh + 15 end              -- кнопка «Пропустить»
+    if is_host then vh = vh + 15 end                -- кнопка «Дальше»
+    local VY = BY + ph + 4
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = VY, width = PW, height = vh, background = "#E6080A12", on_click = ui_swallow }
+    local y = VY + 4
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = y, align = "left",
+        text = auto_on and string.format("§7Переход §f%s", fmt_time(result_rem)) or "§7Ждём голосов",
+        color = "#FFE8EEF8" }
+    y = y + 11
+    if show_vote and skipvote then
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = y, align = "left",
+            text = string.format("§8%d/%d за пропуск", skipvote.votes or 0, skipvote.total or 0), color = "#FF9AA0AA" }
+        y = y + 10
+    end
+    if show_vote then
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = y, width = PW - 6, height = 13,
+            text = i_voted and "§aГолос учтён" or "Пропустить", enabled = not i_voted,
+            on_click = function()
+                i_voted = true
+                lore.report("geo.vote", {})
+                render()
+            end }
+        y = y + 15
+    end
+    if is_host then
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = y, width = PW - 6, height = 13,
             text = "Дальше",
             on_click = function()
                 lore.report("geo.next", {})
                 close_screen()
             end }
-    else
-        -- авто-переход (сервер сам уведёт дальше через R.auto сек) — не «ждём ведущего»
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
-            text = (R.auto and R.auto > 0) and "§8дальше сам…" or "§8ждём ведущего", color = "#FF9AA0AA" }
     end
 end
 
@@ -561,12 +617,15 @@ end
 lore.on("geo.result", function(d)
     stop_timer()
     stop_final()
+    stop_result_timer()
     active = true   -- результат приходит только внутри матча; держим G рабочим и на реконнекте в фазе показа
     is_host = d.host == true
     R = d
     mode = "result"
     final_phase = nil
     waiting = nil
+    skipvote = nil   -- свежий экран результата — голоса за переход с нуля
+    i_voted = false
     px, pz, sx, sz = nil, nil, nil, nil
     -- кадр по всем точкам: правда + догадки всех (у кого есть метка)
     local pts = {}
@@ -580,6 +639,9 @@ lore.on("geo.result", function(d)
     if d["final"] then
         final_phase = "map"
         final_cancel = lore.after(4, start_reveal)
+    else
+        -- между раундами: обратный отсчёт до авто-перехода (сервер уведёт по d.auto сек)
+        start_result_timer(d.auto or 0)
     end
 end)
 
@@ -589,10 +651,10 @@ lore.on("geo.waiting", function(d)
     if handle and mode == "guess" then render() end
 end)
 
--- сколько проголосовало за пропуск раунда
+-- сколько проголосовало за переход (экран результата) / пропуск (угадывание)
 lore.on("geo.skipvote", function(d)
     skipvote = d
-    if handle and mode == "guess" then render() end
+    if handle and (mode == "guess" or mode == "result") then render() end
 end)
 
 -- прогресс загрузки острова (пока режется — панель-боссбар сверху, «N/256»)
@@ -611,11 +673,13 @@ end)
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     stop_final()
+    stop_result_timer()
     hide_loadbar()   -- раунд начался → остров загружен, панель убрать
     active = true
     is_host = d.host == true
     playing = d.play ~= false   -- распорядитель: play=false (наблюдает, не угадывает)
     skipvote = nil
+    i_voted = false
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
     final_phase = nil
@@ -643,9 +707,11 @@ lore.on("geo.end", function()
     is_host = false
     playing = true
     skipvote = nil
+    i_voted = false
     hide_loadbar()
     stop_timer()
     stop_final()
+    stop_result_timer()
     mode = "guess"
     final_phase = nil
     R, waiting = nil, nil
