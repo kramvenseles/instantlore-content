@@ -81,6 +81,7 @@ local active = false   -- идёт ли матч (G открывает доск�
 local is_host = false  -- я ведущий? (кнопки «закрыть место»/«Дальше»/«Готово» — только у хоста)
 local playing = true   -- я участник (угадываю)? false — распорядитель (ведёт, не играет)
 local skipvote = nil   -- {votes,total} — голоса за пропуск раунда (для игроков)
+local loadbar = false  -- показан ли боссбар загрузки острова
 local round_n, round_of = 0, 0
 local handle = nil
 -- таймер раунда (секунды приходят с сервером в geo.round; 0 — без таймера)
@@ -90,6 +91,11 @@ local tick_cancel = nil
 
 local function close_screen()
     if handle then handle.close(); handle = nil end
+end
+
+-- панель загрузки острова (боссбар сверху): прячем, когда раунд начался/матч кончился
+local function hide_loadbar()
+    if loadbar then lore.emit("bossbar.hide", { id = "geoload" }); loadbar = false end
 end
 
 local function clamp(v, lo, hi)
@@ -607,9 +613,23 @@ lore.on("geo.skipvote", function(d)
     if handle and mode == "guess" then render() end
 end)
 
+-- прогресс загрузки острова (пока режется — панель-боссбар сверху, «N/256»)
+lore.on("geo.loading", function(d)
+    local done, total = d.done or 0, d.total or 1
+    local pct = total > 0 and (done / total) or 0
+    local title = string.format("§eЗагрузка острова §f%d/%d", done, total)
+    if not loadbar then
+        lore.emit("bossbar.show", { id = "geoload", title = title, percent = pct, color = "purple" })
+        loadbar = true
+    else
+        lore.emit("bossbar.set", { id = "geoload", title = title, percent = pct })
+    end
+end)
+
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     stop_final()
+    hide_loadbar()   -- раунд начался → остров загружен, панель убрать
     active = true
     is_host = d.host == true
     playing = d.play ~= false   -- распорядитель: play=false (наблюдает, не угадывает)
@@ -641,6 +661,7 @@ lore.on("geo.end", function()
     is_host = false
     playing = true
     skipvote = nil
+    hide_loadbar()
     stop_timer()
     stop_final()
     mode = "guess"
