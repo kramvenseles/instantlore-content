@@ -59,8 +59,13 @@ local DRAG_SLOP = 4
 -- вьюпорт
 local view = SPAN
 local cx, cz = 0, 0
--- режим: "guess" (угадываем) | "result" (показ правды)
+-- режим: "guess" (угадываем) | "result" (показ правды) | "final" (победный экран)
 local mode = "guess"
+-- финал: фаза показа и анимация проявления
+local final_phase = nil   -- nil | "map" (правда последнего раунда ~4с) | "reveal" (итоги)
+local final_cancel = nil  -- таймер авто-перехода map→reveal
+local reveal_cancel = nil -- таймер пошагового проявления строк
+local revealed = 0        -- сколько мест уже проявлено (снизу вверх)
 -- текущая/сохранённая точка догадки
 local px, pz = nil, nil
 local sx, sz = nil, nil
@@ -375,8 +380,8 @@ local function draw_result(nodes)
         align = tright and "right" or "left", text = "§bправда", color = "#FF9AD8FF" }
     nodes[#nodes + 1] = clip_group(ch)
 
-    -- правая панель: лидерборд (имя · сумма), первые 8
-    local PX0, PW = BX + DW + 6, 78
+    -- правая панель: лидерборд (имя · «+прибавка» · сумма), первые 8
+    local PX0, PW = BX + DW + 6, 92
     local rows = R.board or {}
     local ph = 16 + math.min(#rows, 8) * 10
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = ph, background = "#E6080A12", on_click = ui_swallow }
@@ -387,21 +392,28 @@ local function draw_result(nodes)
         local y = BY + 15 + (i - 1) * 10
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = y, align = "left",
             text = string.format("§f%d. %s", i, tostring(row.name or "?")), color = "#FFE8EEF8" }
+        -- прибавка за этот раунд (приглушённая), левее суммы
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 24, y = y, align = "right",
+            text = string.format("§7+%d", row.round or 0), color = "#FF8A94A4" }
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 4, y = y, align = "right",
             text = string.format("§a%d", row.total or 0), color = "#FFBFF0C0" }
     end
 
-    -- нижняя полоса: номер раунда + кнопка (только у хоста), иначе «ждём ведущего»
+    -- нижняя полоса: номер раунда + кнопка (только у хоста), иначе «ждём ведущего».
+    -- На финале (фаза "map") кнопки нет — через ~4с сам уйдём на победный экран.
     local BARY = BY + DH + 4
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = BX, y = BARY, width = DW, height = 16, background = "#E6080A12" }
     nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + 4, y = BARY + 4, align = "left",
-        text = R["final"] and "§eИтоги матча" or string.format("§7Раунд §f%d/%d", R.n or 0, R.of or 0),
+        text = R["final"] and "§eПоследнее место" or string.format("§7Раунд §f%d/%d", R.n or 0, R.of or 0),
         color = "#FFE8EEF8" }
-    if R.host then
+    if R["final"] then
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
+            text = "§8подводим итоги…", color = "#FF9AA0AA" }
+    elseif R.host then
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 56, height = 14,
-            text = R["final"] and "Готово" or "Дальше",
+            text = "Дальше",
             on_click = function()
-                lore.report(R["final"] and "geo.done" or "geo.next", {})
+                lore.report("geo.next", {})
                 close_screen()
             end }
     else
@@ -410,11 +422,73 @@ local function draw_result(nodes)
     end
 end
 
+-- победный экран: тёмный задник, строки проявляются снизу вверх, победитель — последним.
+-- revealed растёт по таймеру; ранг виден, когда rank > N - revealed (т.е. с последнего места).
+local FROW_W = 168
+local function draw_final(nodes)
+    local rows = R.board or {}
+    local N = math.min(#rows, 8)
+    local RX = -FROW_W / 2
+    nodes[#nodes + 1] = { type = "rect", anchor = "center", x = -140, y = -104, width = 280, height = 208, background = "#EE05060C", on_click = ui_swallow }
+    nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = -92, align = "center", text = "§6§lИТОГИ МАТЧА", color = "#FFFFD86A" }
+
+    local function row_at(rank, y, win)
+        local row = rows[rank]
+        if not row then return end
+        if win then
+            nodes[#nodes + 1] = { type = "rect", anchor = "center", x = RX - 2, y = y - 3, width = FROW_W + 4, height = 14, background = "#55FFC24A" }
+        end
+        local label = (win and "§6§l✦ " or "§f") .. string.format("%d. %s", rank, tostring(row.name or "?"))
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = RX + 4, y = y, align = "left",
+            text = label, color = win and "#FFFFE89A" or "#FFE8EEF8" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = RX + FROW_W - 28, y = y, align = "right",
+            text = string.format("§7+%d", row.round or 0), color = "#FF8A94A4" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = RX + FROW_W - 4, y = y, align = "right",
+            text = string.format("§a%d", row.total or 0), color = "#FFBFF0C0" }
+    end
+
+    local function visible(rank) return rank > (N - revealed) end
+    local WINY = -58
+
+    -- победитель сверху + подпись (появляется последним)
+    if N >= 1 and visible(1) then
+        row_at(1, WINY, true)
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = WINY + 11, align = "center",
+            text = "§eПобедитель", color = "#FFFFE08A" }
+    end
+    -- остальные места ниже (2..N)
+    for rank = 2, N do
+        if visible(rank) then
+            row_at(rank, WINY + 30 + (rank - 2) * 12, false)
+        end
+    end
+
+    -- кнопка появляется, когда все проявились
+    if revealed >= N then
+        local BY2 = WINY + 30 + math.max(N - 1, 1) * 12 + 6
+        if R.host then
+            nodes[#nodes + 1] = { type = "button", anchor = "center", x = -28, y = BY2, width = 56, height = 14,
+                text = "Готово",
+                on_click = function()
+                    lore.report("geo.done", {})
+                    close_screen()
+                end }
+        else
+            nodes[#nodes + 1] = { type = "text", anchor = "center", x = 0, y = BY2 + 3, align = "center",
+                text = "§8ждём ведущего", color = "#FF9AA0AA" }
+        end
+    end
+end
+
 render = function()
     clamp_center()
     local nodes = {}
-    draw_board(nodes)
-    if mode == "result" then draw_result(nodes) else draw_guess(nodes) end
+    if mode == "final" then
+        draw_final(nodes)
+    else
+        draw_board(nodes)
+        if mode == "result" then draw_result(nodes) else draw_guess(nodes) end
+    end
     handle = lore.screen({
         title = "Карта первого сезона",
         nodes = nodes,
@@ -424,8 +498,45 @@ render = function()
     })
 end
 
+-- сбросить таймеры финала (переход, проявление)
+local function stop_final()
+    if final_cancel then final_cancel(); final_cancel = nil end
+    if reveal_cancel then reveal_cancel(); reveal_cancel = nil end
+end
+
+-- один шаг проявления: +1 место (снизу вверх), звук; победитель — особым звуком
+local function reveal_tick()
+    local N = math.min(#(R.board or {}), 8)
+    revealed = revealed + 1
+    if revealed >= N then
+        revealed = N
+        lore.emit("sound.play", { id = "minecraft:ui.toast.challenge_complete", category = "master", volume = 0.7, pitch = 1.0 })
+        if reveal_cancel then reveal_cancel(); reveal_cancel = nil end
+    else
+        lore.emit("sound.play", { id = "minecraft:block.note_block.pling", category = "master",
+            volume = 0.6, pitch = math.min(0.8 + 0.12 * revealed, 2.0) })
+    end
+    render()
+end
+
+-- перейти с карты последнего раунда на победный экран
+local function start_reveal()
+    final_cancel = nil
+    if reveal_cancel then reveal_cancel(); reveal_cancel = nil end
+    mode = "final"
+    final_phase = "reveal"
+    revealed = 0
+    local N = math.min(#((R and R.board) or {}), 8)
+    reveal_tick() -- первое место (последнее в таблице) сразу
+    if revealed < N then
+        reveal_cancel = lore.every(0.6, reveal_tick)
+    end
+end
+
 local function open()
+    stop_final()
     mode = "guess"
+    final_phase = nil
     view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
     render()
 end
@@ -433,8 +544,10 @@ end
 -- результат раунда с сервера: правда + метки всех игроков + лидерборд
 lore.on("geo.result", function(d)
     stop_timer()
+    stop_final()
     R = d
     mode = "result"
+    final_phase = nil
     waiting = nil
     px, pz, sx, sz = nil, nil, nil, nil
     -- кадр по всем точкам: правда + догадки всех (у кого есть метка)
@@ -445,6 +558,11 @@ lore.on("geo.result", function(d)
     end
     frame_points(pts)
     render()
+    -- финал: показать правду последнего раунда ~4с, затем сам уйти на победный экран
+    if d["final"] then
+        final_phase = "map"
+        final_cancel = lore.after(4, start_reveal)
+    end
 end)
 
 -- сколько игроков уже угадали (показываем ожидающему)
@@ -455,8 +573,10 @@ end)
 
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
+    stop_final()
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
+    final_phase = nil
     view, cx, cz, px, pz, sx, sz, R, waiting = SPAN, 0, 0, nil, nil, nil, nil, nil, nil
     close_screen()
     start_timer(d.secs or 0)
