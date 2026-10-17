@@ -78,6 +78,7 @@ local pressed = false
 local moved = 0
 -- сессия
 local active = false   -- идёт ли матч (G открывает доску только внутри матча)
+local is_host = false  -- я ведущий? (кнопки «закрыть место»/«Дальше»/«Готово» — только у хоста)
 local round_n, round_of = 0, 0
 local handle = nil
 -- таймер раунда (секунды приходят с сервером в geo.round; 0 — без таймера)
@@ -352,6 +353,15 @@ local function draw_guess(nodes)
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
     end
+    -- ведущий может закрыть место досрочно (не ждать AFK/таймер) — не угадавшие получат 0
+    if is_host then
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 90, width = PW - 6, height = 13,
+            text = "§eЗакрыть место",
+            on_click = function()
+                lore.report("geo.skip", {})
+                close_screen()
+            end }
+    end
 end
 
 local TRUTH_ARM, TRUTH_DOT = "#FF66E0FF", "#FF3AC8F0"
@@ -411,7 +421,7 @@ local function draw_result(nodes)
     if R["final"] then
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
             text = "§8подводим итоги…", color = "#FF9AA0AA" }
-    elseif R.host then
+    elseif is_host then
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = BX + DW - 56, y = BARY + 1, width = 56, height = 14,
             text = "Дальше",
             on_click = function()
@@ -468,7 +478,7 @@ local function draw_final(nodes)
     -- кнопка появляется, когда все проявились
     if revealed >= N then
         local BY2 = WINY + 30 + math.max(N - 1, 1) * 12 + 6
-        if R.host then
+        if is_host then
             nodes[#nodes + 1] = { type = "button", anchor = "center", x = -28, y = BY2, width = 56, height = 14,
                 text = "Готово",
                 on_click = function()
@@ -546,6 +556,8 @@ end
 lore.on("geo.result", function(d)
     stop_timer()
     stop_final()
+    active = true   -- результат приходит только внутри матча; держим G рабочим и на реконнекте в фазе показа
+    is_host = d.host == true
     R = d
     mode = "result"
     final_phase = nil
@@ -576,6 +588,7 @@ end)
 lore.on("geo.round", function(d)
     stop_final()
     active = true
+    is_host = d.host == true
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
     final_phase = nil
@@ -589,15 +602,18 @@ lore.on("geo.round", function(d)
     end
 end)
 
--- стал ведущим посреди показа (прежний хост вышел) — показать кнопку «Дальше»/«Готово»
+-- стал ведущим (прежний хост вышел) — показать host-кнопку в любом режиме
+-- («закрыть место» в угадывании, «Дальше»/«Готово» на показе/финале)
 lore.on("geo.host", function()
+    is_host = true
     if R then R.host = true end
-    if handle and (mode == "result" or mode == "final") then render() end
+    if handle then render() end
 end)
 
 -- матч кончился: закрыть доску, погасить таймеры и подсказку, G больше не открывает
 lore.on("geo.end", function()
     active = false
+    is_host = false
     stop_timer()
     stop_final()
     mode = "guess"
