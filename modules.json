@@ -7,7 +7,6 @@
         "round_seconds": 120,
         "scale": 3000,
         "max_points": 1000,
-        "slot_count": 3,
         "default_difficulty": "standard",
         "difficulties": { "easy": 12, "standard": 8, "hard": 5 }
       }
