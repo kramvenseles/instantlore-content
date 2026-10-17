@@ -79,6 +79,8 @@ local moved = 0
 -- сессия
 local active = false   -- идёт ли матч (G открывает доску только внутри матча)
 local is_host = false  -- я ведущий? (кнопки «закрыть место»/«Дальше»/«Готово» — только у хоста)
+local playing = true   -- я участник (угадываю)? false — распорядитель (ведёт, не играет)
+local skipvote = nil   -- {votes,total} — голоса за пропуск раунда (для игроков)
 local round_n, round_of = 0, 0
 local handle = nil
 -- таймер раунда (секунды приходят с сервером в geo.round; 0 — без таймера)
@@ -170,8 +172,8 @@ end
 local function on_release(p)
     if not pressed then return end
     pressed = false
-    -- точку ставим только в режиме угадывания и только если это клик, а не протяжка
-    if mode == "guess" and not sx and moved <= DRAG_SLOP then
+    -- точку ставим только участник, в режиме угадывания и только если это клик, а не протяжка
+    if mode == "guess" and playing and not sx and moved <= DRAG_SLOP then
         local bpx, bpy = p.x - BX, p.y - BY
         if bpx >= 0 and bpx <= DW and bpy >= 0 and bpy <= DH then
             px, pz = board_px_to_world(bpx, bpy)
@@ -204,7 +206,7 @@ local function stop_timer()
 end
 
 local function on_save()
-    if not px then return end
+    if not playing or not px then return end
     sx, sz = px, pz
     stop_timer()
     lore.report("geo.guess", { x = sx, z = sz })
@@ -215,7 +217,7 @@ end
 -- время вышло: отправить текущую догадку, а нет метки — таймаут (сервер даст 0 очков)
 local function on_timeout()
     stop_timer()
-    if mode ~= "guess" then return end
+    if mode ~= "guess" or not playing then return end
     if px then
         on_save()
     else
@@ -339,7 +341,13 @@ local function draw_guess(nodes)
 
     local PX0, PW = BX + DW + 6, 64
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = 108, background = "#E6080A12", id = "panel", on_click = ui_swallow }
-    if sx then
+    if not playing then
+        -- распорядитель: ведёт матч, но не угадывает — только наблюдает
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Наблюдатель", color = "#FFBFE8FF" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 16, align = "left",
+            text = waiting and string.format("§7угадали §f%d/%d", waiting.submitted or 0, waiting.total or 0) or "§8раунд идёт",
+            color = "#FFE8EEF8" }
+    elseif sx then
         -- догадка отправлена — ждём остальных (счёт из geo.waiting)
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§aОтправлено", color = "#FFBFF0C0" }
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 16, align = "left",
@@ -353,7 +361,7 @@ local function draw_guess(nodes)
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 24, align = "left", text = px and ("§fz " .. pz) or "", color = "#FFE8EEF8" }
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 38, width = PW - 6, height = 13, text = "Сохранить", enabled = px ~= nil, on_click = on_save }
     end
-    -- ведущий может закрыть место досрочно (не ждать AFK/таймер) — не угадавшие получат 0
+    -- нижняя кнопка: ведущий — мгновенно закрыть место; участник — голос за пропуск (>½ → закрытие)
     if is_host then
         nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 90, width = PW - 6, height = 13,
             text = "§eЗакрыть место",
@@ -361,6 +369,14 @@ local function draw_guess(nodes)
                 lore.report("geo.skip", {})
                 close_screen()
             end }
+    elseif playing then
+        if skipvote then
+            nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 80, align = "left",
+                text = string.format("§8за пропуск %d/%d", skipvote.votes or 0, skipvote.total or 0), color = "#FF9AA0AA" }
+        end
+        nodes[#nodes + 1] = { type = "button", anchor = "center", x = PX0 + 3, y = BY + 90, width = PW - 6, height = 13,
+            text = "§7Пропустить",
+            on_click = function() lore.report("geo.vote", {}) end }
     end
 end
 
@@ -429,8 +445,9 @@ local function draw_result(nodes)
                 close_screen()
             end }
     else
+        -- авто-переход (сервер сам уведёт дальше через R.auto сек) — не «ждём ведущего»
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = BX + DW - 4, y = BARY + 4, align = "right",
-            text = "§8ждём ведущего", color = "#FF9AA0AA" }
+            text = (R.auto and R.auto > 0) and "§8дальше сам…" or "§8ждём ведущего", color = "#FF9AA0AA" }
     end
 end
 
@@ -584,11 +601,19 @@ lore.on("geo.waiting", function(d)
     if handle and mode == "guess" then render() end
 end)
 
+-- сколько проголосовало за пропуск раунда
+lore.on("geo.skipvote", function(d)
+    skipvote = d
+    if handle and mode == "guess" then render() end
+end)
+
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     stop_final()
     active = true
     is_host = d.host == true
+    playing = d.play ~= false   -- распорядитель: play=false (наблюдает, не угадывает)
+    skipvote = nil
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
     final_phase = nil
@@ -614,6 +639,8 @@ end)
 lore.on("geo.end", function()
     active = false
     is_host = false
+    playing = true
+    skipvote = nil
     stop_timer()
     stop_final()
     mode = "guess"
