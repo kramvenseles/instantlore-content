@@ -535,11 +535,10 @@ local function start_reveal()
     end
 end
 
+-- G/geo.open: просто показать ТЕКУЩЕЕ состояние (угадывание/ожидание/результат/финал).
+-- Сброс в свежее угадывание делает ТОЛЬКО geo.round — иначе повторное открытие после отправки
+-- догадки кидало бы в новое угадывание вместо экрана результата.
 local function open()
-    stop_final()
-    mode = "guess"
-    final_phase = nil
-    view, cx, cz, px, pz, sx, sz, pressed, moved = SPAN, 0, 0, nil, nil, nil, nil, false, 0
     render()
 end
 
@@ -581,6 +580,7 @@ lore.on("geo.round", function(d)
     mode = "guess"
     final_phase = nil
     view, cx, cz, px, pz, sx, sz, R, waiting = SPAN, 0, 0, nil, nil, nil, nil, nil, nil
+    pressed, moved = false, 0
     close_screen()
     start_timer(d.secs or 0)
     -- без таймера подсказку всё равно показать (start_timer молчит при secs<=0)
