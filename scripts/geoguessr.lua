@@ -77,6 +77,7 @@ local waiting = nil
 local pressed = false
 local moved = 0
 -- сессия
+local active = false   -- идёт ли матч (G открывает доску только внутри матча)
 local round_n, round_of = 0, 0
 local handle = nil
 -- таймер раунда (секунды приходят с сервером в geo.round; 0 — без таймера)
@@ -343,7 +344,8 @@ local function draw_guess(nodes)
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 16, align = "left",
             text = waiting and string.format("§7угадали §f%d/%d", waiting.submitted or 0, waiting.total or 0) or "§7ждём…",
             color = "#FFE8EEF8" }
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 28, align = "left", text = "§8ждём\n§8остальных", color = "#FF9AA0AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 28, align = "left", text = "§8ждём", color = "#FF9AA0AA" }
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 37, align = "left", text = "§8остальных", color = "#FF9AA0AA" }
     else
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 4, align = "left", text = "§7Точка", color = "#FFBFE8FF" }
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = BY + 15, align = "left", text = px and ("§fx " .. px) or "§8—", color = "#FFE8EEF8" }
@@ -574,6 +576,7 @@ end)
 -- новый раунд: свежее угадывание, экран закрыть (игрок осматривается), таймер пошёл
 lore.on("geo.round", function(d)
     stop_final()
+    active = true
     round_n, round_of = d.n or 0, d.of or 0
     mode = "guess"
     final_phase = nil
@@ -586,5 +589,23 @@ lore.on("geo.round", function(d)
     end
 end)
 
-lore.on("geo.open", open)
-lore.on("key.1", open)
+-- стал ведущим посреди показа (прежний хост вышел) — показать кнопку «Дальше»/«Готово»
+lore.on("geo.host", function()
+    if R then R.host = true end
+    if handle and (mode == "result" or mode == "final") then render() end
+end)
+
+-- матч кончился: закрыть доску, погасить таймеры и подсказку, G больше не открывает
+lore.on("geo.end", function()
+    active = false
+    stop_timer()
+    stop_final()
+    mode = "guess"
+    final_phase = nil
+    R, waiting = nil, nil
+    close_screen()
+    lore.emit("actionbar.set", { text = "" })
+end)
+
+lore.on("geo.open", open)                                  -- тест/ручное открытие
+lore.on("key.1", function() if active then open() end end) -- G — только в активном матче
