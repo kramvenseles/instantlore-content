@@ -97,6 +97,13 @@ local function close_screen()
     if handle then handle.close(); handle = nil end
 end
 
+-- Игрок сам закрыл доску (Esc). Движок зовёт это только на настоящем close() экрана, НЕ на
+-- ре-рендере (там removed()). Обнуляем handle — тогда тики таймера (on_tick/result_tick,
+-- гейтятся «if handle») не переоткроют доску: закрыл — осталась закрытой, пока не нажмёшь G.
+local function on_user_close()
+    handle = nil
+end
+
 -- панель загрузки острова (боссбар сверху): прячем, когда раунд начался/матч кончился
 local function hide_loadbar()
     if loadbar then lore.emit("bossbar.hide", { id = "geoload" }); loadbar = false end
@@ -568,6 +575,7 @@ render = function()
         on_scroll = on_zoom,
         on_drag = on_drag,
         on_release = on_release,
+        on_close = on_user_close,
     })
 end
 
