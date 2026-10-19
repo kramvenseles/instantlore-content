@@ -218,6 +218,14 @@ local function fmt_time(s)
     return string.format("%d:%02d", math.floor(s / 60), s % 60)
 end
 
+-- ник для таблицы: обрезаем длинные, чтобы не наезжали на столбцы «+раунд»/«сумма»
+-- (ники до 16 символов, панель узкая). «…» — один глиф, место почти не ест.
+local function clip_name(s, n)
+    s = tostring(s or "?")
+    if #s > n then return s:sub(1, n - 1) .. "…" end
+    return s
+end
+
 local function stop_timer()
     if tick_cancel then tick_cancel(); tick_cancel = nil end
 end
@@ -432,8 +440,10 @@ local function draw_result(nodes)
         align = tright and "right" or "left", text = "§bправда", color = "#FF9AD8FF" }
     nodes[#nodes + 1] = clip_group(ch)
 
-    -- правая панель: лидерборд (имя · «+прибавка» · сумма), первые 8
-    local PX0, PW = BX + DW + 6, 92
+    -- правая панель: лидерборд (имя · «+прибавка» · сумма), первые 8.
+    -- Ширина разведена под 3 столбца: ник слева (обрезан clip_name, чтобы не налезал),
+    -- «+раунд» (до «+1000») и сумма (до «5000») — справа, с зазором между ними.
+    local PX0, PW = BX + DW + 6, 120
     local rows = R.board or {}
     local ph = 16 + math.min(#rows, 8) * 10
     nodes[#nodes + 1] = { type = "rect", anchor = "center", x = PX0, y = BY, width = PW, height = ph, background = "#E6080A12", on_click = ui_swallow }
@@ -443,9 +453,9 @@ local function draw_result(nodes)
         if i > 8 then break end
         local y = BY + 15 + (i - 1) * 10
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + 5, y = y, align = "left",
-            text = string.format("§f%d. %s", i, tostring(row.name or "?")), color = "#FFE8EEF8" }
+            text = string.format("§f%d. %s", i, clip_name(row.name, 7)), color = "#FFE8EEF8" }
         -- прибавка за этот раунд (приглушённая), левее суммы
-        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 24, y = y, align = "right",
+        nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 30, y = y, align = "right",
             text = string.format("§7+%d", row.round or 0), color = "#FF8A94A4" }
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = PX0 + PW - 4, y = y, align = "right",
             text = string.format("§a%d", row.total or 0), color = "#FFBFF0C0" }
@@ -521,7 +531,7 @@ local function draw_final(nodes)
         if win then
             nodes[#nodes + 1] = { type = "rect", anchor = "center", x = RX - 2, y = y - 3, width = FROW_W + 4, height = 14, background = "#55FFC24A" }
         end
-        local label = (win and "§6§l✦ " or "§f") .. string.format("%d. %s", rank, tostring(row.name or "?"))
+        local label = (win and "§6§l✦ " or "§f") .. string.format("%d. %s", rank, clip_name(row.name, 12))
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = RX + 4, y = y, align = "left",
             text = label, color = win and "#FFFFE89A" or "#FFE8EEF8" }
         nodes[#nodes + 1] = { type = "text", anchor = "center", x = RX + FROW_W - 28, y = y, align = "right",
