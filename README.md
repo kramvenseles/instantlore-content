@@ -1,23 +1,23 @@
-# instantlore — зеркало раздачи контента
+# instantlore — content delivery mirror
 
-Статическое зеркало для мода **instant-lore-mod** (Minecraft 1.21.11, Fabric).
-Содержимое каталога отдаётся как есть через GitHub Pages.
+A static mirror for the **instant-lore-mod** (Minecraft 1.21.11, Fabric).
+The directory is served as-is via GitHub Pages.
 
-Основная раздача — `https://play-cs2.com/lore/`. Это зеркало существует, чтобы
-у клиента был **второй домен отказа**: мод не обновляется никогда, поэтому
-потеря единственного адреса означала бы, что контент нельзя обновить больше
-никогда. Подробности — `ARCHITECTURE.md` мода, раздел «Безопасность».
+Primary delivery is `https://play-cs2.com/lore/`. This mirror exists to give the
+client a **second domain of failure**: the mod never auto-updates its own code,
+so losing the single address would mean the content could never be updated again.
+See the mod's `ARCHITECTURE.md`, "Security" section, for the full rationale.
 
-## Тут нечего красть и нечем навредить
+## Nothing here to steal, nothing to abuse
 
-Всё содержимое публично по построению: клиенты качают его без всякой авторизации.
+All content is public by design: clients fetch it without any authentication.
 
-Доверие к площадке при этом **не требуется вообще**. `manifest.json` подписан
-Ed25519, публичный ключ вшит в мод; sha256 каждого файла перечислены внутри
-манифеста и проверяются при загрузке. Подменённый или испорченный файл
-отвергается, кто бы его ни отдал. Зеркало может лишь не ответить — но не соврать.
+Trust in the host is **not required at all**. `manifest.json` is signed with
+Ed25519 and the public key is baked into the mod; the sha256 of every file is
+listed inside the manifest and verified on load. A tampered or corrupted file is
+rejected no matter who served it. A mirror can only fail to respond — it cannot lie.
 
-## Как обновляется
+## How it updates
 
-Автоматически, из `lore-content/deploy.sh` вместе с основной раздачей.
-Руками сюда коммитить незачем: каталог целиком пересобирается из `publish/`.
+Automatically, from `lore-content/deploy.sh` alongside the main delivery.
+There is no need to commit here by hand: the whole directory is rebuilt from `publish/`.
